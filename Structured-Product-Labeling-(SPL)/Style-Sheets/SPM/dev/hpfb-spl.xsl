@@ -27,6 +27,7 @@ Revision: $Id: spl-common.xsl,v 2.0 2006/08/18 04:11:00 sbsuggs Exp $
 <!-- HPFB Changes:
 	1.	changed the resource locations to the HPFB instances. 
 	2. Linking to the HPFB css renders the product data table incorrectly, needs to be resolved!
+	https://github.com/IanYangCa/HPFB/blob/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/dev/hpfb-spl.js
 -->
 
 <xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:v3="urn:hl7-org:v3" exclude-result-prefixes="v3 xsl">
@@ -40,11 +41,11 @@ Revision: $Id: spl-common.xsl,v 2.0 2006/08/18 04:11:00 sbsuggs Exp $
 	<xsl:param name="show-section-numbers" select="/.."/>
 	<!-- Whether to process mixins -->
 	<xsl:param name="process-mixins" select="true()"/>
-	<xsl:param name="core-base-url" select="/.." />
+	<xsl:param name="oids-base-url" select="/.." />
 	<!-- This is the CSS link put into the output -->
-	<xsl:param name="css" select="concat($core-base-url, 'spl-hpfb-core.css')" />
+	<xsl:param name="css" select="concat($oids-base-url, 'hpfb-spl-core.css')" />
 	<!-- Where to find JavaScript resources -->
-	<xsl:param name="resourcesdir" select="$core-base-url" />
+	<xsl:param name="resourcesdir" select="/.." />
 	<xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
 	<xsl:strip-space elements="*"/>
 </xsl:transform>
@@ -52,10 +53,11 @@ Revision: $Id: spl-common.xsl,v 2.0 2006/08/18 04:11:00 sbsuggs Exp $
 
 <metaInformation>
 	<scenarios>
-		<scenario default="yes" name="Scenario1" userelativepaths="yes" externalpreview="yes" url="..\test\1.xml" htmlbaseurl="" outputurl="..\test\test2.html" processortype="saxon8" useresolver="yes" profilemode="7" profiledepth="" profilelength=""
-		          urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no" validator="internal"
-		          customvalidator="">
-			<parameterValue name="core-base-url" value="'https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/current/'"/>
+		<scenario default="yes" name="Scenario1" userelativepaths="yes" externalpreview="yes" url="..\..\..\..\..\..\..\..\..\SPM\test\1.xml" htmlbaseurl="" outputurl="..\..\..\..\..\..\..\..\..\SPM\test\test2.html" processortype="saxon8" useresolver="yes"
+		          profilemode="7" profiledepth="" profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext=""
+		          validateoutput="no" validator="internal" customvalidator="">
+			<parameterValue name="oids-base-url" value="'https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/current/'"/>
+			<parameterValue name="resourcesdir" value="'https://rawgit.com/IanYangCa/HPFB/blob/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/current/'"/>
 			<advancedProp name="sInitialMode" value=""/>
 			<advancedProp name="schemaCache" value="||"/>
 			<advancedProp name="bXsltOneIsOkay" value="true"/>

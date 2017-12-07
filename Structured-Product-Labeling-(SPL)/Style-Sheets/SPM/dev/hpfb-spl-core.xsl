@@ -57,12 +57,10 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 							 exclude-result-prefixes="exsl msxsl v3 xsl xsi str">
 	<xsl:param name="show-data" select="1"/>
 	<xsl:param name="root" select="/"/>
-	<xsl:param name="core-base-url" select="/.."/>
-	<xsl:param name="css" select="concat($core-base-url,'spl-hpfb.css')"/>
+	<xsl:param name="oids-base-url" select="/.."/>
 	<xsl:param name="show-section-numbers" select="/.."/>
 	<xsl:param name="resourcesdir" select="/.." />
-
-	<xsl:param name="vocabulary" select="document('hpfb-labels.xml')"/>
+	<xsl:param name="css" select="concat($resourcesdir,'hpfb-spl-core.css')"/>
 
 	<xsl:output method="html" version="1.0" encoding="UTF-8" indent="no" doctype-public="-"/>
 	<xsl:strip-space elements="*"/>
@@ -91,6 +89,8 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 	<xsl:variable name="oid_loc" select="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
 	<xsl:variable name="file-suffix" select="'.xml'"/>
 	<xsl:variable name="codeLookup" select="document(concat($oid_loc,$structure-aspects-oid,$file-suffix))"/>
+	<xsl:param name="vocabulary" select="document('hpfb-spl-labels.xml')"/>
+
 	<!-- Process mixins if they exist -->
 	<xsl:template match="/" priority="1">
 		<xsl:apply-templates select="*"/>
@@ -203,7 +203,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 	<!-- DOCUMENT MODEL -->
 	<xsl:template mode="title" match="/|@*|node()"/>
 	<xsl:template mode="title" match="v3:document">
-		<div class="DocumentTitle Index">
+		<div class="DocumentTitle toc">
 			<p class="DocumentTitle">
 				<!-- Health Canada Title Page -->
 				<!-- Health Canada Added these 3 lines to render the ToC-->
@@ -235,13 +235,20 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 				<xsl:attribute name="onload"><xsl:text>if(typeof convertToTwoColumns == "function")convertToTwoColumns();</xsl:text></xsl:attribute>
 				<!-- Health Canada Generate Title Page -->
 				<xsl:call-template name="TitlePage"/>
+.
+				<xsl:apply-templates select="//v3:code[@code='440' and @codeSystem=$section-id-oid]/..">
+					<xsl:with-param name="render440" select="'xxx'"/>
+				</xsl:apply-templates>
+
 				<xsl:apply-templates mode="title" select="."/>
 				<!-- remove the double column -->
 				<!--
 				<h1 id="H1ID"><xsl:apply-templates mode="mixed" select="v3:title"/></h1>
 -->
 				<div class="Contents">
-					<xsl:apply-templates select="@*|node()[not(self::v3:relatedDocument[@typeCode = 'DRIV' or @typeCode = 'RPLC'])]"/>
+					<xsl:apply-templates select="@*|node()[not(self::v3:relatedDocument[@typeCode = 'DRIV' or @typeCode = 'RPLC'])]">
+						<xsl:with-param name="render440" select="'440'"/>
+					</xsl:apply-templates>
 				</div>
 				<xsl:if test="boolean($show-data)">
 					<div class="DataElementsTable">
@@ -293,13 +300,13 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 						<td class="borderCellLeft verticalTop">
 						<xsl:call-template name="hpfb-label">
 							<xsl:with-param name="codeSystem" select="$section-id-oid"/>
-							<xsl:with-param name="code" select="'15'"/>
+							<xsl:with-param name="code" select="'150'"/>
 						</xsl:call-template> :
 						<xsl:value-of select="/descendant-or-self::*[@code='150' and @codeSystem=$section-id-oid]/../v3:text"/>
 						<br /><br />
 						<xsl:call-template name="hpfb-label">
 							<xsl:with-param name="codeSystem" select="$section-id-oid"/>
-							<xsl:with-param name="code" select="'16'"/>
+							<xsl:with-param name="code" select="'160'"/>
 						</xsl:call-template> :
 						<xsl:value-of select="/descendant-or-self::*[@code='160' and @codeSystem=$section-id-oid]/../v3:text"/>
 						</td>
@@ -315,7 +322,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 			<div class="submissionNumber">
 				<xsl:call-template name="hpfb-label">
 					<xsl:with-param name="codeSystem" select="$section-id-oid"/>
-					<xsl:with-param name="code" select="'17'"/>
+					<xsl:with-param name="code" select="'170'"/>
 				</xsl:call-template> :
 				<xsl:value-of select="/descendant-or-self::*[@code='170' and @codeSystem=$section-id-oid]/../v3:text"/>
 			</div>
@@ -450,16 +457,14 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 		</xsl:element>
 	</xsl:template>
 <!-- Health Canada Change-->
-	<xsl:template match="v3:section">
-		<xsl:param name="sectionLevel" select="count(ancestor-or-self::v3:section)"/>
+	<xsl:template name="footNote">
 		<xsl:variable name="sectionNumberSequence">
 			<xsl:apply-templates mode="sectionNumber" select="ancestor-or-self::v3:section"/>
 		</xsl:variable>
-		<xsl:variable name="code" select="v3:code/@code" />
+		<xsl:variable name="code" select="./v3:code/@code" />
 		<!-- Health Canada Added new var, line below-->
 		<xsl:variable name="heading" select="$codeLookup/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]/../Value[@ColumnRef=concat($doctype,'-level')]/SimpleValue" />
-			<xsl:if test="not ($code='150' or $code='160' or $code='170' or $code='520')">
-			<div class="Section">
+				<div class="Section">
 				<xsl:for-each select="v3:code">
 					<xsl:attribute name="data-sectionCode"><xsl:value-of select="@code"/></xsl:attribute>
 				</xsl:for-each>
@@ -483,6 +488,45 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 					<xsl:apply-templates mode="data" select="."/>
 				</xsl:if>
 				<xsl:apply-templates select="@*|node()[not(self::v3:title)]"/>
+				<xsl:call-template name="flushSectionTitleFootnotes"/>
+			</div>
+	</xsl:template>
+	<xsl:template match="v3:section">
+		<xsl:param name="sectionLevel" select="count(ancestor-or-self::v3:section)"/>
+		<xsl:param name="render440" select="'440'" />
+		<xsl:variable name="sectionNumberSequence">
+			<xsl:apply-templates mode="sectionNumber" select="ancestor-or-self::v3:section"/>
+		</xsl:variable>
+		<xsl:variable name="code" select="v3:code/@code" />
+		<!-- Health Canada Added new var, line below-->
+		<xsl:variable name="heading" select="$codeLookup/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]/../Value[@ColumnRef=concat($doctype,'-level')]/SimpleValue" />
+			<xsl:if test="not ($code='150' or $code='160' or $code='170' or $code=$render440 or $code='520')">
+			<div class="Section">
+				<xsl:for-each select="v3:code">
+					<xsl:attribute name="data-sectionCode"><xsl:value-of select="@code"/></xsl:attribute>
+				</xsl:for-each>
+				<xsl:call-template name="styleCodeAttr">
+					<xsl:with-param name="styleCode" select="@styleCode"/>
+					<xsl:with-param name="additionalStyleCode" select="'Section'"/>
+				</xsl:call-template>
+				<!-- Health Canada Changed the below line to get code of section for anchors-->
+				<xsl:for-each select="v3:code/@code">
+					<a name="{.}"/>
+				</xsl:for-each>
+				<!-- Health Canada commented this bottom section out to reduce clutter when rendering (inspect element on browser)-->
+				<!--<a name="section-{substring($sectionNumberSequence,2)}"/>-->
+				<p/>
+
+				<xsl:apply-templates select="v3:title">
+					<xsl:with-param name="sectionLevel" select="$heading"/>
+					<xsl:with-param name="sectionNumber" select="substring($sectionNumberSequence,2)"/>
+				</xsl:apply-templates>
+				<xsl:if test="boolean($show-data)">
+					<xsl:apply-templates mode="data" select="."/>
+				</xsl:if>
+				<xsl:apply-templates select="@*|node()[not(self::v3:title)]">
+					<xsl:with-param name="render440" select="$render440" />
+				</xsl:apply-templates>
 				<xsl:call-template name="flushSectionTitleFootnotes"/>
 			</div>
 			</xsl:if>
@@ -514,7 +558,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 		</div>
 	</xsl:template>
 	<xsl:template name="include-custom-items">
-		<script src="{$resourcesdir}spl.js" type="application/javascript" charset="utf-8">/* */</script>
+		<script src="{$resourcesdir}hpfb-spl.js" type="application/javascript" charset="utf-8">/* */</script>
 	</xsl:template>
 <!-- Start PLR Information templates
 			 1. product code
@@ -3259,6 +3303,37 @@ token.
 </xsl:template>
 </xsl:transform>
 <!-- Stylus Studio meta-information - (c) 2004-2009. Progress Software Corporation. All rights reserved.
+
+<metaInformation>
+	<scenarios>
+		<scenario default="yes" name="HPFB" userelativepaths="yes" externalpreview="yes" url="..\test\1.xml" htmlbaseurl="" outputurl="..\test\test2.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth="" profilelength=""
+		          urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no" validator="internal"
+		          customvalidator="">
+			<advancedProp name="sInitialMode" value=""/>
+			<advancedProp name="schemaCache" value="||"/>
+			<advancedProp name="bXsltOneIsOkay" value="true"/>
+			<advancedProp name="bSchemaAware" value="true"/>
+			<advancedProp name="bGenerateByteCode" value="true"/>
+			<advancedProp name="bXml11" value="false"/>
+			<advancedProp name="iValidation" value="0"/>
+			<advancedProp name="bExtensions" value="true"/>
+			<advancedProp name="iWhitespace" value="0"/>
+			<advancedProp name="sInitialTemplate" value=""/>
+			<advancedProp name="bTinyTree" value="true"/>
+			<advancedProp name="xsltVersion" value="2.0"/>
+			<advancedProp name="bWarnings" value="true"/>
+			<advancedProp name="bUseDTD" value="false"/>
+			<advancedProp name="iErrorHandling" value="fatal"/>
+		</scenario>
+	</scenarios>
+	<MapperMetaTag>
+		<MapperInfo srcSchemaPathIsRelative="yes" srcSchemaInterpretAsXML="no" destSchemaPath="" destSchemaRoot="" destSchemaPathIsRelative="yes" destSchemaInterpretAsXML="no"/>
+		<MapperBlockPosition></MapperBlockPosition>
+		<TemplateContext></TemplateContext>
+		<MapperFilter side="source"></MapperFilter>
+	</MapperMetaTag>
+</metaInformation>
+--><!-- Stylus Studio meta-information - (c) 2004-2009. Progress Software Corporation. All rights reserved.
 
 <metaInformation>
 	<scenarios>
