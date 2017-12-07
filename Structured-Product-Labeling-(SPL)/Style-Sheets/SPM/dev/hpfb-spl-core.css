@@ -813,7 +813,15 @@ be represented
         border-bottom-style: solid;
         border-bottom-width: thin;
 }
-
+.spl div.toc {
+        margin-top: 5ex;
+        margin-bottom: 15ex;
+        padding-top: 1ex;
+        padding-bottom: 10ex;
+        border-top-width: thin;
+        border-bottom-style: solid;
+        border-bottom-width: thin;
+}
 .spl .Colspan {
        -moz-column-span: all;
         -webkit-column-span: all;
