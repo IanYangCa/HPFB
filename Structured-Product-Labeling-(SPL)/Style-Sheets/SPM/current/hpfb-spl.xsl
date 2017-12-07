@@ -49,7 +49,6 @@ Revision: $Id: spl-common.xsl,v 2.0 2006/08/18 04:11:00 sbsuggs Exp $
 	<xsl:strip-space elements="*"/>
 </xsl:transform>
 <!-- Stylus Studio meta-information - (c) 2004-2009. Progress Software Corporation. All rights reserved.
-
 <metaInformation>
 	<scenarios>
 		<scenario default="yes" name="Scenario1" userelativepaths="yes" externalpreview="yes" url="..\test\1.xml" htmlbaseurl="" outputurl="..\test\test2.html" processortype="saxon8" useresolver="yes" profilemode="7" profiledepth="" profilelength=""
