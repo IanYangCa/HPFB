@@ -524,22 +524,6 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 			</div>
 			</xsl:if>
 	</xsl:template>
-	<!-- TODO -->
-	<xsl:template match="v3:section[v3:code[descendant-or-self::*[self::v3:code or self::v3:translation][@codeSystem='2.16.840.1.113883.6.1' and @code='34066-1']]]" priority="2">
-		<!-- boxed warning -->
-		<xsl:param name="sectionLevel" select="count(ancestor-or-self::v3:section)"/>
-		<xsl:variable name="sectionNumberSequence">
-			<xsl:apply-templates mode="sectionNumber" select="ancestor-or-self::v3:section"/>
-		</xsl:variable>
-
-		<div>
-			<xsl:call-template name="styleCodeAttr">
-				<xsl:with-param name="styleCode" select="@styleCode"/>
-				<xsl:with-param name="additionalStyleCode" select="'Warning'"/>
-			</xsl:call-template>
-			<xsl:for-each select="@ID">
-				<a name="{.}"/>
-	<!-- End Of TODO -->
 
 <!-- Start PLR Information templates
 			 1. product code
