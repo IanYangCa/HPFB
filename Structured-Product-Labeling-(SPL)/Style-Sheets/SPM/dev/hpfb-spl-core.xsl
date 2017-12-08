@@ -597,12 +597,16 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 											<xsl:choose>
 												<xsl:when test="./v3:substanceAdministration/v3:maxDoseQuantity">
 													<xsl:value-of select="./v3:substanceAdministration/v3:maxDoseQuantity/v3:numerator/@value"/>&#160; <xsl:value-of
-														select="./v3:substanceAdministration/v3:maxDoseQuantity/v3:numerator/@unit"/>&#160;per&#160; <xsl:value-of
-														select="./v3:substanceAdministration/v3:maxDoseQuantity/v3:denominator/@value"/>&#160; <xsl:value-of
-														select="./v3:substanceAdministration/v3:maxDoseQuantity/v3:denominator/@unit"/>
+														select="./v3:substanceAdministration/v3:maxDoseQuantity/v3:numerator/@unit"/>&#160;
+										<xsl:call-template name="hpfb-title">
+											<xsl:with-param name="code" select="'10101'"/> <!-- per -->
+										</xsl:call-template>
+														&#160; 
+														<xsl:value-of select="./v3:substanceAdministration/v3:maxDoseQuantity/v3:denominator/@value"/>&#160; 
+														<xsl:value-of select="./v3:substanceAdministration/v3:maxDoseQuantity/v3:denominator/@unit"/>
 												</xsl:when>
 												<xsl:otherwise>
-													<!-- for $dosageAndAdministrationSectionCode
+													<!-- TODO for $dosageAndAdministrationSectionCode
 													<xsl:for-each select="//v3:maxDoseQuantity[ancestor::v3:section/v3:code/@code = $dosageAndAdministrationSectionCode]">
 														<xsl:value-of select="./v3:numerator/@value"/>&#160; <xsl:value-of select="./v3:numerator/@unit"/>&#160;per&#160; <xsl:value-of
 															select="./v3:denominator/@value"/>&#160; <xsl:value-of select="./v3:denominator/@unit"/>
@@ -644,19 +648,10 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 														</td>
 													</tr>
 													<!-- Repeat Each precondition for the indication subject -->
-													<!-- PCR 593 Displaying all the preconditions that are specifict to this indication and those that may be in other sections such
-																 as the Dosage forms and Strengths.
-														-->
-													<!-- PCR 593 Displaying all the preconditions that are specifict to this indication and those that may be in other sections such
-																 as the Dosage forms and Strengths.
-														-->
-													<!-- PCR 606 In order to remove the duplicates each section whose ancestor is anything other than $indicationSectionCode.
-																 A not (!) in the predicate will not do since a precondition axis can have multiple section tags as ancestors, of which any may be an Indication Section.
-														-->
 													<xsl:for-each select="./v3:substanceAdministration/v3:precondition">
 														<xsl:call-template name="displayConditionsOfUse"> </xsl:call-template>
 													</xsl:for-each>
-													<!--
+													<!-- TODO about Highlight
 													<xsl:for-each select="//v3:excerpt/v3:highlight/v3:subject/v3:substanceAdministration/v3:precondition">
 														<xsl:if test="count(ancestor::v3:section[v3:code/@code=$indicationSectionCode]) = 0">
 															<xsl:call-template name="displayConditionsOfUse"> </xsl:call-template>
@@ -739,7 +734,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 													<xsl:for-each select="./v3:substanceAdministration/v3:subjectOf/v3:issue">
 														<xsl:call-template name="displayLimitationsOfUse"> </xsl:call-template>
 													</xsl:for-each>
-													<!--
+													<!-- TODO for displayLimitationsOfUse
 													<xsl:for-each select="//v3:excerpt/v3:highlight/v3:subject/v3:substanceAdministration/v3:subjectOf/v3:issue[v3:subject/v3:observationCriterion]">
 														<xsl:if test="count(ancestor::v3:section[v3:code/@code=$indicationSectionCode]) = 0">
 															<xsl:call-template name="displayLimitationsOfUse"> </xsl:call-template>
