@@ -41,6 +41,7 @@ Revision: $Id: spl-common.xsl,v 2.0 2006/08/18 04:11:00 sbsuggs Exp $
 	<xsl:param name="show-section-numbers" select="/.."/>
 	<!-- Whether to process mixins -->
 	<xsl:param name="process-mixins" select="true()"/>
+	<!-- "/.." means the value come from parent or caller parameter -->
 	<xsl:param name="oids-base-url" select="/.." />
 	<!-- This is the CSS link put into the output -->
 	<!-- Where to find JavaScript resources -->

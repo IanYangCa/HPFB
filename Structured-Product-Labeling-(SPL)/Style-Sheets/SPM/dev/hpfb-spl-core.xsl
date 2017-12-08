@@ -57,6 +57,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 							 exclude-result-prefixes="exsl msxsl v3 xsl xsi str">
 	<xsl:param name="show-data" select="1"/>
 	<xsl:param name="root" select="/"/>
+	<!-- "/.." means the value come from parent or caller parameter -->
 	<xsl:param name="oids-base-url" select="/.."/>
 	<xsl:param name="show-section-numbers" select="/.."/>
 	<xsl:param name="resourcesdir" select="/.." />
