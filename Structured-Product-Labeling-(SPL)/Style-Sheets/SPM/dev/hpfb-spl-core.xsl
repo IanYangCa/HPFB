@@ -89,7 +89,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 	<xsl:variable name="oid_loc" select="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
 	<xsl:variable name="file-suffix" select="'.xml'"/>
 	<xsl:variable name="codeLookup" select="document(concat($oid_loc,$structure-aspects-oid,$file-suffix))"/>
-	<xsl:param name="vocabulary" select="document('hpfb-spl-labels.xml')"/>
+	<xsl:param name="vocabulary" select="document(concat($oid_loc,$section-id-oid,$file-suffix))"/>
 
 	<!-- Process mixins if they exist -->
 	<xsl:template match="/" priority="1">
@@ -283,7 +283,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 			</div>
 			<div class="include">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'includingPatientMedicationInformation'"/>
+					<xsl:with-param name="code" select="'10031'"/> <!-- IncludePatientMedicationInformation -->
 				</xsl:call-template>
 			</div>
 			<div class="pageTitle">
@@ -298,14 +298,12 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 					<xsl:call-template name="companyAddress"/>
 						</td>
 						<td class="borderCellLeft verticalTop">
-						<xsl:call-template name="hpfb-label">
-							<xsl:with-param name="codeSystem" select="$section-id-oid"/>
+						<xsl:call-template name="hpfb-title">
 							<xsl:with-param name="code" select="'150'"/>
 						</xsl:call-template> :
 						<xsl:value-of select="/descendant-or-self::*[@code='150' and @codeSystem=$section-id-oid]/../v3:text"/>
 						<br /><br />
-						<xsl:call-template name="hpfb-label">
-							<xsl:with-param name="codeSystem" select="$section-id-oid"/>
+						<xsl:call-template name="hpfb-title">
 							<xsl:with-param name="code" select="'160'"/>
 						</xsl:call-template> :
 						<xsl:value-of select="/descendant-or-self::*[@code='160' and @codeSystem=$section-id-oid]/../v3:text"/>
@@ -320,8 +318,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 			</div>
 
 			<div class="submissionNumber">
-				<xsl:call-template name="hpfb-label">
-					<xsl:with-param name="codeSystem" select="$section-id-oid"/>
+				<xsl:call-template name="hpfb-title">
 					<xsl:with-param name="code" select="'170'"/>
 				</xsl:call-template> :
 				<xsl:value-of select="/descendant-or-self::*[@code='170' and @codeSystem=$section-id-oid]/../v3:text"/>
@@ -575,7 +572,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 				<tr>
 					<td class="contentTableTitle">
 						<xsl:call-template name="hpfb-title">
-							<xsl:with-param name="code" select="'indicationsAndUsage'"/>
+							<xsl:with-param name="code" select="'10034'"/> <!--indicationsAndUsage -->
 						</xsl:call-template>
 					</td>
 				</tr>
@@ -586,34 +583,34 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 								<tr>
 									<td class="formTitle" colSpan="2">
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'indications'"/>
+											<xsl:with-param name="code" select="'10033'"/> <!-- indications -->
 										</xsl:call-template>
 									</td>
 									<td class="formTitle" colSpan="4">
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'usage'"/>
+											<xsl:with-param name="code" select="'10095'"/> <!-- usage -->
 										</xsl:call-template>
 									</td>
 								</tr>
 								<tr>
 									<td class="formTitle">
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'indication'"/>
+											<xsl:with-param name="code" select="'10032'"/> <!-- indication -->
 										</xsl:call-template>
 									</td>
 									<td class="formTitle">
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'intentOfUse'"/>
+											<xsl:with-param name="code" select="'10040'"/> <!-- intentOfUse -->
 										</xsl:call-template>
 									</td>
 									<td class="formTitle">
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'maximumDose'"/>
+											<xsl:with-param name="code" select="'10049'"/> <!-- maximumDose -->
 										</xsl:call-template>
 									</td>
 									<td class="formTitle" colSpan="4">
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'conditionsLimitationsOfUse'"/>
+											<xsl:with-param name="code" select="'10014'"/> <!-- conditionsLimitationsOfUse -->
 										</xsl:call-template>
 									</td>
 								</tr>
@@ -651,29 +648,29 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 													<tr class="formTable">
 														<td class="formTitle" colSpan="4">
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'conditionsOfUse'"/>
+											<xsl:with-param name="code" select="'10015'"/> <!-- conditionsOfUse -->
 										</xsl:call-template>
 														</td>
 													</tr>
 													<tr class="formTable">
 														<td class="formTitle">
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'useCategory'"/>
+											<xsl:with-param name="code" select="'10096'"/> <!-- useCategory -->
 										</xsl:call-template>
 														</td>
 														<td class="formTitle">
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'preconditionCategory'"/>
+											<xsl:with-param name="code" select="'10064'"/> <!-- preconditionCategory -->
 										</xsl:call-template>
 														</td>
 														<td class="formTitle">
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'precondition'"/>
+											<xsl:with-param name="code" select="'10060'"/> <!-- precondition -->
 										</xsl:call-template>
 														</td>
 														<td class="formTitle">
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'labelingSection'"/>
+											<xsl:with-param name="code" select="'10041'"/> <!-- labelingSection -->
 										</xsl:call-template>
 														</td>
 													</tr>
@@ -707,12 +704,12 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 															</xsl:attribute>
 															<td class="formItem">
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'conditionOfUse'"/>
+											<xsl:with-param name="code" select="'10100'"/> <!-- conditionOfUse -->
 										</xsl:call-template>
 															</td>
 															<td class="formItem">
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'screeningMonitoringTest'"/>
+											<xsl:with-param name="code" select="'10081'"/> <!-- screeningMonitoringTest -->
 										</xsl:call-template>
 															</td>
 															<td class="formItem">
@@ -738,29 +735,29 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 													<tr class="formTable">
 														<td class="formTitle" colSpan="4">
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'limitationsOfUse'"/>
+											<xsl:with-param name="code" select="'10043'"/> <!-- limitationsOfUse -->
 										</xsl:call-template>
 														</td>
 													</tr>
 													<tr class="formTable">
 														<td class="formTitle">
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'useCategory'"/>
+											<xsl:with-param name="code" select="'10096'"/> <!-- useCategory -->
 										</xsl:call-template>
 														</td>
 														<td class="formTitle">
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'preconditionCategory'"/>
+											<xsl:with-param name="code" select="'10064'"/> <!-- preconditionCategory -->
 										</xsl:call-template>
 														</td>
 														<td class="formTitle">
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'precondition'"/>
+											<xsl:with-param name="code" select="'10060'"/> <!-- precondition -->
 										</xsl:call-template>
 														</td>
 														<td class="formTitle">
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'labelingSection'"/>
+											<xsl:with-param name="code" select="'10041'"/> <!-- labelingSection -->
 										</xsl:call-template>
 														</td>
 													</tr>
@@ -803,7 +800,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 				<tr>
 					<td class="formHeadingTitle">
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'pharmacologicClass'"/>
+											<xsl:with-param name="code" select="'10061'"/> <!-- pharmacologicClass -->
 										</xsl:call-template>
 					</td>
 				</tr>
@@ -814,12 +811,12 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 								<tr>
 									<td class="formHeadingTitle" width="30%">
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'substance'"/>
+											<xsl:with-param name="code" select="'10087'"/> <!-- substance -->
 										</xsl:call-template>
 									</td>
 									<td class="formHeadingTitle" width="70%">P
 										<xsl:call-template name="hpfb-title">
-											<xsl:with-param name="code" select="'pharmacologicClass'"/>
+											<xsl:with-param name="code" select="'10061'"/> <!-- pharmacologicClass -->
 										</xsl:call-template>
 									</td>
 								</tr>
@@ -864,7 +861,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 			<xsl:variable name="revisionTimeCandidates" select="v3:effectiveTime|v3:availabilityTime"/>
 			<xsl:variable name="revisionTime" select="$revisionTimeCandidates/@value"/>
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'revisionTimeCandidates'"/>
+					<xsl:with-param name="code" select="'10075'"/> <!-- revisionTimeCandidates -->
 				</xsl:call-template>:
 			<xsl:call-template name="string-to-date">
 				<xsl:with-param name="text">
@@ -873,7 +870,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 			</xsl:call-template>
 			<xsl:text>&#160;&#160;&#160;&#160;</xsl:text>
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'revisionTime'"/>
+					<xsl:with-param name="code" select="'10074'"/> <!-- revisionTime -->
 				</xsl:call-template>:
 			<xsl:call-template name="string-to-date">
 				<xsl:with-param name="text">
@@ -903,7 +900,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 			<xsl:when test="./v3:observationCriterion">
 				<td class="formItem">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'conditionOfUse'"/>
+					<xsl:with-param name="code" select="'10100'"/> <!-- conditionOfUse -->
 				</xsl:call-template>
 				</td>
 				<td class="formItem">
@@ -916,12 +913,12 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 			<xsl:when test="./v3:substanceAdministrationCriterion">
 				<td class="formItem">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'conditionOfUse'"/>
+					<xsl:with-param name="code" select="'10100'"/> <!-- conditionOfUse -->
 				</xsl:call-template>
 				</td>
 				<td class="formItem">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'adjunct'"/>
+					<xsl:with-param name="code" select="'10004'"/> <!-- adjunct -->
 				</xsl:call-template>
 				</td>
 				<td class="formItem">
@@ -945,7 +942,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 	<xsl:template name="printSeperator">
 		<xsl:param name="lastDelimiter"><xsl:if test="last() > 2">,</xsl:if>
 				&#160;<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'and'"/>
+					<xsl:with-param name="code" select="'10005'"/> <!-- and -->
 				</xsl:call-template>&#160;
 		</xsl:param>
 		<xsl:choose>
@@ -1058,7 +1055,7 @@ token.
 					<!-- this one below should work for all parsers as it is using exslt but will keep the above code for msxsl for now -->
 					<xsl:message>
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'warningMissingRequired'"/>
+					<xsl:with-param name="code" select="'10099'"/> <!-- warningMissingRequired -->
 				</xsl:call-template>
 					</xsl:message>
 					<xsl:for-each select="str:tokenize($allCodes, ' ')">
@@ -1203,12 +1200,12 @@ token.
 								<xsl:choose>
 									<xsl:when test="v3:ingredient">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'abstractProductConcept'"/>
+					<xsl:with-param name="code" select="'10000'"/> <!-- abstractProductConcept -->
 				</xsl:call-template>
 									</xsl:when>
 									<xsl:otherwise>
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'applicationProductConcept'"/>
+					<xsl:with-param name="code" select="'10007'"/> <!-- applicationProductConcept -->
 				</xsl:call-template>
 									</xsl:otherwise>
 								</xsl:choose>
@@ -1288,7 +1285,7 @@ token.
 							</xsl:when>
 							<xsl:otherwise>
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'otherParty'"/>
+					<xsl:with-param name="code" select="'10056'"/> <!-- otherParty -->
 				</xsl:call-template>
 							</xsl:otherwise>
 						</xsl:choose>
@@ -1298,27 +1295,27 @@ token.
 			<tr>
 				<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'role'"/>
+					<xsl:with-param name="code" select="'10076'"/> <!-- role -->
 				</xsl:call-template>
 				</th>
 				<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'name'"/>
+					<xsl:with-param name="code" select="'10051'"/> <!-- name -->
 				</xsl:call-template>
 				</th>
 				<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'address'"/>
+					<xsl:with-param name="code" select="'10003'"/> <!-- address -->
 				</xsl:call-template>
 				</th>
 				<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'ID_FEI'"/>
+					<xsl:with-param name="code" select="'10027'"/> <!-- ID_FEI -->
 				</xsl:call-template>
 				</th>
 				<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'businessOperations'"/>
+					<xsl:with-param name="code" select="'10010'"/> <!-- businessOperations -->
 				</xsl:call-template>
 				</th>
 			</tr>
@@ -1362,7 +1359,7 @@ token.
 							<xsl:if test="/v3:document/v3:code/@code='75030-7' and ../v3:id[@extension]">
 								<xsl:text>, </xsl:text>
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'licenseInfo'"/>
+					<xsl:with-param name="code" select="'10042'"/> <!-- licenseInfo -->
 				</xsl:call-template>&#160;
 								<xsl:text>(</xsl:text>
 								<xsl:value-of select="concat('Number: ', ../v3:id/@extension, ', ')"/>
@@ -1376,7 +1373,7 @@ token.
 								<xsl:text>(</xsl:text>
 								<xsl:if test="../v3:code[@displayName = 'other']">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'text'"/>
+					<xsl:with-param name="code" select="'10091'"/> <!-- text -->
 				</xsl:call-template>-
 									<xsl:value-of select="../v3:text/text()"/>
 									<xsl:if test="../v3:subjectOf/v3:document">
@@ -1402,22 +1399,22 @@ token.
 					<tr>
 						<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'US_AgentID'"/>
+					<xsl:with-param name="code" select="'10094'"/> <!-- US_AgentID -->
 				</xsl:call-template>
 						</th>
 						<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'address'"/>
+					<xsl:with-param name="code" select="'10003'"/> <!-- address -->
 				</xsl:call-template>
 						</th>
 						<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'telephoneNumber'"/>
+					<xsl:with-param name="code" select="'10090'"/> <!-- telephoneNumber -->
 				</xsl:call-template>
 						</th>
 						<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'emailAddress'"/>
+					<xsl:with-param name="code" select="'10022'"/> <!-- emailAddress -->
 				</xsl:call-template>
 						</th>
 					</tr>
@@ -1439,7 +1436,7 @@ token.
 						<xsl:for-each select="v3:telecom/@value[starts-with(.,'fax:')]">
 							<br/>
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'fax'"/>
+					<xsl:with-param name="code" select="'10023'"/> <!-- fax -->
 				</xsl:call-template>:&#160;
 							<xsl:value-of select="substring-after(., 'fax:')"/>
 						</xsl:for-each>
@@ -1455,22 +1452,22 @@ token.
 					<tr>
 						<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'importerID'"/>
+					<xsl:with-param name="code" select="'10028'"/> <!-- importerID -->
 				</xsl:call-template>
 						</th>
 						<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'address'"/>
+					<xsl:with-param name="code" select="'10003'"/> <!-- address -->
 				</xsl:call-template>
 						</th>
 						<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'telephoneNumber'"/>
+					<xsl:with-param name="code" select="'10090'"/> <!-- telephoneNumber -->
 				</xsl:call-template>
 						</th>
 						<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'emailAddress'"/>
+					<xsl:with-param name="code" select="'10022'"/> <!-- emailAddress -->
 				</xsl:call-template>
 						</th>
 					</tr>
@@ -1492,7 +1489,7 @@ token.
 						<xsl:for-each select="v3:telecom/@value[starts-with(.,'fax:')]">
 							<br/>
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'fax'"/>
+					<xsl:with-param name="code" select="'10023'"/> <!-- fax -->
 				</xsl:call-template>:&#160;
 							<xsl:value-of select="substring-after(., 'fax:')"/>
 						</xsl:for-each>
@@ -1511,22 +1508,22 @@ token.
 			<tr>
 				<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'contact'"/>
+					<xsl:with-param name="code" select="'10016'"/> <!-- contact -->
 				</xsl:call-template>
 				</th>
 				<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'address'"/>
+					<xsl:with-param name="code" select="'10003'"/> <!-- address -->
 				</xsl:call-template>
 				</th>
 				<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'telephoneNumber'"/>
+					<xsl:with-param name="code" select="'10090'"/> <!-- telephoneNumber -->
 				</xsl:call-template>
 				</th>
 				<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'emailAddress'"/>
+					<xsl:with-param name="code" select="'10022'"/> <!-- emailAddress -->
 				</xsl:call-template>
 				</th>
 			</tr>
@@ -1544,7 +1541,7 @@ token.
 					<br/>
 					<xsl:text>FAX: </xsl:text>
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'role'"/>
+					<xsl:with-param name="code" select="'10076'"/> <!-- role -->
 				</xsl:call-template>
 					<xsl:value-of select="substring-after(., 'fax:')"/>
 				</xsl:for-each>
@@ -1562,7 +1559,7 @@ token.
 			<tr>
 				<td colspan="4" class="formHeadingReg"><span class="formHeadingTitle" >
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'DIN_Owner'"/>
+					<xsl:with-param name="code" select="'10020'"/> <!-- DIN_Owner -->
 				</xsl:call-template>&#160;-&#160;
 				</span><xsl:value-of select="./v3:name"/>
 				<!-- TODO -->
@@ -1579,7 +1576,7 @@ token.
 					<xsl:if test="/v3:document/v3:code/@code[. = '51726-8' or . = '72871-7']">
 						<span class="formHeadingTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'NDC_LabelerCode'"/>
+					<xsl:with-param name="code" select="'10052'"/> <!-- NDC_LabelerCode -->
 				</xsl:call-template>:&#160;
 						</span>
 				<!-- TODO -->
@@ -1597,7 +1594,7 @@ token.
 					<xsl:if test="/v3:document/v3:code/@code[. = '66105-8']">
 						<span class="formHeadingTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'manufacturerLicenseNumber'"/>
+					<xsl:with-param name="code" select="'10044'"/> <!-- manufacturerLicenseNumber -->
 				</xsl:call-template>:&#160;
 						</span>
 						<xsl:choose>
@@ -1627,12 +1624,12 @@ token.
 						<xsl:choose>
 							<xsl:when test="/v3:document/v3:code/@code[. = '75030-7']"> 
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'reporter'"/>
+					<xsl:with-param name="code" select="'10072'"/> <!-- reporter -->
 				</xsl:call-template>&#160;-&#160;
 							</xsl:when>
 							<xsl:otherwise>
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'registrant'"/>
+					<xsl:with-param name="code" select="'10071'"/> <!-- registrant -->
 				</xsl:call-template>&#160;-&#160;
 							</xsl:otherwise>
 						</xsl:choose>
@@ -1648,7 +1645,7 @@ token.
 			<tr><td>Address:</td><td><xsl:value-of select="./v3:streetAddressLine"/></td></tr>
 			<tr><td>
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'cityStateZip'"/>
+					<xsl:with-param name="code" select="'10011'"/> <!-- cityStateZip -->
 				</xsl:call-template>:
 			</td>
 				<td>
@@ -1677,12 +1674,12 @@ token.
 								<xsl:choose>
 									<xsl:when test="v3:ingredient">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'abstractProductConcept'"/>
+					<xsl:with-param name="code" select="'10000'"/> <!-- abstractProductConcept -->
 				</xsl:call-template>
 									</xsl:when>
 									<xsl:otherwise>
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'applicationProductConcept'"/>
+					<xsl:with-param name="code" select="'10007'"/> <!-- applicationProductConcept -->
 				</xsl:call-template>
 									</xsl:otherwise>
 								</xsl:choose>
@@ -1759,7 +1756,7 @@ token.
 					<tr>
 						<td colspan="4" class="formHeadingTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'productInformation'"/>
+					<xsl:with-param name="code" select="'10066'"/> <!-- productInformation -->
 				</xsl:call-template>
 						</td>
 					</tr>
@@ -1767,7 +1764,7 @@ token.
 						<xsl:if test="not(../../v3:part)">
 							<td class="formLabel">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'productType'"/>
+					<xsl:with-param name="code" select="'10068'"/> <!-- productType -->
 				</xsl:call-template>
 							</td>
 							<td class="formItem">
@@ -1778,7 +1775,7 @@ token.
 						<xsl:for-each select="v3:code/@code">
 							<td class="formLabel">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'itemCodeSource'"/>
+					<xsl:with-param name="code" select="'10039'"/> <!-- itemCodeSource -->
 				</xsl:call-template>
 							</td>
 							<td class="formItem">
@@ -1796,7 +1793,7 @@ token.
 							<xsl:if test="../v3:consumedIn/*[self::v3:substanceAdministration or self::v3:substanceAdministration1]/v3:routeCode and not(v3:part)">
 								<td width="30%" class="formLabel">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'routeOfAdministration'"/>
+					<xsl:with-param name="code" select="'10077'"/> <!-- routeOfAdministration -->
 				</xsl:call-template>
 								</td>
 								<td class="formItem">
@@ -1809,7 +1806,7 @@ token.
 							<xsl:if test="../v3:subjectOf/v3:policy/v3:code/@displayName">
 								<td width="30%" class="formLabel">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'DEA_Schedule'"/>
+					<xsl:with-param name="code" select="'10019'"/> <!-- DEA_Schedule -->
 				</xsl:call-template>
 								</td>
 								<td class="formItem">
@@ -1822,7 +1819,7 @@ token.
 						<tr class="formTableRowAlt">
 							<td class="formLabel">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'reportingPeriod'"/>
+					<xsl:with-param name="code" select="'10070'"/> <!-- reportingPeriod -->
 				</xsl:call-template>
 							</td>
 							<td class="formItem">
@@ -1901,7 +1898,7 @@ token.
 			<tr>
 				<td colspan="4" class="formHeadingTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'productCharacteristics'"/>
+					<xsl:with-param name="code" select="'10065'"/> <!-- productCharacteristics -->
 				</xsl:call-template>
 				</td>
 			</tr>
@@ -1972,7 +1969,7 @@ token.
 			<tr>
 				<td colspan="4" class="formHeadingTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'productCharacteristics'"/>
+					<xsl:with-param name="code" select="'10065'"/> <!-- productCharacteristics -->
 				</xsl:call-template>
 				</td>
 			</tr>
@@ -2062,7 +2059,7 @@ token.
 	<xsl:param name="path" select="."/>
 	<td class="formLabel">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'color'"/>
+					<xsl:with-param name="code" select="'10013'"/> <!-- color -->
 				</xsl:call-template>
 	</td>
 	<td class="formItem">
@@ -2079,7 +2076,7 @@ token.
 		<xsl:param name="path" select="."/>
 		<td class="formLabel">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'productionAmount'"/>
+					<xsl:with-param name="code" select="'10067'"/> <!-- productionAmount -->
 				</xsl:call-template>
 		</td>
 		<td class="formItem">
@@ -2096,25 +2093,25 @@ token.
 	<xsl:param name="path" select="."/>
 	<td class="formLabel">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'score'"/>
+					<xsl:with-param name="code" select="'10079'"/> <!-- score -->
 				</xsl:call-template>
 	</td>
 	<td class="formItem">
 		<xsl:choose>
 			<xsl:when test="$path/v3:value/@nullFlavor='OTH'">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'scoreWithUnevenPieces'"/>
+					<xsl:with-param name="code" select="'10080'"/> <!-- scoreWithUnevenPieces -->
 				</xsl:call-template>
 			</xsl:when>
 			<xsl:when test="not($path/v3:value)">&#160;&#160;&#160;&#160;</xsl:when>
 			<xsl:when test="$path/v3:value/@value = '1'">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'noScore'"/>
+					<xsl:with-param name="code" select="'10055'"/> <!-- noScore -->
 				</xsl:call-template>
 			</xsl:when>
 			<xsl:otherwise><xsl:value-of select="$path/v3:value/@value"/>&#160;
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'pieces'"/>
+					<xsl:with-param name="code" select="'10063'"/> <!-- pieces -->
 				</xsl:call-template>
 			</xsl:otherwise>
 		</xsl:choose>
@@ -2125,7 +2122,7 @@ token.
 	<xsl:param name="path" select="."/>
 	<td class="formLabel">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'shape'"/>
+					<xsl:with-param name="code" select="'10083'"/> <!-- shape -->
 				</xsl:call-template>
 	</td>
 	<td class="formItem">
@@ -2138,7 +2135,7 @@ token.
 	<xsl:param name="path" select="."/>
 	<td class="formLabel">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'flavor'"/>
+					<xsl:with-param name="code" select="'10024'"/> <!-- flavor -->
 				</xsl:call-template>
 	</td>
 	<td class="formItem">
@@ -2154,7 +2151,7 @@ token.
 	<xsl:param name="path" select="."/>
 	<td class="formLabel">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'imprint'"/>
+					<xsl:with-param name="code" select="'10029'"/> <!-- imprint -->
 				</xsl:call-template>
 	</td>
 	<td class="formItem">
@@ -2166,7 +2163,7 @@ token.
 	<xsl:param name="path" select="."/>
 	<td class="formLabel">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'size'"/>
+					<xsl:with-param name="code" select="'10084'"/> <!-- size -->
 				</xsl:call-template>
 	</td>
 	<td class="formItem">
@@ -2179,7 +2176,7 @@ token.
 	<xsl:param name="path" select="."/>
 	<td class="formLabel">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'symbol'"/>
+					<xsl:with-param name="code" select="'10089'"/> <!-- symbol -->
 				</xsl:call-template>
 	</td>
 	<td class="formItem">
@@ -2191,7 +2188,7 @@ token.
 	<xsl:param name="path" select="."/>
 	<td class="formLabel">Coating
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'coating'"/>
+					<xsl:with-param name="code" select="'10012'"/> <!-- coating -->
 				</xsl:call-template>
 	</td>
 	<td class="formItem">
@@ -2202,7 +2199,7 @@ token.
 		<xsl:param name="path" select="."/>
 		<td class="formLabel">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'pharmaceuticalStandard'"/>
+					<xsl:with-param name="code" select="'10062'"/> <!-- pharmaceuticalStandard -->
 				</xsl:call-template>
 		</td>
 		<td class="formItem">
@@ -2217,7 +2214,7 @@ token.
 		<xsl:param name="path" select="."/>
 		<td class="formLabel">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'schedulingSymbol'"/>
+					<xsl:with-param name="code" select="'10078'"/> <!-- schedulingSymbol -->
 				</xsl:call-template>
 		</td>
 		<td class="formItem">
@@ -2232,7 +2229,7 @@ token.
 		<xsl:param name="path" select="."/>
 		<td class="formLabel">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'therapeuticClass'"/>
+					<xsl:with-param name="code" select="'10092'"/> <!-- therapeuticClass -->
 				</xsl:call-template>
 		</td>
 		<td class="formItem">
@@ -2247,7 +2244,7 @@ token.
 	<xsl:param name="path" select="."/>
 	<td class="formLabel">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'contains'"/>
+					<xsl:with-param name="code" select="'10017'"/> <!-- contains -->
 				</xsl:call-template>
 	</td>
 	<td class="formItem">
@@ -2266,29 +2263,29 @@ token.
 			<tr>
 				<td colspan="4" class="formHeadingReg"><span class="formHeadingTitle" >
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'marketingInformation'"/>
+					<xsl:with-param name="code" select="'10047'"/> <!-- marketingInformation -->
 				</xsl:call-template>
 				</span></td>
 			</tr>
 			<tr>
 				<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'marketingCategory'"/>
+					<xsl:with-param name="code" select="'10045'"/> <!-- marketingCategory -->
 				</xsl:call-template>
 				</th>
 				<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'applicationNumberMonographCitation'"/>
+					<xsl:with-param name="code" select="'10006'"/> <!-- applicationNumberMonographCitation -->
 				</xsl:call-template>
 				</th>
 					<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'marketingStartDate'"/>
+					<xsl:with-param name="code" select="'10048'"/> <!-- marketingStartDate -->
 				</xsl:call-template>
 					</th>
 					<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'marketingEndDate'"/>
+					<xsl:with-param name="code" select="'10046'"/> <!-- marketingEndDate -->
 				</xsl:call-template>
 					</th>
 			</tr>
@@ -2358,19 +2355,19 @@ token.
 				<!-- see PCR 801, just make the header bigger -->
 				<td colspan="2" class="formHeadingTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'inactiveIngredients'"/>
+					<xsl:with-param name="code" select="'10030'"/> <!-- inactiveIngredients -->
 				</xsl:call-template>
 				</td>
 			</tr>
 			<tr>
 				<th class="formTitle" scope="col">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'ingredientName'"/>
+					<xsl:with-param name="code" select="'10036'"/> <!-- ingredientName -->
 				</xsl:call-template>
 				</th>
 				<th class="formTitle" scope="col">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'strength'"/>
+					<xsl:with-param name="code" select="'10086'"/> <!-- strength -->
 				</xsl:call-template>
 				</th>
 			</tr>
@@ -2378,7 +2375,7 @@ token.
 				<tr>
 					<td colspan="2" class="formItem" align="center">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'noInactiveIngredientsFound'"/>
+					<xsl:with-param name="code" select="'10054'"/> <!-- noInactiveIngredientsFound -->
 				</xsl:call-template>
 					</td>
 				</tr>
@@ -2399,7 +2396,7 @@ token.
 							<xsl:text> (</xsl:text>
 							<xsl:for-each select="v3:code/@code">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'UNII'"/>
+					<xsl:with-param name="code" select="'10093'"/> <!-- UNII -->
 				</xsl:call-template>:
 								<xsl:value-of select="."/>
 							</xsl:for-each>
@@ -2422,24 +2419,24 @@ token.
 			<tr>
 				<td colspan="3" class="formHeadingTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'activeIngredientActiveMoiety'"/>
+					<xsl:with-param name="code" select="'10001'"/> <!-- activeIngredientActiveMoiety -->
 				</xsl:call-template>
 				</td>
 			</tr>
 			<tr>
 				<th class="formTitle" scope="col">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'ingredientName'"/>
+					<xsl:with-param name="code" select="'10036'"/> <!-- ingredientName -->
 				</xsl:call-template>
 				</th>
 				<th class="formTitle" scope="col">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'basisOfStrength'"/>
+					<xsl:with-param name="code" select="'10009'"/> <!-- basisOfStrength -->
 				</xsl:call-template>
 				</th>
 				<th class="formTitle" scope="col">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'strength'"/>
+					<xsl:with-param name="code" select="'10086'"/> <!-- strength -->
 				</xsl:call-template>
 				</th>
 			</tr>
@@ -2447,7 +2444,7 @@ token.
 				<tr>
 					<td colspan="3" class="formItem" align="center">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'noActiveIngredientsFound'"/>
+					<xsl:with-param name="code" select="'10053'"/> <!-- noActiveIngredientsFound -->
 				</xsl:call-template>
 					</td>
 				</tr>
@@ -2468,12 +2465,12 @@ token.
 							<xsl:text> (</xsl:text>
 							<xsl:for-each select="v3:code/@code">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'UNII'"/>
+					<xsl:with-param name="code" select="'10093'"/> <!-- UNII -->
 				</xsl:call-template>:
 								<xsl:value-of select="."/>
 								<xsl:if test="position()!=last()">  
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'and'"/>
+					<xsl:with-param name="code" select="'10005'"/> <!-- and -->
 				</xsl:call-template>
 								</xsl:if>
 							</xsl:for-each>
@@ -2484,7 +2481,7 @@ token.
 									<xsl:value-of select="."/>
 									<xsl:text> - </xsl:text>
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'UNII'"/>
+					<xsl:with-param name="code" select="'10093'"/> <!-- UNII -->
 				</xsl:call-template>:
 									<xsl:value-of select="../v3:code/@code"/>
 									<xsl:if test="position()!=last()">, </xsl:if>
@@ -2494,7 +2491,7 @@ token.
 							<xsl:for-each select="../v3:subjectOf/v3:substanceSpecification/v3:code[@codeSystem = '2.16.840.1.113883.6.69' or @codeSystem = '2.16.840.1.113883.3.6277']/@code">
 								 ( 
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'sourceNDC'"/>
+					<xsl:with-param name="code" select="'10085'"/> <!-- sourceNDC -->
 				</xsl:call-template>:
 								
 								<xsl:value-of select="."/>
@@ -2532,24 +2529,24 @@ token.
 				<td colspan="3" class="formHeadingTitle">
 					<xsl:if test="v3:ingredient[@classCode = 'INGR' or starts-with(@classCode,'ACTI')]">Other </xsl:if>
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'ingredients'"/>
+					<xsl:with-param name="code" select="'10037'"/> <!-- ingredients -->
 				</xsl:call-template>
 				</td>
 			</tr>
 			<tr>
 				<th class="formTitle" scope="col">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'ingredientKind'"/>
+					<xsl:with-param name="code" select="'10035'"/> <!-- ingredientKind -->
 				</xsl:call-template>
 				</th>
 				<th class="formTitle" scope="col">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'ingredientName'"/>
+					<xsl:with-param name="code" select="'10036'"/> <!-- ingredientName -->
 				</xsl:call-template>
 				</th>
 				<th class="formTitle" scope="col">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'quantity'"/>
+					<xsl:with-param name="code" select="'10069'"/> <!-- quantity -->
 				</xsl:call-template>
 				</th>
 			</tr>
@@ -2565,22 +2562,22 @@ token.
 						<xsl:choose>
 							<xsl:when test="@classCode = 'BASE'">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'base'"/>
+					<xsl:with-param name="code" select="'10008'"/> <!-- base -->
 				</xsl:call-template>
 							</xsl:when>
 							<xsl:when test="@classCode = 'ADTV'">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'additive'"/>
+					<xsl:with-param name="code" select="'10002'"/> <!-- additive -->
 				</xsl:call-template>
 							</xsl:when>
 							<xsl:when test="@classCode = 'CNTM' and v3:quantity/v3:numerator/@value='0'">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'doesNotContain'"/>
+					<xsl:with-param name="code" select="'10021'"/> <!-- doesNotContain -->
 				</xsl:call-template>
 							</xsl:when>
 							<xsl:when test="@classCode = 'CNTM'">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'mayContain'"/>
+					<xsl:with-param name="code" select="'10050'"/> <!-- mayContain -->
 				</xsl:call-template>
 							</xsl:when>
 							<xsl:otherwise>
@@ -2596,7 +2593,7 @@ token.
 							<xsl:text> (</xsl:text>
 							<xsl:for-each select="v3:code/@code">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'UNII'"/>
+					<xsl:with-param name="code" select="'10093'"/> <!-- UNII -->
 				</xsl:call-template>:
 								<xsl:value-of select="."/>
 							</xsl:for-each>
@@ -2621,7 +2618,7 @@ token.
 		<tr>
 			<td colspan="5" class="formHeadingTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'packaging'"/>
+					<xsl:with-param name="code" select="'10059'"/> <!-- packaging -->
 				</xsl:call-template>
 			</td>
 		</tr>
@@ -2629,22 +2626,22 @@ token.
 			<th scope="col" width="1" class="formTitle">#</th>
 			<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'itemCode'"/>
+					<xsl:with-param name="code" select="'10038'"/> <!-- itemCode -->
 				</xsl:call-template>
 			</th>
 			<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'packageDescription'"/>
+					<xsl:with-param name="code" select="'10057'"/> <!-- packageDescription -->
 				</xsl:call-template>
 			</th>
 			<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'marketingStartDate'"/>
+					<xsl:with-param name="code" select="'10048'"/> <!-- marketingStartDate -->
 				</xsl:call-template>
 			</th>
 			<th scope="col" class="formTitle">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'marketingEndDate'"/>
+					<xsl:with-param name="code" select="'10046'"/> <!-- marketingEndDate -->
 				</xsl:call-template>
 			</th>
 		</tr>
@@ -2659,7 +2656,7 @@ token.
 				<td colspan="4" class="formTitle">
 					<strong>
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'packageInformationNotApplicable'"/>
+					<xsl:with-param name="code" select="'10058'"/> <!-- packageInformationNotApplicable -->
 				</xsl:call-template>
 					</strong>
 				</td>
@@ -3082,7 +3079,7 @@ token.
 						<div>
 							<h1>
 								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'hightlightsOfPrescribingInformation'"/>
+									<xsl:with-param name="code" select="'10026'"/> <!-- hightlightsOfPrescribingInformation -->
 								</xsl:call-template>
 							</h1>
 							<xsl:apply-templates mode="highlights" select="@*|node()" />
@@ -3173,7 +3170,7 @@ token.
 			</xsl:variable>
 			<p class="HighlightsRevision">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'revised'"/>
+					<xsl:with-param name="code" select="'10073'"/> <!-- revised -->
 				</xsl:call-template> :
 				<xsl:choose>
 					<xsl:when test="function-available('exsl:node-set')">
@@ -3193,7 +3190,7 @@ token.
 						</xsl:apply-templates>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:message terminate="yes"><xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'messageTxt'"/></xsl:call-template></xsl:message>
+						<xsl:message terminate="yes"><xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10097'"/></xsl:call-template></xsl:message>
 					</xsl:otherwise>
 				</xsl:choose>
 			</p>
@@ -3215,10 +3212,10 @@ token.
 						<div>
 							<h1 class="Colspan">
 								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'fullPrescribingInformation'"/>
+									<xsl:with-param name="code" select="'10025'"/> <!-- fullPrescribingInformation -->
 								</xsl:call-template>:&#160;
 								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'contents'"/>
+									<xsl:with-param name="code" select="'10018'"/> <!-- contents -->
 								</xsl:call-template>
 								<a href="#footnote-content" name="footnote-reference-content">*</a>
 							</h1>
@@ -3229,7 +3226,7 @@ token.
 								</dt>
 								<dd>
 								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'sectionsSubsectionsOmitted'"/>
+									<xsl:with-param name="code" select="'10082'"/> <!-- sectionsSubsectionsOmitted -->
 								</xsl:call-template>
 								</dd>
 							</dl>
@@ -3264,7 +3261,7 @@ token.
 			<xsl:if test="position() = 1">
 				<td class="formTitle" colspan="2">
 								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'substanceMeasured'"/>
+									<xsl:with-param name="code" select="'10088'"/> <!-- substanceMeasured -->
 								</xsl:call-template>
 				</td>
 			</xsl:if>
@@ -3299,41 +3296,16 @@ token.
 <xsl:template name="hpfb-title">
 	<xsl:param name="code" select="/.." />
 	<xsl:variable name="node" select="$vocabulary/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]"/>
-	<xsl:value-of select="$node/../Value[@ColumnRef=$display_language]/SimpleValue"/> 
+	<xsl:variable name="value" select="$node/../Value[@ColumnRef=$display_language]/SimpleValue"/>
+	<xsl:if test="$value">
+		<xsl:value-of select="$value" disable-output-escaping="no"/>
+	</xsl:if>
+	<xsl:if test="not($value)">
+		<xsl:value-of select="$code" />
+	</xsl:if>
 </xsl:template>
 </xsl:transform>
 <!-- Stylus Studio meta-information - (c) 2004-2009. Progress Software Corporation. All rights reserved.
-
-<metaInformation>
-	<scenarios>
-		<scenario default="yes" name="HPFB" userelativepaths="yes" externalpreview="yes" url="..\test\1.xml" htmlbaseurl="" outputurl="..\test\test2.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth="" profilelength=""
-		          urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no" validator="internal"
-		          customvalidator="">
-			<advancedProp name="sInitialMode" value=""/>
-			<advancedProp name="schemaCache" value="||"/>
-			<advancedProp name="bXsltOneIsOkay" value="true"/>
-			<advancedProp name="bSchemaAware" value="true"/>
-			<advancedProp name="bGenerateByteCode" value="true"/>
-			<advancedProp name="bXml11" value="false"/>
-			<advancedProp name="iValidation" value="0"/>
-			<advancedProp name="bExtensions" value="true"/>
-			<advancedProp name="iWhitespace" value="0"/>
-			<advancedProp name="sInitialTemplate" value=""/>
-			<advancedProp name="bTinyTree" value="true"/>
-			<advancedProp name="xsltVersion" value="2.0"/>
-			<advancedProp name="bWarnings" value="true"/>
-			<advancedProp name="bUseDTD" value="false"/>
-			<advancedProp name="iErrorHandling" value="fatal"/>
-		</scenario>
-	</scenarios>
-	<MapperMetaTag>
-		<MapperInfo srcSchemaPathIsRelative="yes" srcSchemaInterpretAsXML="no" destSchemaPath="" destSchemaRoot="" destSchemaPathIsRelative="yes" destSchemaInterpretAsXML="no"/>
-		<MapperBlockPosition></MapperBlockPosition>
-		<TemplateContext></TemplateContext>
-		<MapperFilter side="source"></MapperFilter>
-	</MapperMetaTag>
-</metaInformation>
---><!-- Stylus Studio meta-information - (c) 2004-2009. Progress Software Corporation. All rights reserved.
 
 <metaInformation>
 	<scenarios>
