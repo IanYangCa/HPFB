@@ -229,7 +229,6 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 					<xsl:value-of select="v3:title"/>
 				</title>
 				<link rel="stylesheet" type="text/css" href="{$css}"/>
-				<xsl:call-template name="include-custom-items"/>
 			</head>
 			<body class="spl" id="spl">
 				<xsl:attribute name="onload"><xsl:text>if(typeof convertToTwoColumns == "function")convertToTwoColumns();</xsl:text></xsl:attribute>
@@ -241,10 +240,6 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 				</xsl:apply-templates>
 
 				<xsl:apply-templates mode="title" select="."/>
-				<!-- remove the double column -->
-				<!--
-				<h1 id="H1ID"><xsl:apply-templates mode="mixed" select="v3:title"/></h1>
--->
 				<div class="Contents">
 					<xsl:apply-templates select="@*|node()[not(self::v3:relatedDocument[@typeCode = 'DRIV' or @typeCode = 'RPLC'])]">
 						<xsl:with-param name="render440" select="'440'"/>
@@ -265,12 +260,14 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 					<!-- End of comment-->
 					</div>
 				</xsl:if>
+				<!-- TODO -->
 				<xsl:apply-templates select="v3:relatedDocument[/v3:document/v3:code[@code = 'X9999-4']][@typeCode = 'RPLC']"/>
 				<p>
 					<xsl:call-template name="effectiveDate"/>
 					<xsl:text>&#160;</xsl:text>
 					<xsl:call-template name="distributorName"/>
 				</p>
+				<!--  End of TODO -->
 
 			</body>
 		</html>
@@ -325,11 +322,6 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 			</div>
 			<div class="minSpace" />
 			<div class="minSpace" />
-			<!--
-			<div class="companyRight">
-			ZOLADEX®is a registered trademark of the AstraZeneca group of companies.
-			</div>
-			-->
 		</div>
 	</xsl:template>
 	<xsl:template name="companyAddress">
@@ -454,6 +446,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 		</xsl:element>
 	</xsl:template>
 <!-- Health Canada Change-->
+<!-- TODO -->
 	<xsl:template name="footNote">
 		<xsl:variable name="sectionNumberSequence">
 			<xsl:apply-templates mode="sectionNumber" select="ancestor-or-self::v3:section"/>
@@ -488,6 +481,8 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 				<xsl:call-template name="flushSectionTitleFootnotes"/>
 			</div>
 	</xsl:template>
+	<!-- End Of TODO -->
+
 	<xsl:template match="v3:section">
 		<xsl:param name="sectionLevel" select="count(ancestor-or-self::v3:section)"/>
 		<xsl:param name="render440" select="'440'" />
@@ -528,6 +523,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 			</div>
 			</xsl:if>
 	</xsl:template>
+	<!-- TODO -->
 	<xsl:template match="v3:section[v3:code[descendant-or-self::*[self::v3:code or self::v3:translation][@codeSystem='2.16.840.1.113883.6.1' and @code='34066-1']]]" priority="2">
 		<!-- boxed warning -->
 		<xsl:param name="sectionLevel" select="count(ancestor-or-self::v3:section)"/>
@@ -542,21 +538,8 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 			</xsl:call-template>
 			<xsl:for-each select="@ID">
 				<a name="{.}"/>
-			</xsl:for-each>
-			<a name="section-{substring($sectionNumberSequence,2)}"/>
-			<p/>
-			<!-- this funny p is used to prevent melting two sub-sections together in condensed style -->
-			<xsl:apply-templates select="v3:title">
-				<xsl:with-param name="sectionLevel" select="$sectionLevel"/>
-				<xsl:with-param name="sectionNumber" select="substring($sectionNumberSequence,2)"/>
-			</xsl:apply-templates>
+	<!-- End Of TODO -->
 
-			<xsl:apply-templates select="@*|node()[not(self::v3:title)]"/>
-		</div>
-	</xsl:template>
-	<xsl:template name="include-custom-items">
-		<script src="{$resourcesdir}hpfb-spl.js" type="application/javascript" charset="utf-8">/* */</script>
-	</xsl:template>
 <!-- Start PLR Information templates
 			 1. product code
 			 2. dosage form
@@ -565,6 +548,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 			 5. imprint information
 			 6. packaging information
 	-->
+	<!-- TODO -->
 <xsl:template name="PLRIndications" mode="indication" match="v3:section [v3:code [descendant-or-self::* [(self::v3:code or self::v3:translation) and @codeSystem='2.16.840.1.113883.6.1'] ] ]">
 	<xsl:if test="count(//v3:reason) > 0">
 		<table class="contentTablePetite" cellSpacing="0" cellPadding="3" width="100%">
@@ -793,6 +777,8 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 		</table>
 	</xsl:if>
 </xsl:template>
+	<!-- End Of TODO -->
+	<!-- TODO -->
 <xsl:template name="PharmacologicalClass">
 	<xsl:if test="//v3:generalizedMaterialKind[v3:code/@codeSystem='2.16.840.1.113883.3.26.1.5']">
 		<table cellSpacing="0" cellPadding="3" width="100%" class="formTablePetite">
@@ -852,6 +838,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 		</table>
 	</xsl:if>
 </xsl:template>
+	<!-- End Of TODO -->
 
 	<xsl:template name="effectiveDate">
 		<div class="EffectiveDate">
@@ -1893,6 +1880,7 @@ token.
 	</xsl:template>
 	<!-- display the imprint information in the specified order.  a apply-template could be used here but then we would not be able to control what order the
 			 imprint information is displayed in since there isn't a requirement specifying that the characteristic must be programmed in a certain order-->
+<!-- TODO -->
 	<xsl:template name="characteristics-old">
 		<table width="100%" cellpadding="3" cellspacing="0" class="formTablePetite">
 			<tr>
@@ -1964,6 +1952,8 @@ token.
 			</xsl:if>
 		</table>
 	</xsl:template>
+<!-- End Of TODO -->
+
 	<xsl:template name="characteristics-new">
 		<table width="100%" cellpadding="3" cellspacing="0" class="formTablePetite">
 			<tr>
@@ -1974,9 +1964,6 @@ token.
 				</td>
 			</tr>
 			<xsl:apply-templates mode="characteristics" select="../v3:subjectOf/v3:characteristic">
-			<!--
-				<xsl:sort select="count($characteristics/*/*/v3:characteristic[v3:code[@code = current()/v3:code/@code and @codeSystem = current()/v3:code/@codeSystem]][1]/preceding::*)"/>
--->
 			</xsl:apply-templates>
 		</table>
 	</xsl:template>
@@ -3067,241 +3054,30 @@ token.
 <xsl:template match="v3:td/@align|v3:td/@char|v3:td/@charoff|v3:td/@valign|v3:td/@abbr|v3:td/@axis|v3:td/@headers|v3:td/@scope|v3:td/@rowspan|v3:td/@colspan">
 		<xsl:copy-of select="."/>
 </xsl:template>
-<xsl:template mode="highlights" match="/|@*|node()">
-		<xsl:apply-templates mode="highlights" select="@*|node()"/>
-</xsl:template>
-<xsl:template mode="highlights" match="/v3:document">
-		<div id="Highlights" class="Highlights">
-			<table cellspacing="5" cellpadding="5" width="100%" style="table-layout:fixed">
-				<tr>
-					<td width="50%" align="left" valign="top"><div/></td>
-					<td width="50%" align="left" valign="top">
-						<div>
-							<h1>
-								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10026'"/> <!-- hightlightsOfPrescribingInformation -->
-								</xsl:call-template>
-							</h1>
-							<xsl:apply-templates mode="highlights" select="@*|node()" />
-						</div>
-					</td>
-				</tr>
-			</table>
-		</div>
-</xsl:template>
-<xsl:template mode="highlights" match="/v3:document/v3:title">
-		<div class="HighlightsDisclaimer">
-			<xsl:apply-templates mode="mixed" select="."/>
-		</div>
-</xsl:template>
-<xsl:template mode="highlights" match="v3:structuredBody">
-		<!-- here is where we undertake some hard re-ordering -->
-		<xsl:variable name="body" select="."/>
-		<xsl:apply-templates mode="highlights" select="$body/*"/>
-<!--TODO
-		<xsl:call-template name="patientLabelReference"/>
-		<xsl:call-template name="flushDocumentTitleFootnotes"/>
--->
-		<xsl:call-template name="effectiveDateHighlights"/>
-</xsl:template>
-<xsl:template mode="highlights" match="v3:section">
-		<xsl:param name="suppressTitle" select="/.."/>
-		<xsl:param name="doNotSuppressFrontOrBackMatter" select="/.."/>
-			<div>
-				<xsl:if test="v3:excerpt and not($suppressTitle)">
-					<xsl:call-template name="styleCodeAttr">
-						<xsl:with-param name="styleCode" select="@styleCode"/>
-						<xsl:with-param name="additionalStyleCode">Highlight<xsl:if test="ancestor::v3:section[v3:excerpt]">Sub</xsl:if>Section</xsl:with-param>
-					</xsl:call-template>
-				</xsl:if>
-				<xsl:apply-templates mode="highlights" select="@*|v3:excerpt">
-					<xsl:with-param name="suppressTitle" select="$suppressTitle"/>
-				</xsl:apply-templates>
-				<xsl:apply-templates mode="highlights" select="node()[not(self::v3:excerpt)]">
-					<xsl:with-param name="suppressTitle" select="$suppressTitle"/>
-				</xsl:apply-templates>
-			</div>
-</xsl:template>
-<xsl:template mode="highlights" match="v3:section[v3:code[@codeSystem='2.16.840.1.113883.6.1' and @code='34066-1']][v3:excerpt]">	<!-- BOXED WARNING -->
-		<xsl:param name="doNotSuppressFrontOrBackMatter" select="/.."/>
-		<xsl:if test="$doNotSuppressFrontOrBackMatter">
-			<div class="Warning">
-				<xsl:apply-templates mode="highlights" select="@*|v3:excerpt">
-					<xsl:with-param name="suppressTitle" select="1"/>
-				</xsl:apply-templates>
-				<xsl:apply-templates mode="highlights" select="node()[not(self::v3:excerpt)]">
-					<xsl:with-param name="suppressTitle" select="1"/>
-				</xsl:apply-templates>
-			</div>
-		</xsl:if>
-</xsl:template>
-<xsl:template mode="highlights" match="v3:excerpt">
-		<xsl:param name="suppressTitle" select="/.."/>
-		<xsl:variable name="currentCode" select="parent::v3:section/v3:code/@code"/>
-		<xsl:variable name="currentSectionNum">
-			<xsl:apply-templates mode="sectionNumber" select="ancestor-or-self::v3:section"/>
-		</xsl:variable>
-		<xsl:if test="not($suppressTitle)">
-			<h1 class="Highlights">
-				<span>
-					<xsl:value-of select="translate(v3:code/@displayName,'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
-				</span>
-			</h1>
-		</xsl:if>
-		<div>
-			<xsl:apply-templates mode="mixed" select="@*|node()[not(self::v3:title)]"/>
-		</div>
-</xsl:template>
-<xsl:template name="recent-effectiveDate">
-		<xsl:param name="effectiveDateSequence" />
-		<xsl:for-each select="$effectiveDateSequence[string-length(.) &gt; 7]">
-			<xsl:sort select="." order="descending"/>
-			<xsl:if test="position() = 1">
-				<v3:effectiveTime value="{.}" />
-			</xsl:if>
-		</xsl:for-each>
-</xsl:template>
-<xsl:template name="effectiveDateHighlights">
-		<xsl:if test="/v3:document/v3:effectiveTime[@value != '']">
-			<xsl:variable name="recent-contentOfLabeling-effectiveDate">
-				<xsl:call-template name="recent-effectiveDate">
-					<xsl:with-param name="effectiveDateSequence" select="/v3:document/v3:component/v3:structuredBody/v3:component[not(v3:section/v3:code/@code = '48780-1')]/v3:section/v3:effectiveTime/@value"/>
-				</xsl:call-template>
-			</xsl:variable>
-			<p class="HighlightsRevision">
-				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'10073'"/> <!-- revised -->
-				</xsl:call-template> :
-				<xsl:choose>
-					<xsl:when test="function-available('exsl:node-set')">
-						<xsl:apply-templates mode="data" select="exsl:node-set($recent-contentOfLabeling-effectiveDate)/v3:effectiveTime">
-							<xsl:with-param name="displayMonth">true</xsl:with-param>
-							<xsl:with-param name="displayDay">false</xsl:with-param>
-							<xsl:with-param name="displayYear">true</xsl:with-param>
-							<xsl:with-param name="delimiter">/</xsl:with-param>
-						</xsl:apply-templates>
-					</xsl:when>
-					<xsl:when test="function-available('msxsl:node-set')">
-						<xsl:apply-templates mode="data" select="msxsl:node-set($recent-contentOfLabeling-effectiveDate)/v3:effectiveTime">
-							<xsl:with-param name="displayMonth">true</xsl:with-param>
-							<xsl:with-param name="displayDay">false</xsl:with-param>
-							<xsl:with-param name="displayYear">true</xsl:with-param>
-							<xsl:with-param name="delimiter">/</xsl:with-param>
-						</xsl:apply-templates>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:message terminate="yes"><xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10097'"/></xsl:call-template></xsl:message>
-					</xsl:otherwise>
-				</xsl:choose>
-			</p>
-		</xsl:if>
-</xsl:template>
-<!-- MODE index -->
-<xsl:template mode="index" match="/|@*|node()">
-		<xsl:apply-templates mode="index" select="@*|node()"/>
-</xsl:template>
-
-<xsl:template mode="index" match="v3:document" priority="0">
-		<div id="Index" class="Index">
-			<table cellspacing="5" cellpadding="5" width="100%" style="table-layout:fixed">
-				<tr>
-					<td width="50%" align="left" valign="top">
-						<div/>
-					</td>
-					<td width="50%" align="left" valign="top">
-						<div>
-							<h1 class="Colspan">
-								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10025'"/> <!-- fullPrescribingInformation -->
-								</xsl:call-template>:&#160;
-								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10018'"/> <!-- contents -->
-								</xsl:call-template>
-								<a href="#footnote-content" name="footnote-reference-content">*</a>
-							</h1>
-							<xsl:apply-templates mode="index" select="@*|node()" />
-							<dl class="Footnote">
-								<dt>
-									<a href="#footnote-reference-content" name="footnote-content">*</a>
-								</dt>
-								<dd>
-								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10082'"/> <!-- sectionsSubsectionsOmitted -->
-								</xsl:call-template>
-								</dd>
-							</dl>
-						</div>
-					</td>
-				</tr>
-			</table>
-		</div>
-</xsl:template>
-<xsl:template mode="index" match="v3:section[v3:title and descendant::v3:text[parent::v3:section]]" priority="0">
-		<xsl:param name="sectionLevel" select="count(ancestor::v3:section)+1"/>
-		<xsl:param name="sectionNumber" select="/.."/>
-		<xsl:variable name="sectionNumberSequence">
-			<xsl:apply-templates mode="sectionNumber" select="ancestor-or-self::v3:section"/>
-		</xsl:variable>
-		<xsl:if test="$sectionLevel &lt; 3">
-			<xsl:element name="h{$sectionLevel}">
-				<a href="#section-{substring($sectionNumberSequence,2)}">
-					<xsl:attribute name="class">toc</xsl:attribute>
-					<xsl:apply-templates select="@*"/>
-					<xsl:apply-templates mode="mixed" select="./v3:title/node()">
-						<xsl:with-param name="isTableOfContent" select="'yes'"/>
-					</xsl:apply-templates>
-				</a>
-			</xsl:element>
-			<xsl:apply-templates mode="index" select="@*|node()"/>
-		</xsl:if>
-</xsl:template>
-
-<xsl:template mode="twoColumn" match="v3:analyte">
-		<tr>
-			<xsl:if test="position() = 1">
-				<td class="formTitle" colspan="2">
-								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10088'"/> <!-- substanceMeasured -->
-								</xsl:call-template>
-				</td>
-			</xsl:if>
-		</tr>
-		<tr>
-			<xsl:attribute name="class">
-				<xsl:choose>
-					<xsl:when test="position() mod 2 = 1">formTableRow</xsl:when>
-					<xsl:otherwise>formTableRowAlt</xsl:otherwise>
-				</xsl:choose>
-			</xsl:attribute>
-			<xsl:apply-templates select="."></xsl:apply-templates>
-			<xsl:apply-templates select="following-sibling::v3:analyte[1]"></xsl:apply-templates>
-		</tr>
-</xsl:template>
-<xsl:template mode="twocolumn" match="/|node()|@*">
-		<xsl:param name="class"/>
-		<xsl:copy>
-			<xsl:apply-templates mode="twocolumn" select="@*|node()">
-				<xsl:with-param name="class" select="$class"/>
-			</xsl:apply-templates>
-		</xsl:copy>
-</xsl:template>
 
 <xsl:template name="hpfb-label">
-		<xsl:param name="codeSystem" select="/.."/>
-		<xsl:param name="code" select="/.."/>
-		<xsl:variable name="tempDoc" select="document(concat($oid_loc,$codeSystem,$file-suffix))"/>
-		<xsl:variable name="node" select="$tempDoc/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]"/>
-		<xsl:value-of select="$node/../Value[@ColumnRef=$display_language]/SimpleValue"/> 
+	<xsl:param name="codeSystem" select="/.."/>
+	<xsl:param name="code" select="/.."/>
+	<xsl:variable name="tempDoc" select="document(concat($oid_loc,$codeSystem,$file-suffix))"/>
+	<xsl:variable name="node" select="$tempDoc/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]"/>
+	<xsl:variable name="value" select="$node/../Value[@ColumnRef=$display_language]/SimpleValue"/> 
+	<xsl:if test="$value">
+		<xsl:value-of select="$value"/>
+	</xsl:if>
+	<xsl:if test="not($value)">
+		Error: code missing:(<xsl:value-of select="$code" /> in <xsl:value-of select="$codeSystem"/>)
+	</xsl:if>
+
 </xsl:template>
 <xsl:template name="hpfb-title">
 	<xsl:param name="code" select="/.." />
 	<xsl:variable name="node" select="$vocabulary/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]"/>
 	<xsl:variable name="value" select="$node/../Value[@ColumnRef=$display_language]/SimpleValue"/>
 	<xsl:if test="$value">
-		<xsl:value-of select="$value" disable-output-escaping="no"/>
+		<xsl:value-of select="$value"/>
 	</xsl:if>
 	<xsl:if test="not($value)">
-		<xsl:value-of select="$code" />
+		Error: code missing:(<xsl:value-of select="$code" /> in <xsl:value-of select="$section-id-oid"/>)
 	</xsl:if>
 </xsl:template>
 </xsl:transform>
@@ -3309,9 +3085,11 @@ token.
 
 <metaInformation>
 	<scenarios>
-		<scenario default="yes" name="HPFB" userelativepaths="yes" externalpreview="yes" url="..\test\1.xml" htmlbaseurl="" outputurl="..\test\test2.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth="" profilelength=""
-		          urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no" validator="internal"
-		          customvalidator="">
+		<scenario default="yes" name="HPFB" userelativepaths="yes" externalpreview="yes" url="..\..\..\..\..\..\..\..\..\SPM\test\1.xml" htmlbaseurl="" outputurl="..\..\..\..\..\..\..\..\..\SPM\test\test2.html" processortype="saxon8" useresolver="yes"
+		          profilemode="0" profiledepth="" profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext=""
+		          validateoutput="no" validator="internal" customvalidator="">
+			<parameterValue name="oids-base-url" value="'https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/current/'"/>
+			<parameterValue name="resourcesdir" value="'https://rawgit.com/IanYangCa/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/dev/'"/>
 			<advancedProp name="sInitialMode" value=""/>
 			<advancedProp name="schemaCache" value="||"/>
 			<advancedProp name="bXsltOneIsOkay" value="true"/>
