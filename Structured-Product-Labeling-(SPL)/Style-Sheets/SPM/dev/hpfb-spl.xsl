@@ -43,9 +43,9 @@ Revision: $Id: spl-common.xsl,v 2.0 2006/08/18 04:11:00 sbsuggs Exp $
 	<xsl:param name="process-mixins" select="true()"/>
 	<xsl:param name="oids-base-url" select="/.." />
 	<!-- This is the CSS link put into the output -->
-	<xsl:param name="css" select="concat($oids-base-url, 'hpfb-spl-core.css')" />
 	<!-- Where to find JavaScript resources -->
 	<xsl:param name="resourcesdir" select="/.." />
+	<xsl:param name="css" select="concat($resourcesdir, 'hpfb-spl-core.css')" />
 	<xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
 	<xsl:strip-space elements="*"/>
 </xsl:transform>
@@ -57,7 +57,7 @@ Revision: $Id: spl-common.xsl,v 2.0 2006/08/18 04:11:00 sbsuggs Exp $
 		          profilemode="7" profiledepth="" profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext=""
 		          validateoutput="no" validator="internal" customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/current/'"/>
-			<parameterValue name="resourcesdir" value="'https://rawgit.com/IanYangCa/HPFB/blob/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/current/'"/>
+			<parameterValue name="resourcesdir" value="'https://rawgit.com/IanYangCa/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/dev/'"/>
 			<advancedProp name="sInitialMode" value=""/>
 			<advancedProp name="schemaCache" value="||"/>
 			<advancedProp name="bXsltOneIsOkay" value="true"/>
