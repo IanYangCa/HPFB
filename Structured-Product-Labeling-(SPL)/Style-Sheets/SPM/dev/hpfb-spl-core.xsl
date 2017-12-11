@@ -2742,7 +2742,12 @@ token.
 		</xsl:if>
 </xsl:template>
 <!-- LIST MODEL -->
-<xsl:template match="v3:list[@listType='ordered' and not(v3:item/v3:caption)]" priority="1">
+<xsl:template match="v3:list[@styleCode]" priority="1">
+		<ul>
+			<xsl:apply-templates select="@*|node()"/>
+		</ul>
+</xsl:template>
+<xsl:template match="v3:list[@listType='ordered']" priority="2">
 		<xsl:apply-templates select="v3:caption"/>
 		<ol>
 			<xsl:if test="$root/v3:document[v3:code/@code = 'X9999-4']">
@@ -2753,7 +2758,7 @@ token.
 			<xsl:apply-templates select="@*|node()[not(self::v3:caption)]"/>
 		</ol>
 </xsl:template>
-<xsl:template match="v3:list/v3:item[not(parent::v3:list/v3:item/v3:caption)]">
+<xsl:template match="v3:list/v3:item">
 		<!-- Health Canada added font size attribute -->
 		<li style="font-size:1.1em;">
 			<xsl:apply-templates select="@*"/>
