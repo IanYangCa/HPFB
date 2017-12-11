@@ -45,7 +45,7 @@ Revision: $Id: spl-common.xsl,v 2.0 2006/08/18 04:11:00 sbsuggs Exp $
 	<xsl:param name="oids-base-url" select="/.." />
 	<!-- This is the CSS link put into the output -->
 	<!-- Where to find JavaScript resources -->
-	<xsl:param name="resourcesdir" select="/.." />
+	<xsl:param name="resourcesdir" select="'https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/current/'" />
 	<xsl:param name="css" select="concat($resourcesdir, 'hpfb-spl-core.css')" />
 	<xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
 	<xsl:strip-space elements="*"/>
