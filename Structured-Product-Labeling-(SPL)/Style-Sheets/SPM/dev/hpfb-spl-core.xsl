@@ -550,7 +550,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 						<td class="contentTableTitle">
 							<xsl:call-template name="hpfb-title">
 								<xsl:with-param name="code" select="'10034'"/>
-								<!--indicationsAndUsage -->S
+								<!--indicationsAndUsage -->
 							</xsl:call-template>
 						</td>
 					</tr>
