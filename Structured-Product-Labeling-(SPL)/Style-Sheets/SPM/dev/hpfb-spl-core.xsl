@@ -1170,14 +1170,14 @@ token.
 	<!-- Note: This template is also used for top level Product Concept which does not have v3:asEquivalentEntity -->
 	<xsl:template mode="subjects" match="v3:section/v3:subject/v3:manufacturedProduct/*[self::v3:manufacturedProduct[v3:name or v3:formCode] or self::v3:manufacturedMedicine]|v3:section/v3:subject/v3:identifiedSubstance/v3:identifiedSubstance">
 			<div>
-			<xsl:if test="../v3:subjectOf/v3:marketingAct/v3:code[@code='2' and @codeSystem=$marketing-status-oid]">
+			<xsl:if test="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$marketing-status-oid]/../v3:effectiveTime/v3:high">
 				<xsl:call-template name="styleCodeAttr">
 					<xsl:with-param name="styleCode" select="'Watermark'"/>
 				</xsl:call-template>
 				<p class="WatermarkTextStyle">INVALID</p>
 			</xsl:if>
 			<table class="contentTablePetite" cellSpacing="0" cellPadding="3" width="100%">
-				<xsl:if test="../v3:subjectOf/v3:marketingAct/v3:code[@code='2' and @codeSystem=$marketing-status-oid]">
+				<xsl:if test="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$marketing-status-oid]/../v3:effectiveTime/v3:high">
 					<xsl:call-template name="styleCodeAttr">
 						<xsl:with-param name="styleCode" select="'contentTablePetite'"/>
 						<xsl:with-param name="additionalStyleCode" select="'WatermarkText'"/>
