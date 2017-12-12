@@ -1281,7 +1281,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 			<table width="100%" cellpadding="3" cellspacing="0" class="formTableMorePetite">
 				<!-- replace with the label for the role -->
 				<xsl:variable name="role_id" select="./v3:id[@root=$organization-role-oid]/@extension"/>
-				<xsl:variable name="role_name" select="(document(concat($oid_loc,$organization-role-oid,$file-suffix)))/gc:CodeList/SimpleCodeList/Row[./Value[@ColumnRef='code']/SimpleValue=$role_id]/Value[@ColumnRef=$display_language]/SimpleValue"/>
+				<xsl:variable name="role_name" select="(document(concat($oids-base-url,$organization-role-oid,$file-suffix)))/gc:CodeList/SimpleCodeList/Row[./Value[@ColumnRef='code']/SimpleValue=$role_id]/Value[@ColumnRef=$display_language]/SimpleValue"/>
 				<tr>
 					<td colspan="5" class="formHeadingReg">
 						<span class="formHeadingTitle">
@@ -3204,7 +3204,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 	<xsl:template name="hpfb-label">
 		<xsl:param name="codeSystem" select="/.."/>
 		<xsl:param name="code" select="/.."/>
-		<xsl:variable name="tempDoc" select="document(concat($oid_loc,$codeSystem,$file-suffix))"/>
+		<xsl:variable name="tempDoc" select="document(concat($oids-base-url,$codeSystem,$file-suffix))"/>
 		<xsl:variable name="node" select="$tempDoc/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]"/>
 		<xsl:variable name="value" select="$node/../Value[@ColumnRef=$display_language]/SimpleValue"/>
 		<xsl:if test="$value">
