@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
 <!--
+pbx: start removing all old HC comments that are no longer applicable or current
+
 **************************
 @Health Canada:
 Jeffrey: This XSL should be able to render all text for the 2004/2016 templates.
@@ -55,6 +57,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 							 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 							 xmlns:gc="http://docs.oasis-open.org/codelist/ns/genericode/1.0/"
 							 exclude-result-prefixes="exsl msxsl v3 xsl xsi str">
+	<!-- pbx: either declare the param here or in the hpfb-spl.xsl not both -->
 	<xsl:param name="show-data" select="1"/>
 	<xsl:param name="root" select="/"/>
 	<!-- "/.." means the value come from parent or caller parameter -->
@@ -262,6 +265,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 					</div>
 				</xsl:if>
 				<!-- TODO -->
+				<!-- we might use this in the future, remove for now-->
 				<xsl:apply-templates select="v3:relatedDocument[/v3:document/v3:code[@code = 'X9999-4']][@typeCode = 'RPLC']"/>
 				<p>
 					<xsl:call-template name="effectiveDate"/>
@@ -448,6 +452,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 	</xsl:template>
 <!-- Health Canada Change-->
 <!-- TODO -->
+	<!-- pbx: used -->
 	<xsl:template name="footNote">
 		<xsl:variable name="sectionNumberSequence">
 			<xsl:apply-templates mode="sectionNumber" select="ancestor-or-self::v3:section"/>
@@ -534,6 +539,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 			 6. packaging information
 	-->
 	<!-- TODO -->
+	<!-- clean up hard code -->
 <xsl:template name="PLRIndications" mode="indication" match="v3:section [v3:code [descendant-or-self::* [(self::v3:code or self::v3:translation) and @codeSystem='2.16.840.1.113883.6.1'] ] ]">
 	<xsl:if test="count(//v3:reason) > 0">
 		<table class="contentTablePetite" cellSpacing="0" cellPadding="3" width="100%">
@@ -607,6 +613,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 												</xsl:when>
 												<xsl:otherwise>
 													<!-- TODO for $dosageAndAdministrationSectionCode
+														<pbx: no clue>
 													<xsl:for-each select="//v3:maxDoseQuantity[ancestor::v3:section/v3:code/@code = $dosageAndAdministrationSectionCode]">
 														<xsl:value-of select="./v3:numerator/@value"/>&#160; <xsl:value-of select="./v3:numerator/@unit"/>&#160;per&#160; <xsl:value-of
 															select="./v3:denominator/@value"/>&#160; <xsl:value-of select="./v3:denominator/@unit"/>
@@ -652,6 +659,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 														<xsl:call-template name="displayConditionsOfUse"> </xsl:call-template>
 													</xsl:for-each>
 													<!-- TODO about Highlight
+														<pbx: keep for now>
 													<xsl:for-each select="//v3:excerpt/v3:highlight/v3:subject/v3:substanceAdministration/v3:precondition">
 														<xsl:if test="count(ancestor::v3:section[v3:code/@code=$indicationSectionCode]) = 0">
 															<xsl:call-template name="displayConditionsOfUse"> </xsl:call-template>
@@ -735,6 +743,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 														<xsl:call-template name="displayLimitationsOfUse"> </xsl:call-template>
 													</xsl:for-each>
 													<!-- TODO for displayLimitationsOfUse
+														<pbx: keep for now>
 													<xsl:for-each select="//v3:excerpt/v3:highlight/v3:subject/v3:substanceAdministration/v3:subjectOf/v3:issue[v3:subject/v3:observationCriterion]">
 														<xsl:if test="count(ancestor::v3:section[v3:code/@code=$indicationSectionCode]) = 0">
 															<xsl:call-template name="displayLimitationsOfUse"> </xsl:call-template>

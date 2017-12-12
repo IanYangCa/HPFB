@@ -25,7 +25,8 @@ Revision: $Id: spl-common.xsl,v 2.0 2006/08/18 04:11:00 sbsuggs Exp $
 -->
 
 <!-- HPFB Changes:
-	1.	changed the resource locations to the HPFB instances. 
+	1.	changed the resource locations to the HPFB instances.
+	pbx: is para 2 still valid?
 	2. Linking to the HPFB css renders the product data table incorrectly, needs to be resolved!
 	https://github.com/IanYangCa/HPFB/blob/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/dev/hpfb-spl.js
 -->
@@ -36,6 +37,7 @@ Revision: $Id: spl-common.xsl,v 2.0 2006/08/18 04:11:00 sbsuggs Exp $
 	<xsl:param name="show-subjects-xml" select="0"/>
 	<!-- Whether to show the data elements in special tables etc., set to "/.." instead of "1" to turn off -->
 	<xsl:param name="show-data" select="1"/>
+	<!-- pbx: is the item below still true? -->
 	<!-- HPFB: for some reason linking to the HPFB css renders the product data table incorrectly, needs to be resolved -->
 	<!-- Whether to show section numbers, set to 1 to enable and "/.." to turn off-->
 	<xsl:param name="show-section-numbers" select="/.."/>
@@ -45,8 +47,10 @@ Revision: $Id: spl-common.xsl,v 2.0 2006/08/18 04:11:00 sbsuggs Exp $
 	<xsl:param name="oids-base-url" select="/.." />
 	<!-- This is the CSS link put into the output -->
 	<!-- Where to find JavaScript resources -->
+	<!-- pbx: this points to prod, should point to dev! -->
 	<xsl:param name="resourcesdir" select="'https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/current/'" />
 	<xsl:param name="css" select="concat($resourcesdir, 'hpfb-spl-core.css')" />
+	<!-- is there any reason we render HTML 1.0?  -->
 	<xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
 	<xsl:strip-space elements="*"/>
 </xsl:transform>
