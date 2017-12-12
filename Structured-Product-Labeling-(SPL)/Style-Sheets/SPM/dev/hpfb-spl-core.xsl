@@ -74,6 +74,7 @@ https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/St
 	<xsl:variable name="document-id-oid" select="'2.16.840.1.113883.2.20.6.10'"/>
 	<xsl:variable name="marketing-category-oid" select="'2.16.840.1.113883.2.20.6.11'"/>
 	<xsl:variable name="ingredient-id-oid" select="'2.16.840.1.113883.2.20.6.14'"/>
+	<xsl:variable name="marketing-status-oid" select="'2.16.840.1.113883.2.20.6.18'"/>
 	<xsl:variable name="organization-role-oid" select="'2.16.840.1.113883.2.20.6.33'"/>
 	<xsl:variable name="pharmaceutical-standard-oid" select="'2.16.840.1.113883.2.20.6.5'"/>
 	<xsl:variable name="product-characteristics-oid" select="'2.16.840.1.113883.2.20.6.23'"/>
@@ -1168,7 +1169,20 @@ token.
 	</xsl:template>
 	<!-- Note: This template is also used for top level Product Concept which does not have v3:asEquivalentEntity -->
 	<xsl:template mode="subjects" match="v3:section/v3:subject/v3:manufacturedProduct/*[self::v3:manufacturedProduct[v3:name or v3:formCode] or self::v3:manufacturedMedicine]|v3:section/v3:subject/v3:identifiedSubstance/v3:identifiedSubstance">
+			<div>
+			<xsl:if test="../v3:subjectOf/v3:marketingAct/v3:code[@code='2' and @codeSystem=$marketing-status-oid]">
+				<xsl:call-template name="styleCodeAttr">
+					<xsl:with-param name="styleCode" select="'Watermark'"/>
+				</xsl:call-template>
+				<p class="WatermarkTextStyle">INVALID</p>
+			</xsl:if>
 			<table class="contentTablePetite" cellSpacing="0" cellPadding="3" width="100%">
+				<xsl:if test="../v3:subjectOf/v3:marketingAct/v3:code[@code='2' and @codeSystem=$marketing-status-oid]">
+					<xsl:call-template name="styleCodeAttr">
+						<xsl:with-param name="styleCode" select="'contentTablePetite'"/>
+						<xsl:with-param name="additionalStyleCode" select="'WatermarkText'"/>
+					</xsl:call-template>
+				</xsl:if>
 				<tbody>
 						<tr>
 							<th align="left" class="formHeadingTitle">
@@ -1238,6 +1252,7 @@ token.
 
 				</tbody>
 			</table>
+			</div>
 	</xsl:template>
 <xsl:template mode="subjects" match="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization">
 	<xsl:if test="./v3:name">
@@ -3079,26 +3094,11 @@ token.
 
 <metaInformation>
 	<scenarios>
-		<scenario default="yes" name="HPFB" userelativepaths="yes" externalpreview="yes" url="..\..\..\..\..\..\..\..\..\SPM\test\1.xml" htmlbaseurl="" outputurl="..\..\..\..\..\..\..\..\..\SPM\test\test2.html" processortype="saxon8" useresolver="yes"
+		<scenario default="yes" name="HPFB" userelativepaths="yes" externalpreview="yes" url="..\..\..\..\..\..\..\..\..\SPM\test\1.xml" htmlbaseurl="" outputurl="..\..\..\..\..\..\..\..\..\SPM\test\test3.html" processortype="msxml" useresolver="no"
 		          profilemode="0" profiledepth="" profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext=""
 		          validateoutput="no" validator="internal" customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://rawgit.com/HealthCanada/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/current/'"/>
 			<parameterValue name="resourcesdir" value="'https://rawgit.com/IanYangCa/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/dev/'"/>
-			<advancedProp name="sInitialMode" value=""/>
-			<advancedProp name="schemaCache" value="||"/>
-			<advancedProp name="bXsltOneIsOkay" value="true"/>
-			<advancedProp name="bSchemaAware" value="true"/>
-			<advancedProp name="bGenerateByteCode" value="true"/>
-			<advancedProp name="bXml11" value="false"/>
-			<advancedProp name="iValidation" value="0"/>
-			<advancedProp name="bExtensions" value="true"/>
-			<advancedProp name="iWhitespace" value="0"/>
-			<advancedProp name="sInitialTemplate" value=""/>
-			<advancedProp name="bTinyTree" value="true"/>
-			<advancedProp name="xsltVersion" value="2.0"/>
-			<advancedProp name="bWarnings" value="true"/>
-			<advancedProp name="bUseDTD" value="false"/>
-			<advancedProp name="iErrorHandling" value="fatal"/>
 		</scenario>
 	</scenarios>
 	<MapperMetaTag>
