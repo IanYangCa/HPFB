@@ -35,32 +35,32 @@ be represented
 }
 							
 @media print {
-@page { 
-        size:8.5in 11in; 
-    /* this affects the margin in the printer settings */ 
-    margin: 25mm 25mm 25mm 25mm;  
-	orphans:4; 
-	widows:2;
-}
-
-.spl {
-	font-family: "Times New Roman", Times, serif;
-	font-size: 12pt;	
-	color: #000000;
-	margin-left: 0in;
-	margin-right: 0in;
-	margin-top: 0in;
-	margin-bottom: 0in;
-}
-
-
-.spl div.DocumentTitle {
-        display: none;
-}
-
-.spl .bars {
-     display:none;
-}
+	@page { 
+	    size:8.5in 11in; 
+	    /* this affects the margin in the printer settings */ 
+	    margin: 25mm 25mm 25mm 25mm;  
+		orphans:4; 
+		widows:2;
+	}
+	
+	.spl {
+		font-family: "Times New Roman", Times, serif;
+		font-size: 12pt;	
+		color: #000000;
+		margin-left: 0in;
+		margin-right: 0in;
+		margin-top: 0in;
+		margin-bottom: 0in;
+	}
+	
+/*	
+	.spl div.DocumentTitle {
+	        display: none;
+	}
+	*/
+	.spl .bars {
+	     display:none;
+	}
 
 }
 .header3911 {	
