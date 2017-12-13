@@ -65,19 +65,19 @@ Revision: $Id: spl-common.xsl,v 2.0 2006/08/18 04:11:00 sbsuggs Exp $
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
 			<parameterValue name="resourcesdir" value="'https://rawgit.com/IanYangCa/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/dev/'"/>
 			<advancedProp name="sInitialMode" value=""/>
-			<advancedProp name="schemaCache" value="||"/>
-			<advancedProp name="bXsltOneIsOkay" value="true"/>
 			<advancedProp name="bSchemaAware" value="true"/>
-			<advancedProp name="bGenerateByteCode" value="true"/>
+			<advancedProp name="bXsltOneIsOkay" value="true"/>
+			<advancedProp name="schemaCache" value="||"/>
 			<advancedProp name="bXml11" value="false"/>
+			<advancedProp name="bGenerateByteCode" value="true"/>
 			<advancedProp name="iValidation" value="0"/>
 			<advancedProp name="bExtensions" value="true"/>
 			<advancedProp name="iWhitespace" value="0"/>
 			<advancedProp name="sInitialTemplate" value=""/>
 			<advancedProp name="bTinyTree" value="true"/>
-			<advancedProp name="xsltVersion" value="2.0"/>
-			<advancedProp name="bWarnings" value="true"/>
 			<advancedProp name="bUseDTD" value="false"/>
+			<advancedProp name="bWarnings" value="true"/>
+			<advancedProp name="xsltVersion" value="2.0"/>
 			<advancedProp name="iErrorHandling" value="fatal"/>
 		</scenario>
 	</scenarios>
