@@ -2094,7 +2094,9 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 	<xsl:template mode="characteristics" match="v3:value[@xsi:type = 'CV' or @xsi:type = 'CE' or @xsi:type = 'CE']">
 		<td class="formItem">
 			<xsl:value-of select=".//@displayName[1]"/>
-			(<xsl:value-of select="./v3:originalText"/>)
+			<xsl:if test="./v3:originalText">
+				(<xsl:value-of select="./v3:originalText"/>)
+			</xsl:if>
 		</td>
 		<td class="formItem">
 			<xsl:value-of select=".//@code[1]"/>
