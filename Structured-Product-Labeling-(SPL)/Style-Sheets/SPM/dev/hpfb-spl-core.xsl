@@ -228,17 +228,21 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 					<xsl:text>if(typeof convertToTwoColumns == "function")convertToTwoColumns();</xsl:text>
 				</xsl:attribute>
 				<!-- Health Canada Generate Title Page -->
-				<xsl:call-template name="TitlePage"/>.
+				<xsl:call-template name="TitlePage"/>
+				<div class="pagebreak"/>
 				<xsl:apply-templates select="//v3:code[@code='440' and @codeSystem=$section-id-oid]/..">
 					<xsl:with-param name="render440" select="'xxx'"/>
 				</xsl:apply-templates>
+				<div class="pagebreak"/>
 
 				<xsl:apply-templates mode="title" select="."/>
+				<div class="pagebreak"/>
 				<div class="Contents">
 					<xsl:apply-templates select="@*|node()[not(self::v3:relatedDocument[@typeCode = 'DRIV' or @typeCode = 'RPLC'])]">
 						<xsl:with-param name="render440" select="'440'"/>
 					</xsl:apply-templates>
 				</div>
+				<div class="pagebreak"/>
 				<xsl:if test="boolean($show-data)">
 					<div class="DataElementsTable">
 						<!-- HPFB: pbx: re-enabled the Product Data aspect -->
