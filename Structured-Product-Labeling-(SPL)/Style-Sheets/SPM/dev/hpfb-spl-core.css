@@ -37,11 +37,8 @@ be represented
 @media print {
 @page { 
         size:8.5in 11in; 
-	margin:0pt;
-	margin-left:0pt;
-	margin-right:0pt;
-	margin-top:0pt;
-	margin-bottom:0pt;
+    /* this affects the margin in the printer settings */ 
+    margin: 25mm 25mm 25mm 25mm;  
 	orphans:4; 
 	widows:2;
 }
