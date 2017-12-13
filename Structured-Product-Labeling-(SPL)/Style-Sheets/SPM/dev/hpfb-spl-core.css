@@ -958,3 +958,4 @@ be represented
     transform:rotate(300deg);
     -webkit-transform:rotate(300deg);
 }
+.spl .pagebreak { page-break-before: always; }
