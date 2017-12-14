@@ -605,7 +605,7 @@ be represented
 
 .spl hr.Footnoterule {
 	margin-top:2ex;
-	width: 30%;
+	width: 99%;
 	text-align: left;
 	/* FIXME: make a normal line, not a grey 3d effect */		
 }
