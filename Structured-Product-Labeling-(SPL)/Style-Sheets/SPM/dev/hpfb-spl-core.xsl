@@ -1094,9 +1094,9 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 		<xsl:variable name="footnotes" select="./v3:title/v3:footnote[not(ancestor::v3:table)]"/>
 		<xsl:if test="$footnotes">
 			<hr class="Footnoterule"/>
-			<dl class="Footnote">
+			<ol class="Footnote">
 				<xsl:apply-templates mode="footnote" select="$footnotes"/>
-			</dl>
+			</ol>
 		</xsl:if>
 	</xsl:template>
 
@@ -2058,6 +2058,26 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 					</xsl:call-template>
 				</td>
 			</tr>
+			<tr>
+				<th class="formTitle" scope="col">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10051'"/>
+						<!-- ingredientKind -->
+					</xsl:call-template>
+				</th>
+				<th class="formTitle" scope="col">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10101'"/>
+						<!-- ingredientName -->
+					</xsl:call-template>
+				</th>
+				<th class="formTitle" scope="col">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10102'"/>
+						<!-- quantity -->
+					</xsl:call-template>
+				</th>
+			</tr>
 			<xsl:apply-templates mode="characteristics" select="../v3:subjectOf/v3:characteristic">
 			</xsl:apply-templates>
 		</table>
@@ -2154,7 +2174,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 	<xsl:template name="image">
 		<xsl:param name="path" select="."/>
 		<xsl:if test="string-length($path/v3:value/v3:reference/@value) &gt; 0">
-			<img alt="Image of Product" style="width:20%;" src="{$path/v3:value/v3:reference/@value}"/>
+			<img alt="Image of Product" style="width:5%;" src="{$path/v3:value/v3:reference/@value}"/>
 		</xsl:if>
 	</xsl:template>
 	<!-- display the characteristic color -->
@@ -2916,9 +2936,14 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 		<xsl:variable name="footnotes" select=".//v3:footnote[not(ancestor::v3:table)]"/>
 		<xsl:if test="$footnotes">
 			<div class="Footnoterule"/>
-			<dl class="Footnote">
-				<xsl:apply-templates mode="footnote" select="$footnotes"/>
-			</dl>
+			<div class="bold">Foot Notes:</div>
+			<ol class="Footnote">
+				<xsl:for-each select="$footnotes">
+					<li>
+						<xsl:value-of select="./text()"/>
+					</li>
+				</xsl:for-each>
+			</ol>
 		</xsl:if>
 	</xsl:template>
 	<!-- LIST MODEL -->

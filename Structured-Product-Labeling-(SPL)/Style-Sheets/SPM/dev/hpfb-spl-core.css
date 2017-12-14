@@ -954,3 +954,6 @@ be represented
     -webkit-transform:rotate(300deg);
 }
 .spl .pagebreak { page-break-before: always; }
+.spl .bold {
+    font-weight: bold;
+}
