@@ -2936,6 +2936,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 		<xsl:variable name="footnotes" select=".//v3:footnote[not(ancestor::v3:table)]"/>
 		<xsl:if test="$footnotes">
 			<div class="Footnoterule"/>
+			<br/>
 			<div class="bold">Foot Notes:</div>
 			<ol class="Footnote">
 				<xsl:for-each select="$footnotes">
