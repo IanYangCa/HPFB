@@ -77,6 +77,9 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 	<xsl:variable name="documentTypes" select="document(concat($oids-base-url,$document-id-oid,$file-suffix))"/>
 	<xsl:variable name="characteristics" select="document(concat($oids-base-url,$product-characteristics-oid,$file-suffix))"/>
 
+	<xsl:template name="include-custom-items">
+		<script src="{$resourcesdir}spl.js" type="text/javascript" charset="utf-8">/* */</script>
+	</xsl:template>
 	<!-- Process mixins if they exist -->
 	<xsl:template match="/" priority="1">
 		<xsl:apply-templates select="*"/>
@@ -222,17 +225,20 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 					<xsl:value-of select="v3:title"/>
 				</title>
 				<link rel="stylesheet" type="text/css" href="{$css}"/>
+				<xsl:call-template name="include-custom-items"/>
 			</head>
 			<body class="spl" id="spl">
 				<xsl:attribute name="onload">
-					<xsl:text>if(typeof convertToTwoColumns == "function")convertToTwoColumns();</xsl:text>
+					<xsl:text>setWatermarkBorder();</xsl:text>
 				</xsl:attribute>
 				<!-- Health Canada Generate Title Page -->
 				<xsl:call-template name="TitlePage"/>
 				<div class="pagebreak"/>
+				<div class="Index">
 				<xsl:apply-templates select="//v3:code[@code='440' and @codeSystem=$section-id-oid]/..">
 					<xsl:with-param name="render440" select="'xxx'"/>
 				</xsl:apply-templates>
+				</div>
 				<div class="pagebreak"/>
 
 				<xsl:apply-templates mode="title" select="."/>
@@ -283,7 +289,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 				</xsl:call-template>
 			</div>
 			<div class="pageTitle">
-				<xsl:value-of select="$titleNode/../v3:code/@displayName"/>
+				<xsl:value-of select="$root/v3:document/v3:title"/>
 			</div>
 			<div class="minSpace"/>
 			<div class="minSpace"/>
@@ -1196,12 +1202,17 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 	</xsl:template>
 	<!-- Note: This template is also used for top level Product Concept which does not have v3:asEquivalentEntity -->
 	<xsl:template mode="subjects" match="v3:section/v3:subject/v3:manufacturedProduct/*[self::v3:manufacturedProduct[v3:name or v3:formCode] or self::v3:manufacturedMedicine]|v3:section/v3:subject/v3:identifiedSubstance/v3:identifiedSubstance">
+		<div class="pagebreak"/>
 		<div>
+			
 			<xsl:if test="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$marketing-status-oid]/../v3:effectiveTime/v3:high">
 				<xsl:call-template name="styleCodeAttr">
 					<xsl:with-param name="styleCode" select="'Watermark'"/>
 				</xsl:call-template>
-				<p class="WatermarkTextStyle">INVALID</p>
+				<div class="WatermarkTextStyle">
+					<xsl:value-of select="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$marketing-status-oid]/../v3:effectiveTime/v3:high"/>XXX&#160;
+					<xsl:value-of select="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$marketing-status-oid]/../v3:effectiveTime/v3:high/@value"/>
+				</div>
 			</xsl:if>
 			<table class="contentTablePetite" cellSpacing="0" cellPadding="3" width="100%">
 				<xsl:if test="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$marketing-status-oid]/../v3:effectiveTime/v3:high">
@@ -2904,7 +2915,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 	<xsl:template match="v3:flushfootnotes" name="flushfootnotes">
 		<xsl:variable name="footnotes" select=".//v3:footnote[not(ancestor::v3:table)]"/>
 		<xsl:if test="$footnotes">
-			<hr class="Footnoterule"/>
+			<div class="Footnoterule"/>
 			<dl class="Footnote">
 				<xsl:apply-templates mode="footnote" select="$footnotes"/>
 			</dl>
