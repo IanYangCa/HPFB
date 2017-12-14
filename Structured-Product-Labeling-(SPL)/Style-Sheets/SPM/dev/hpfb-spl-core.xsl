@@ -78,7 +78,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 	<xsl:variable name="characteristics" select="document(concat($oids-base-url,$product-characteristics-oid,$file-suffix))"/>
 
 	<xsl:template name="include-custom-items">
-		<script src="{$resourcesdir}spl.js" type="text/javascript" charset="utf-8">/* */</script>
+		<script src="{$resourcesdir}hpfb-spl.js" type="text/javascript" charset="utf-8">/* */</script>
 	</xsl:template>
 	<!-- Process mixins if they exist -->
 	<xsl:template match="/" priority="1">
