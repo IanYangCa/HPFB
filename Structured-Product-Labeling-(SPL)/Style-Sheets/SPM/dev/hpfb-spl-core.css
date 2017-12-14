@@ -603,9 +603,11 @@ be represented
     margin-left:1.5em;
 }
 
-.spl hr.Footnoterule {
+.spl .Footnoterule {
 	margin-top:2ex;
 	width: 99%;
+    border-top-style: solid;
+    border-top-width: thin;
 	text-align: left;
 	/* FIXME: make a normal line, not a grey 3d effect */		
 }
@@ -940,13 +942,14 @@ be represented
     z-index:1;
 }
 
-.spl p.WatermarkTextStyle
+.spl .WatermarkTextStyle
 {
 	position:relative;
 	bottom: -200px;
 	right:-100px;
     color:red;
     font-size:120px;
+    text-overflow:clip;
     transform:rotate(300deg);
     -webkit-transform:rotate(300deg);
 }
