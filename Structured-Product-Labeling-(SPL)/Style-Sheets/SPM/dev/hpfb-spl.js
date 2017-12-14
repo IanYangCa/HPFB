@@ -1,6 +1,6 @@
 function setWatermarkBorder(){
 	var watermarks = document.getElementsByClassName('Watermark');
-	if(! empty(watermarks)){
+	if(watermarks && ! watermarks.empty()){
 		watermarks.forEach(initialWatermark());
 	}
 }
