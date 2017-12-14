@@ -234,11 +234,9 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 				<!-- Health Canada Generate Title Page -->
 				<xsl:call-template name="TitlePage"/>
 				<div class="pagebreak"/>
-				<div class="Index">
 				<xsl:apply-templates select="//v3:code[@code='440' and @codeSystem=$section-id-oid]/..">
 					<xsl:with-param name="render440" select="'xxx'"/>
 				</xsl:apply-templates>
-				</div>
 				<div class="pagebreak"/>
 
 				<xsl:apply-templates mode="title" select="."/>
