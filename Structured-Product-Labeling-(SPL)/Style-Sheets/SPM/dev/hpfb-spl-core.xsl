@@ -698,7 +698,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 																</xsl:attribute>
 																<td class="formItem">
 																	<xsl:call-template name="hpfb-title">
-																		<xsl:with-param name="code" select="'10100'"/>
+																		<xsl:with-param name="code" select="'10015'"/>
 																		<!-- conditionOfUse -->
 																	</xsl:call-template>
 																</td>
@@ -906,7 +906,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 				<xsl:when test="./v3:observationCriterion">
 					<td class="formItem">
 						<xsl:call-template name="hpfb-title">
-							<xsl:with-param name="code" select="'10100'"/>
+							<xsl:with-param name="code" select="'10015'"/>
 							<!-- conditionOfUse -->
 						</xsl:call-template>
 					</td>
@@ -920,7 +920,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 				<xsl:when test="./v3:substanceAdministrationCriterion">
 					<td class="formItem">
 						<xsl:call-template name="hpfb-title">
-							<xsl:with-param name="code" select="'10100'"/>
+							<xsl:with-param name="code" select="'10015'"/>
 							<!-- conditionOfUse -->
 						</xsl:call-template>
 					</td>
@@ -2060,19 +2060,17 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 				<th class="formTitle" scope="col">
 					<xsl:call-template name="hpfb-title">
 						<xsl:with-param name="code" select="'10051'"/>
-						<!-- ingredientKind -->
+						<!-- Name -->
+					</xsl:call-template>
+				</th>
+				<th class="formTitle" scope="col">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10100'"/>
 					</xsl:call-template>
 				</th>
 				<th class="formTitle" scope="col">
 					<xsl:call-template name="hpfb-title">
 						<xsl:with-param name="code" select="'10101'"/>
-						<!-- ingredientName -->
-					</xsl:call-template>
-				</th>
-				<th class="formTitle" scope="col">
-					<xsl:call-template name="hpfb-title">
-						<xsl:with-param name="code" select="'10102'"/>
-						<!-- quantity -->
 					</xsl:call-template>
 				</th>
 			</tr>
@@ -2935,7 +2933,12 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 		<xsl:if test="$footnotes">
 			<div class="Footnoterule"/>
 			<br/>
-			<div class="bold">Foot Notes:</div>
+			<div class="bold">
+				<xsl:call-template name="hpfb-title">
+					<xsl:with-param name="code" select="'10102'"/> <!-- Foot Notes -->
+					<!-- additive -->
+				</xsl:call-template>:
+			</div>
 			<ol class="Footnote">
 				<xsl:for-each select="$footnotes">
 					<li>
