@@ -225,6 +225,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 					<xsl:value-of select="v3:title"/>
 				</title>
 				<link rel="stylesheet" type="text/css" href="{$css}"/>
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 				<xsl:call-template name="include-custom-items"/>
 			</head>
 			<body class="spl" id="spl">
@@ -621,7 +622,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 													<xsl:when test="./v3:substanceAdministration/v3:maxDoseQuantity">
 														<xsl:value-of select="./v3:substanceAdministration/v3:maxDoseQuantity/v3:numerator/@value"/>&#xA0; <xsl:value-of select="./v3:substanceAdministration/v3:maxDoseQuantity/v3:numerator/@unit"/>&#xA0;
 														<xsl:call-template name="hpfb-title">
-															<xsl:with-param name="code" select="'10101'"/>
+															<xsl:with-param name="code" select="'10103'"/>
 															<!-- per -->
 														</xsl:call-template>&#xA0;
 														<xsl:value-of select="./v3:substanceAdministration/v3:maxDoseQuantity/v3:denominator/@value"/>&#xA0;
