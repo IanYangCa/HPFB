@@ -1,14 +1,22 @@
 function setWatermarkBorder(){
-	var watermarks = document.getElementsByClassName('Watermark');
-	if(watermarks && ! watermarks.empty()){
-		watermarks.forEach(initialWatermark());
+	var watermarks = $(".Watermark");
+	if(watermarks){
+		//watermarks.forEach(initialWatermark);
+		initialWatermark(watermarks, 1);
 	}
 }
 function initialWatermark(item, index){
-	var table = item.getElementsByTagName('table');
-	var tableBorder = table.getBoundingClientRect();
-	item.style.left = tableBorder.left;
-	item.style.top = tableBorder.top;
-	item.style.right = tableBorder.right;
-	item.style.bottom = tableBorder.bottom;
+	var table = $(item).find('table');
+	if(table){
+		var watermarkText = $(item).find(".WatermarkTextStyle");
+		var width = Math.sqrt($(table).height()*$(table).height()+$(table).width()*$(table).width())*0.9;
+		var angle = Math.atan2($(table).height(),$(table).width())*180/Math.PI;
+		var v_offset = $(table).height()/2 + $(watermarkText).height()/2; //$(table).height() / 2 + Math.cos(angle)*width/2;
+		var h_offset = - (width - $(table).width())/2; //Math.sin(angle)*width/2 + $(table).width()/2;
+		$(watermarkText).css({top : v_offset, left: h_offset});
+		$(watermarkText).css("width", width);
+		$(watermarkText).show();
+		$(watermarkText).css({'transform' :  'rotate(-' + angle + 'deg)'});
+//		$(watermarkText).css("height", $(table).width());
+	}
 }

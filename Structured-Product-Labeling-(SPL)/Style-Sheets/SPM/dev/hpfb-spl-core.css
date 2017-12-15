@@ -944,14 +944,13 @@ be represented
 
 .spl .WatermarkTextStyle
 {
+	display:none;
 	position:relative;
-	bottom: -200px;
-	right:-100px;
     color:red;
     font-size:120px;
+    overflow: hidden;
     text-overflow:clip;
-    transform:rotate(300deg);
-    -webkit-transform:rotate(300deg);
+	white-space: nowrap;
 }
 .spl .pagebreak { page-break-before: always; }
 .spl .bold {

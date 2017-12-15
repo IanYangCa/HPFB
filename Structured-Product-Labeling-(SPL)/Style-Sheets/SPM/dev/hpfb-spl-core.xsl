@@ -60,6 +60,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 	<xsl:variable name="pharmaceutical-standard-oid" select="'2.16.840.1.113883.2.20.6.5'"/>
 	<xsl:variable name="product-characteristics-oid" select="'2.16.840.1.113883.2.20.6.23'"/>
 	<xsl:variable name="structure-aspects-oid" select="'2.16.840.1.113883.2.20.6.36'"/>
+	<xsl:variable name="term-status-oid" select="'2.16.840.1.113883.2.20.6.37'"/>
 	<xsl:variable name="din-oid" select="'2.16.840.1.113883.2.20.6.42'"/>
 
 	<xsl:variable name="doc_language">
@@ -1204,13 +1205,18 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 		<div class="pagebreak"/>
 		<div>
 			
-			<xsl:if test="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$marketing-status-oid]/../v3:effectiveTime/v3:high">
+			<xsl:if test="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$term-status-oid]/../v3:effectiveTime/v3:high">
 				<xsl:call-template name="styleCodeAttr">
 					<xsl:with-param name="styleCode" select="'Watermark'"/>
 				</xsl:call-template>
+				<xsl:variable name="watermarkText">
+					<xsl:value-of select="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$term-status-oid]/@displayName"/>
+					(<xsl:value-of select="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$term-status-oid]/@code"/>
+					)&#160;&#160;
+					<xsl:value-of select="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$term-status-oid]/../v3:effectiveTime/v3:high/@value"/>&#160;&#160;
+				</xsl:variable>
 				<div class="WatermarkTextStyle">
-					<xsl:value-of select="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$marketing-status-oid]/../v3:effectiveTime/v3:high"/>XXX&#160;
-					<xsl:value-of select="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$marketing-status-oid]/../v3:effectiveTime/v3:high/@value"/>
+					<xsl:value-of select="$watermarkText"/><xsl:value-of select="$watermarkText"/><xsl:value-of select="$watermarkText"/>
 				</div>
 			</xsl:if>
 			<table class="contentTablePetite" cellSpacing="0" cellPadding="3" width="100%">
@@ -3271,9 +3277,9 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 
 <metaInformation>
 	<scenarios>
-		<scenario default="yes" name="HPFB" userelativepaths="yes" externalpreview="yes" url="..\..\..\..\..\..\..\..\..\SPM\test\1.xml" htmlbaseurl="" outputurl="..\..\..\..\..\..\..\..\..\SPM\test\test3.html" processortype="saxon8" useresolver="yes"
-		          profilemode="0" profiledepth="" profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext=""
-		          validateoutput="no" validator="internal" customvalidator="">
+		<scenario default="yes" name="HPFB" userelativepaths="no" externalpreview="yes" url="file:///c:/SPM/test/1.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test3.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
+		          profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no" validator="internal"
+		          customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
 			<parameterValue name="resourcesdir" value="'https://rawgit.com/IanYangCa/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/dev/'"/>
 			<advancedProp name="sInitialMode" value=""/>
