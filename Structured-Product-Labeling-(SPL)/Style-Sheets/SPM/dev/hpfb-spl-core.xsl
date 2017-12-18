@@ -303,13 +303,17 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 							<xsl:call-template name="hpfb-title">
 								<xsl:with-param name="code" select="'150'"/>
 							</xsl:call-template>:
-							<xsl:value-of select="/descendant-or-self::*[@code='150' and @codeSystem=$section-id-oid]/../v3:text"/>
+							<xsl:call-template name="string-to-date">
+								<xsl:with-param name="text" select="/v3:document/v3:effectiveTime/v3:originalText"/>
+							</xsl:call-template>
 							<br/>
 							<br/>
 							<xsl:call-template name="hpfb-title">
 								<xsl:with-param name="code" select="'160'"/>
 							</xsl:call-template>:
-							<xsl:value-of select="/descendant-or-self::*[@code='160' and @codeSystem=$section-id-oid]/../v3:text"/>
+							<xsl:call-template name="string-to-date">
+								<xsl:with-param name="text" select="/v3:document/v3:effectiveTime/@value"/>
+							</xsl:call-template>
 						</td>
 					</tr>
 				</table>
