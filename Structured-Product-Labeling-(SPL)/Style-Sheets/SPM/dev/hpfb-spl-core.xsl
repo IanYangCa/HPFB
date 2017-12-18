@@ -36,8 +36,16 @@ TODO: footnote styleCode Footnote, Endnote not yet obeyed
 TODO: Implementation guide needs to define linkHtml styleCodes.
 -->
 <!-- Health Canada Change added xmlns:gc-->
-<xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:v3="urn:hl7-org:v3" xmlns:str="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common" xmlns:msxsl="urn:schemas-microsoft-com:xslt"
-               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gc="http://docs.oasis-open.org/codelist/ns/genericode/1.0/" exclude-result-prefixes="exsl msxsl v3 xsl xsi str">
+<xsl:transform version="1.0" 
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+	xmlns:v3="urn:hl7-org:v3" 
+	xmlns:str="http://exslt.org/strings" 
+	xmlns:exsl="http://exslt.org/common" 
+	xmlns:date="http://exslt.org/dates-and-times" extension-element-prefixes="date"	
+	xmlns:msxsl="urn:schemas-microsoft-com:xslt"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:gc="http://docs.oasis-open.org/codelist/ns/genericode/1.0/" 
+	exclude-result-prefixes="exsl msxsl v3 xsl xsi str">
 	<!-- pbx: either declare the param here or in the hpfb-spl.xsl not both -->
 	<xsl:param name="root" select="/"/>
 	<!-- "/.." means the value come from parent or caller parameter -->
@@ -303,7 +311,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 							<xsl:call-template name="hpfb-title">
 								<xsl:with-param name="code" select="'150'"/>
 							</xsl:call-template>:
-							<xsl:call-template name="string-to-date">
+							<xsl:call-template name="string-ISO-date">
 								<xsl:with-param name="text" select="/v3:document/v3:effectiveTime/v3:originalText"/>
 							</xsl:call-template>
 							<br/>
@@ -311,7 +319,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 							<xsl:call-template name="hpfb-title">
 								<xsl:with-param name="code" select="'160'"/>
 							</xsl:call-template>:
-							<xsl:call-template name="string-to-date">
+							<xsl:call-template name="string-ISO-date">
 								<xsl:with-param name="text" select="/v3:document/v3:effectiveTime/@value"/>
 							</xsl:call-template>
 						</td>
@@ -2502,6 +2510,13 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 				<xsl:value-of select="$year"/>
 			</xsl:if>
 		</xsl:if>
+	</xsl:template>
+	<xsl:template name="string-ISO-date">
+		<xsl:param name="text"/>
+		<xsl:variable name="year" select="substring($text,1,4)"/>
+		<xsl:variable name="month" select="substring($text,5,2)"/>
+		<xsl:variable name="day" select="substring($text,7,2)"/>
+		<xsl:value-of select="concat($year, '-', $month, '-', $day)"/>
 	</xsl:template>
 	<xsl:template name="InactiveIngredients">
 		<table width="100%" cellpadding="3" cellspacing="0" class="formTablePetite">
