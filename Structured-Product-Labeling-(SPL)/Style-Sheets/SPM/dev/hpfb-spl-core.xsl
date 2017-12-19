@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
 <!--
-**************************
-@Health Canada:
-Jeffrey: This XSL should be able to render all text for the 2004/2016 templates.
-We did not receive test files other than the 2004 Standard so I cannot confirm it
-it will work 100% without any bugs. From the test files that we did receive,
-ALL data from the XMLs are displayed as they are ordered, with all tables
-and attributes preserved as well.
-
-The main rendering is done at line 185, which renders the XML tags according to the
-XSL:templates available in THIS file.
-
-****************************
-
 The contents of this file are subject to the Health Level-7 Public
 License Version 1.0 (the "License"); you may not use this file
 except in compliance with the License. You may obtain a copy of the
@@ -30,10 +17,7 @@ The Initial Developer of the Original Code is Gunther Schadow.
 Portions created by Initial Developer are Copyright (C) 2002-2013
 Health Level Seven, Inc. All Rights Reserved.
 
-Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs
-
-TODO: footnote styleCode Footnote, Endnote not yet obeyed
-TODO: Implementation guide needs to define linkHtml styleCodes.
+Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 -->
 <!-- Health Canada Change added xmlns:gc-->
 <xsl:transform version="1.0" 
@@ -41,23 +25,22 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 	xmlns:v3="urn:hl7-org:v3" 
 	xmlns:str="http://exslt.org/strings" 
 	xmlns:exsl="http://exslt.org/common" 
-	xmlns:date="http://exslt.org/dates-and-times" extension-element-prefixes="date"	
 	xmlns:msxsl="urn:schemas-microsoft-com:xslt"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:gc="http://docs.oasis-open.org/codelist/ns/genericode/1.0/" 
 	exclude-result-prefixes="exsl msxsl v3 xsl xsi str">
-	<!-- pbx: either declare the param here or in the hpfb-spl.xsl not both -->
-	<xsl:param name="root" select="/"/>
+	<!-- declare the param here for debug use only -->
 	<!-- "/.." means the value come from parent or caller parameter -->
-	<xsl:param name="oids-base-url" select="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
+	<xsl:param name="show-data" select="/.."/>
+	<xsl:param name="oids-base-url" select="/.."/>
 	<xsl:param name="show-section-numbers" select="/.."/>
 	<xsl:param name="resourcesdir" select="/.."/>
-	<xsl:param name="css" select="concat($resourcesdir,'hpfb-spl-core.css')"/>
+	<xsl:param name="css" select="/.."/>
 
 	<xsl:output method="html" version="1.0" encoding="UTF-8" indent="no" doctype-public="-"/>
 	<xsl:strip-space elements="*"/>
 
-	<xsl:variable name="show-data" select="1"/>
+	<xsl:variable name="root" select="/"/>
 	<xsl:variable name="section-id-oid" select="'2.16.840.1.113883.2.20.6.8'"/>
 	<xsl:variable name="country-code-oid" select="'2.16.840.1.113883.2.20.6.17'"/>
 	<xsl:variable name="document-id-oid" select="'2.16.840.1.113883.2.20.6.10'"/>
@@ -87,6 +70,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 	<xsl:variable name="characteristics" select="document(concat($oids-base-url,$product-characteristics-oid,$file-suffix))"/>
 
 	<xsl:template name="include-custom-items">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="{$resourcesdir}hpfb-spl.js" type="text/javascript" charset="utf-8">/* */</script>
 	</xsl:template>
 	<!-- Process mixins if they exist -->
@@ -98,8 +82,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 	<xsl:template match="@*|node()">
 		<xsl:apply-templates select="*"/>
 	</xsl:template>
-	<!-- GS: the document title should not be processed in normal mode.
-			 This is really should be revisited when the top-level template gets refactored. -->
+
 	<xsl:template match="/v3:document/v3:title" priority="1"/>
 
 	<!-- The indication secction variable contains the actual Indication Section node-->
@@ -234,7 +217,6 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 					<xsl:value-of select="v3:title"/>
 				</title>
 				<link rel="stylesheet" type="text/css" href="{$css}"/>
-				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 				<xsl:call-template name="include-custom-items"/>
 			</head>
 			<body class="spl" id="spl">
@@ -243,23 +225,24 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 				</xsl:attribute>
 				<!-- Health Canada Generate Title Page -->
 				<xsl:call-template name="TitlePage"/>
-				<div class="pagebreak"/>
+				<!-- TODO page break only immediately before h1 section -->
+
+				<!-- This is Foot Notes -->
 				<xsl:apply-templates select="//v3:code[@code='440' and @codeSystem=$section-id-oid]/..">
 					<xsl:with-param name="render440" select="'xxx'"/>
 				</xsl:apply-templates>
-				<div class="pagebreak"/>
 
 				<xsl:apply-templates mode="title" select="."/>
-				<div class="pagebreak"/>
+
 				<div class="Contents">
-					<xsl:apply-templates select="@*|node()[not(self::v3:relatedDocument[@typeCode = 'DRIV' or @typeCode = 'RPLC'])]">
+					<!-- Not related documents [not(self::v3:relatedDocument[@typeCode = 'DRIV' or @typeCode = 'RPLC'])]-->
+					<xsl:apply-templates select="@*|node()">
 						<xsl:with-param name="render440" select="'440'"/>
 					</xsl:apply-templates>
 				</div>
 				<div class="pagebreak"/>
 				<xsl:if test="boolean($show-data)">
 					<div class="DataElementsTable">
-						<!-- HPFB: pbx: re-enabled the Product Data aspect -->
 						<xsl:call-template name="PLRIndications"/>
 
 						<xsl:if test="//v3:*[self::v3:ingredientSubstance[starts-with(../@classCode,'ACTI')] ]">
@@ -269,23 +252,17 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 						<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization"/>
 						<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization"/>
 						<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization"/>
-						<!-- End of comment-->
 					</div>
 				</xsl:if>
-				<!-- TODO -->
-				<!-- we might use this in the future, remove for now-->
-				<xsl:apply-templates select="v3:relatedDocument[/v3:document/v3:code[@code = 'X9999-4']][@typeCode = 'RPLC']"/>
 				<p>
 					<xsl:call-template name="effectiveDate"/>
 					<xsl:text>&#xA0;</xsl:text>
 					<xsl:call-template name="distributorName"/>
 				</p>
-				<!--  End of TODO -->
 			</body>
 		</html>
 	</xsl:template>
 	<xsl:template name="TitlePage">
-		<xsl:variable name="titleNode" select="/descendant-or-self::*[@code='450' and @codeSystem=$section-id-oid]"/>
 		<div class="titlePage">
 			<div class="pageTitle">
 				<xsl:value-of select="$documentTypes/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$root/v3:document/v3:code/@code]/../Value[@ColumnRef=$display_language]/SimpleValue"/>
@@ -380,6 +357,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 		</xsl:for-each>
 	</xsl:template>
 	<!-- Health Canada Change -->
+	<!-- review to here -->
 	<xsl:template match="v3:title">
 		<xsl:param name="sectionLevel" select="count(ancestor::v3:section)"/>
 		<xsl:param name="sectionNumber" select="/.."/>
@@ -514,6 +492,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 			<xsl:call-template name="flushSectionTitleFootnotes"/>
 		</div>
 	</xsl:template>
+	<xsl:template mode="sectionNumber" match="/|@*|node()"/>
 
 	<xsl:template match="v3:section">
 		<xsl:param name="sectionLevel" select="count(ancestor-or-self::v3:section)"/>
@@ -525,6 +504,9 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 
 		<xsl:variable name="heading" select="$codeLookup/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]/../Value[@ColumnRef=concat($doctype,'-level')]/SimpleValue"/>
 		<xsl:if test="not ($code='150' or $code='160' or $code='170' or $code=$render440 or $code='520')">
+			<xsl:if test="$heading = 1">
+				<div class="pagebreak" />
+			</xsl:if>
 			<div class="Section">
 				<xsl:for-each select="v3:code">
 					<xsl:attribute name="data-sectionCode">
@@ -540,7 +522,6 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 					<a name="{.}"/>
 				</xsl:for-each>
 				<p/>
-
 				<xsl:apply-templates select="v3:title">
 					<xsl:with-param name="sectionLevel" select="$heading"/>
 					<xsl:with-param name="sectionNumber" select="substring($sectionNumberSequence,2)"/>
@@ -882,7 +863,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 				<xsl:with-param name="code" select="'10075'"/>
 				<!-- revisionTimeCandidates -->
 			</xsl:call-template>:
-			<xsl:call-template name="string-to-date">
+			<xsl:call-template name="string-ISO-date">
 				<xsl:with-param name="text">
 					<xsl:value-of select="$revisionTimeCandidates"/>
 				</xsl:with-param>
@@ -892,7 +873,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 				<xsl:with-param name="code" select="'10074'"/>
 				<!-- revisionTime -->
 			</xsl:call-template>:
-			<xsl:call-template name="string-to-date">
+			<xsl:call-template name="string-ISO-date">
 				<xsl:with-param name="text">
 					<xsl:value-of select="$revisionTime"/>
 				</xsl:with-param>
@@ -1216,16 +1197,23 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 	<xsl:template mode="subjects" match="v3:section/v3:subject/v3:manufacturedProduct/*[self::v3:manufacturedProduct[v3:name or v3:formCode] or self::v3:manufacturedMedicine]|v3:section/v3:subject/v3:identifiedSubstance/v3:identifiedSubstance">
 		<div class="pagebreak"/>
 		<div>
-			
 			<xsl:if test="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$term-status-oid]/../v3:effectiveTime/v3:high">
 				<xsl:call-template name="styleCodeAttr">
 					<xsl:with-param name="styleCode" select="'Watermark'"/>
 				</xsl:call-template>
 				<xsl:variable name="watermarkText">
 					<xsl:value-of select="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$term-status-oid]/@displayName"/>
-					(<xsl:value-of select="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$term-status-oid]/@code"/>
-					)&#160;&#160;
-					<xsl:value-of select="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$term-status-oid]/../v3:effectiveTime/v3:high/@value"/>&#160;&#160;
+					&#160;&#160;
+						<xsl:call-template name="hpfb-title">
+							<xsl:with-param name="code" select="'10104'"/>
+							<!-- date -->
+						</xsl:call-template>
+						:&#160;
+					<xsl:call-template name="string-ISO-date">
+						<xsl:with-param name="text">
+							<xsl:value-of select="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$term-status-oid]/../v3:effectiveTime/v3:high/@value"/>
+						</xsl:with-param>
+					</xsl:call-template>&#160;&#160;
 				</xsl:variable>
 				<div class="WatermarkTextStyle">
 					<xsl:value-of select="$watermarkText"/><xsl:value-of select="$watermarkText"/><xsl:value-of select="$watermarkText"/>
@@ -2459,14 +2447,14 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 						<xsl:value-of select="../v3:subjectOf/v3:approval/v3:id/@extension"/>
 					</td>
 					<td class="formItem">
-						<xsl:call-template name="string-to-date">
+						<xsl:call-template name="string-ISO-date">
 							<xsl:with-param name="text">
 								<xsl:value-of select="../v3:subjectOf/v3:marketingAct/v3:effectiveTime/v3:low/@value"/>
 							</xsl:with-param>
 						</xsl:call-template>
 					</td>
 					<td class="formItem">
-						<xsl:call-template name="string-to-date">
+						<xsl:call-template name="string-ISO-date">
 							<xsl:with-param name="text">
 								<xsl:value-of select="../v3:subjectOf/v3:marketingAct/v3:effectiveTime/v3:high/@value"/>
 							</xsl:with-param>
@@ -2487,6 +2475,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 		<xsl:param name="text"/>
 		<xsl:value-of select="translate($text,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')"/>
 	</xsl:template>
+	<!-- This template is not use for now, keep it for later -->
 	<xsl:template name="string-to-date">
 		<xsl:param name="text"/>
 		<xsl:param name="displayMonth">true</xsl:param>
@@ -2900,14 +2889,14 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 					</xsl:for-each>
 				</td>
 				<td class="formItem">
-					<xsl:call-template name="string-to-date">
+					<xsl:call-template name="string-ISO-date">
 						<xsl:with-param name="text">
 							<xsl:value-of select="../v3:subjectOf/v3:marketingAct/v3:effectiveTime/v3:low/@value"/>
 						</xsl:with-param>
 					</xsl:call-template>
 				</td>
 				<td class="formItem">
-					<xsl:call-template name="string-to-date">
+					<xsl:call-template name="string-ISO-date">
 						<xsl:with-param name="text">
 							<xsl:value-of select="../v3:subjectOf/v3:marketingAct/v3:effectiveTime/v3:high/@value"/>
 						</xsl:with-param>
@@ -3213,7 +3202,7 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 				<xsl:with-param name="styleCode" select="@styleCode"/>
 				<xsl:with-param name="additionalStyleCode">
 					<xsl:choose>
-						<xsl:when test="contains(ancestor::v3:table/@styleCode, 'Noautorules') or contains(ancestor::v3:section/v3:code/@code, '43683-2') and not(@styleCode)">
+						<xsl:when test="contains(ancestor::v3:table/@styleCode, 'Noautorules') and not(@styleCode)"> <!-- or contains(ancestor::v3:section/v3:code/@code, '43683-2') -->
 							<xsl:text></xsl:text>
 						</xsl:when>
 						<xsl:otherwise>
@@ -3234,36 +3223,12 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 	</xsl:template>
 	<xsl:template match="v3:td">
 		<!-- determine our position to find out the associated col -->
-		<xsl:param name="position">
-			<xsl:choose>
-				<xsl:when test="string(number(preceding-sibling::v3:td/@colspan[number(.)&gt;0]) != 'NaN')">
-					<xsl:value-of select="1 + count(preceding-sibling::v3:td[not(@colspan[number(.) &gt; 0])])       +sum(preceding-sibling::v3:td/@colspan[number(.)&gt;0])"/>
-				</xsl:when>
-				<xsl:when test="preceding-sibling::v3:td[not(@colspan[number(.) &gt; 0])]">
-					<xsl:value-of select="1 + count(preceding-sibling::v3:td[not(@colspan[number(.) &gt; 0])])"/>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:value-of select="1"/>
-				</xsl:otherwise>
-			</xsl:choose>
-		</xsl:param>
-		<xsl:param name="associatedCol" select="(ancestor::v3:table/v3:colgroup/v3:col|ancestor::v3:table/v3:col)[$position]"/>
-		<xsl:param name="associatedColgroup" select="$associatedCol/parent::v3:colgroup"/>
 		<!-- Health Canada Change added attributes for td-->
 		<td style="padding:5px; border: solid 1px;">
 			<xsl:call-template name="styleCodeAttr">
 				<xsl:with-param name="styleCode" select="@styleCode"/>
-				<xsl:with-param name="additionalStyleCode">
-					<xsl:if test="not(ancestor::v3:tfoot) and ((contains($associatedColgroup/@styleCode,'Lrule') and not($associatedCol/preceding-sibling::v3:col)) or contains($associatedCol/@styleCode, 'Lrule'))">
-						<xsl:text> Lrule </xsl:text>
-					</xsl:if>
-					<xsl:if test="not(ancestor::v3:tfoot) and ((contains($associatedColgroup/@styleCode,'Rrule') and not($associatedCol/following-sibling::v3:col)) or contains($associatedCol/@styleCode, 'Rrule'))">
-						<xsl:text> Rrule </xsl:text>
-					</xsl:if>
-				</xsl:with-param>
 			</xsl:call-template>
 			<xsl:call-template name="additionalStyleAttr"/>
-			<xsl:copy-of select="$associatedCol/@align"/>
 			<xsl:apply-templates select="@*[not(local-name(.)='styleCode')]"/>
 			<xsl:apply-templates mode="mixed" select="node()"/>
 		</td>
@@ -3296,10 +3261,13 @@ TODO: Implementation guide needs to define linkHtml styleCodes.
 
 <metaInformation>
 	<scenarios>
-		<scenario default="yes" name="HPFB" userelativepaths="no" externalpreview="yes" url="file:///c:/SPM/test/1.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test3.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
+		<scenario default="yes" name="HPFB" userelativepaths="no" externalpreview="yes" url="file:///c:/SPM/test/2.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test3.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
 		          profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no" validator="internal"
 		          customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
+			<parameterValue name="show-section-numbers" value="'true()'"/>
+			<parameterValue name="show-data" value="'1'"/>
+			<parameterValue name="css" value="'https://rawgit.com/IanYangCa/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/dev/hpfb-spl-core.css'"/>
 			<parameterValue name="resourcesdir" value="'https://rawgit.com/IanYangCa/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/dev/'"/>
 			<advancedProp name="sInitialMode" value=""/>
 			<advancedProp name="schemaCache" value="||"/>
