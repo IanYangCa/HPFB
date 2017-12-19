@@ -56,6 +56,9 @@ be represented
 	.spl .bars {
 	     display:none;
 	}
+	.spl .pagebreak { 
+		page-break-before: always; 
+	}
 
 }
 .header3911 {	
@@ -952,7 +955,7 @@ be represented
     text-overflow:clip;
 	white-space: nowrap;
 }
-.spl .pagebreak { page-break-before: always; }
+
 .spl .bold {
     font-weight: bold;
 }
