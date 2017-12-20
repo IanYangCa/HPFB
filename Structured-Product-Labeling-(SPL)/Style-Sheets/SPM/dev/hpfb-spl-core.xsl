@@ -86,7 +86,6 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 	<xsl:template match="/v3:document/v3:title" priority="1"/>
 
 	<!-- The indication secction variable contains the actual Indication Section node-->
-	<xsl:variable name="indicationSection" select="/v3:document/v3:component/v3:structuredBody/v3:component//v3:section [v3:code [descendant-or-self::* [(self::v3:code or self::v3:translation) and @codeSystem='2.16.840.1.113883.6.1'] ] ]"/>
 	<xsl:template match="v3:section" mode="tableOfContents">
 		<!-- Health Canada Import previous prefix level -->
 		<xsl:param name="parentPrefix" select="''"/>
@@ -225,7 +224,6 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				</xsl:attribute>
 				<!-- Health Canada Generate Title Page -->
 				<xsl:call-template name="TitlePage"/>
-				<!-- TODO page break only immediately before h1 section -->
 
 				<!-- This is Foot Notes -->
 				<xsl:apply-templates select="//v3:code[@code='440' and @codeSystem=$section-id-oid]/..">
@@ -245,9 +243,6 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					<div class="DataElementsTable">
 						<xsl:call-template name="PLRIndications"/>
 
-						<xsl:if test="//v3:*[self::v3:ingredientSubstance[starts-with(../@classCode,'ACTI')] ]">
-							<xsl:call-template name="PharmacologicalClass"/>
-						</xsl:if>
 						<xsl:apply-templates mode="subjects" select="//v3:section/v3:subject/*[self::v3:manufacturedProduct or self::v3:identifiedSubstance]"/>
 						<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization"/>
 						<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization"/>
@@ -357,7 +352,6 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 		</xsl:for-each>
 	</xsl:template>
 	<!-- Health Canada Change -->
-	<!-- review to here -->
 	<xsl:template match="v3:title">
 		<xsl:param name="sectionLevel" select="count(ancestor::v3:section)"/>
 		<xsl:param name="sectionNumber" select="/.."/>
@@ -447,6 +441,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			</xsl:if>
 
 			<xsl:apply-templates select="@*"/>
+			<!-- TODO CHECK-->
 			<xsl:if test="boolean($show-section-numbers) and $sectionNumber">
 				<span class="SectionNumber">
 					<xsl:value-of select="$sectionNumber"/>
@@ -545,7 +540,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			 5. imprint information
 			 6. packaging information
 	-->
-	<xsl:template name="PLRIndications" mode="indication" match="v3:section [v3:code [descendant-or-self::* [(self::v3:code or self::v3:translation) and @codeSystem='2.16.840.1.113883.6.1'] ] ]">
+	<xsl:template name="PLRIndications" mode="indication" match="v3:section [v3:code [descendant-or-self::*  ] ]">
 		<xsl:if test="count(//v3:reason) &gt; 0">
 			<table class="contentTablePetite" cellSpacing="0" cellPadding="3" width="100%">
 				<tbody>
@@ -601,251 +596,6 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 											</xsl:call-template>
 										</td>
 									</tr>
-									<!-- Repeat Me -->
-									<xsl:for-each select="$indicationSection//v3:excerpt/v3:highlight/v3:subject">
-										<tr class="formTableRowAlt">
-											<td class="formItem" valign="top">
-												<strong>
-													<xsl:value-of select="./v3:substanceAdministration/v3:reason/v3:indicationObservationCriterion/v3:value/@displayName"/>(<xsl:value-of select="./v3:substanceAdministration/v3:reason/v3:indicationObservationCriterion/v3:code/@displayName"/>)</strong>
-											</td>
-											<td class="formItem" valign="top">
-												<xsl:value-of select="./v3:substanceAdministration/v3:reason/@typeCode"/>
-											</td>
-											<td class="formItem" valign="top">
-												<xsl:choose>
-													<xsl:when test="./v3:substanceAdministration/v3:maxDoseQuantity">
-														<xsl:value-of select="./v3:substanceAdministration/v3:maxDoseQuantity/v3:numerator/@value"/>&#xA0; <xsl:value-of select="./v3:substanceAdministration/v3:maxDoseQuantity/v3:numerator/@unit"/>&#xA0;
-														<xsl:call-template name="hpfb-title">
-															<xsl:with-param name="code" select="'10103'"/>
-															<!-- per -->
-														</xsl:call-template>&#xA0;
-														<xsl:value-of select="./v3:substanceAdministration/v3:maxDoseQuantity/v3:denominator/@value"/>&#xA0;
-														<xsl:value-of select="./v3:substanceAdministration/v3:maxDoseQuantity/v3:denominator/@unit"/>
-													</xsl:when>
-													<xsl:otherwise>
-														<!-- TODO for $dosageAndAdministrationSectionCode
-														<pbx: no clue>
-													<xsl:for-each select="//v3:maxDoseQuantity[ancestor::v3:section/v3:code/@code = $dosageAndAdministrationSectionCode]">
-														<xsl:value-of select="./v3:numerator/@value"/>&#160; <xsl:value-of select="./v3:numerator/@unit"/>&#160;per&#160; <xsl:value-of
-															select="./v3:denominator/@value"/>&#160; <xsl:value-of select="./v3:denominator/@unit"/>
-													</xsl:for-each>
-													-->
-													</xsl:otherwise>
-												</xsl:choose>
-											</td>
-											<td class="formItem" colSpan="3">
-												<table class="formTablePetite" cellSpacing="0" cellPadding="5" width="100%">
-													<tbody>
-														<tr class="formTable">
-															<td class="formTitle" colSpan="4">
-																<xsl:call-template name="hpfb-title">
-																	<xsl:with-param name="code" select="'10015'"/>
-																	<!-- conditionsOfUse -->
-																</xsl:call-template>
-															</td>
-														</tr>
-														<tr class="formTable">
-															<td class="formTitle">
-																<xsl:call-template name="hpfb-title">
-																	<xsl:with-param name="code" select="'10096'"/>
-																	<!-- useCategory -->
-																</xsl:call-template>
-															</td>
-															<td class="formTitle">
-																<xsl:call-template name="hpfb-title">
-																	<xsl:with-param name="code" select="'10064'"/>
-																	<!-- preconditionCategory -->
-																</xsl:call-template>
-															</td>
-															<td class="formTitle">
-																<xsl:call-template name="hpfb-title">
-																	<xsl:with-param name="code" select="'10060'"/>
-																	<!-- precondition -->
-																</xsl:call-template>
-															</td>
-															<td class="formTitle">
-																<xsl:call-template name="hpfb-title">
-																	<xsl:with-param name="code" select="'10041'"/>
-																	<!-- labelingSection -->
-																</xsl:call-template>
-															</td>
-														</tr>
-														<!-- Repeat Each precondition for the indication subject -->
-														<xsl:for-each select="./v3:substanceAdministration/v3:precondition">
-															<xsl:call-template name="displayConditionsOfUse">
-															</xsl:call-template>
-														</xsl:for-each>
-														<!-- TODO about Highlight
-														<pbx: keep for now>
-													<xsl:for-each select="//v3:excerpt/v3:highlight/v3:subject/v3:substanceAdministration/v3:precondition">
-														<xsl:if test="count(ancestor::v3:section[v3:code/@code=$indicationSectionCode]) = 0">
-															<xsl:call-template name="displayConditionsOfUse"> </xsl:call-template>
-														</xsl:if>
-													</xsl:for-each>
-													-->
-														<xsl:for-each select="./v3:substanceAdministration/v3:componentOf">
-															<tr>
-																<xsl:attribute name="class">
-																	<xsl:choose>
-																		<xsl:when test="position() mod 2 = 0">formTableRow</xsl:when>
-																		<xsl:otherwise>formTableRowAlt</xsl:otherwise>
-																	</xsl:choose>
-																</xsl:attribute>
-																<td class="formItem">
-																	<xsl:call-template name="hpfb-title">
-																		<xsl:with-param name="code" select="'10015'"/>
-																		<!-- conditionOfUse -->
-																	</xsl:call-template>
-																</td>
-																<td class="formItem">
-																	<xsl:call-template name="hpfb-title">
-																		<xsl:with-param name="code" select="'10081'"/>
-																		<!-- screeningMonitoringTest -->
-																	</xsl:call-template>
-																</td>
-																<td class="formItem">
-																	<xsl:for-each select="./v3:protocol/v3:component">
-																		<xsl:value-of select="./v3:monitoringObservation/v3:code/@displayName"/>
-																		<xsl:call-template name="printSeperator"/>
-																	</xsl:for-each>
-																</td>
-																<td class="formItem">
-																	<xsl:variable name="sectionNumberSequence">
-																		<xsl:apply-templates mode="sectionNumber" select="$indicationSection/ancestor-or-self::v3:section"/>
-																	</xsl:variable>
-																	<a href="#section-{substring($sectionNumberSequence,2)}">
-																		<xsl:value-of select="$indicationSection/v3:title"/>
-																	</a>
-																</td>
-															</tr>
-														</xsl:for-each>
-														<!-- end repeat -->
-														<tr>
-															<td>&#xA0;</td>
-														</tr>
-														<tr class="formTable">
-															<td class="formTitle" colSpan="4">
-																<xsl:call-template name="hpfb-title">
-																	<xsl:with-param name="code" select="'10043'"/>
-																	<!-- limitationsOfUse -->
-																</xsl:call-template>
-															</td>
-														</tr>
-														<tr class="formTable">
-															<td class="formTitle">
-																<xsl:call-template name="hpfb-title">
-																	<xsl:with-param name="code" select="'10096'"/>
-																	<!-- useCategory -->
-																</xsl:call-template>
-															</td>
-															<td class="formTitle">
-																<xsl:call-template name="hpfb-title">
-																	<xsl:with-param name="code" select="'10064'"/>
-																	<!-- preconditionCategory -->
-																</xsl:call-template>
-															</td>
-															<td class="formTitle">
-																<xsl:call-template name="hpfb-title">
-																	<xsl:with-param name="code" select="'10060'"/>
-																	<!-- precondition -->
-																</xsl:call-template>
-															</td>
-															<td class="formTitle">
-																<xsl:call-template name="hpfb-title">
-																	<xsl:with-param name="code" select="'10041'"/>
-																	<!-- labelingSection -->
-																</xsl:call-template>
-															</td>
-														</tr>
-														<!-- Repeat Each Limitation of Use -->
-														<!-- apply all limitation of use templates for issues within this subject -->
-														<!-- now apply all limitation of use templates for issues that are NOT within any indication section or subsection -->
-														<!-- PCR 593 Since the limitation of use can have multiple ancestors called section, we process all children limitations of the current context.
-																 and then all other limitations with specified named ancestors. All possible ancestors other than indication section are used in the predicate.
-																 Also made a call to a named template in a loop rather than a matched template-->
-														<xsl:for-each select="./v3:substanceAdministration/v3:subjectOf/v3:issue">
-															<xsl:call-template name="displayLimitationsOfUse">
-															</xsl:call-template>
-														</xsl:for-each>
-														<!-- TODO for displayLimitationsOfUse
-														<pbx: keep for now>
-													<xsl:for-each select="//v3:excerpt/v3:highlight/v3:subject/v3:substanceAdministration/v3:subjectOf/v3:issue[v3:subject/v3:observationCriterion]">
-														<xsl:if test="count(ancestor::v3:section[v3:code/@code=$indicationSectionCode]) = 0">
-															<xsl:call-template name="displayLimitationsOfUse"> </xsl:call-template>
-														</xsl:if>
-													</xsl:for-each>
-													-->
-														<!-- end repeat -->
-													</tbody>
-												</table>
-											</td>
-										</tr>
-									</xsl:for-each>
-									<!--/xsl:for-each-->
-									<!-- end repeat -->
-								</tbody>
-							</table>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</xsl:if>
-	</xsl:template>
-
-	<xsl:template name="PharmacologicalClass">
-		<xsl:if test="//v3:generalizedMaterialKind[v3:code/@codeSystem='2.16.840.1.113883.3.26.1.5']">
-			<table cellSpacing="0" cellPadding="3" width="100%" class="formTablePetite">
-				<tbody>
-					<tr>
-						<td class="formHeadingTitle">
-							<xsl:call-template name="hpfb-title">
-								<xsl:with-param name="code" select="'10061'"/>
-								<!-- pharmacologicClass -->
-							</xsl:call-template>
-						</td>
-					</tr>
-					<tr class="formTableRowAlt">
-						<td class="formItem">
-							<table class="formTablePetite" cellSpacing="0" cellPadding="3" width="100%">
-								<tbody>
-									<tr>
-										<td class="formHeadingTitle" width="30%">
-											<xsl:call-template name="hpfb-title">
-												<xsl:with-param name="code" select="'10087'"/>
-												<!-- substance -->
-											</xsl:call-template>
-										</td>
-										<td class="formHeadingTitle" width="70%">P
-											<xsl:call-template name="hpfb-title">
-												<xsl:with-param name="code" select="'10061'"/>
-												<!-- pharmacologicClass -->
-											</xsl:call-template>
-										</td>
-									</tr>
-									<xsl:for-each select="//*[v3:asSpecializedKind]">
-										<tr>
-											<xsl:attribute name="class">
-												<xsl:choose>
-													<xsl:when test="position() mod 2 = 0">formTableRow</xsl:when>
-													<xsl:otherwise>formTableRowAlt</xsl:otherwise>
-												</xsl:choose>
-											</xsl:attribute>
-											<td class="formItem">
-												<strong>
-													<xsl:value-of select="v3:name"/>
-												</strong>
-											</td>
-											<td class="formItem">
-												<xsl:for-each select="v3:asSpecializedKind">
-													<xsl:value-of select="v3:generalizedMaterialKind/v3:code/@displayName"/>
-													<xsl:if test="contains(v3:generalizedMaterialKind/v3:code/@displayName,'[EPC]')">
-														<xsl:value-of select="concat('(', v3:generalizedMaterialKind/v3:name[@use='L'], ')')"/>
-													</xsl:if>
-													<xsl:call-template name="printSeperator"/>
-												</xsl:for-each>
-											</td>
-										</tr>
-									</xsl:for-each>
 								</tbody>
 							</table>
 						</td>
@@ -994,7 +744,6 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 		<xsl:if test="self::*[self::v3:paragraph]//v3:content[@styleCode[contains(.,'xmChange')]] or v3:content[@styleCode[contains(.,'xmChange')]] and not(ancestor::v3:table)">
 			<xsl:attribute name="style">
 				<xsl:choose>
-					<xsl:when test="ancestor::v3:section[v3:code[@code = '34066-1']]">margin-left:-2em; padding-left:2em; border-left:1px solid; position:relative; zoom: 1;</xsl:when>
 					<xsl:when test="self::*//v3:content/@styleCode[contains(.,'xmChange')] or v3:content/@styleCode[contains(.,'xmChange')]">border-left:1px solid;</xsl:when>
 					<xsl:otherwise>margin-left:-1em; padding-left:1em; border-left:1px solid;</xsl:otherwise>
 				</xsl:choose>
@@ -1363,25 +1112,14 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					<td class="formItem">
 						<xsl:apply-templates mode="format" select="./v3:addr"/>
 					</td>
-					<!-- root = "1.3.6.1.4.1.519.1" -->
-					<!-- TODO 
-					code system 1.3.6.1.4.1.519.1 is not existed in HPFB
-				-->
 					<td class="formItem">
-						<xsl:value-of select="./v3:id[@root='1.3.6.1.4.1.519.1']/@extension"/>
-						<xsl:if test="./v3:id[@root='1.3.6.1.4.1.519.1']/@extension and ./v3:id[not(@root='1.3.6.1.4.1.519.1')]/@extension">/</xsl:if>
-						<xsl:value-of select="./v3:id[not(@root='1.3.6.1.4.1.519.1')]/@extension"/>
+						<xsl:value-of select="./v3:id/@extension"/>
 					</td>
 					<td class="formItem">
 						<xsl:for-each select="../v3:performance[not(v3:actDefinition/v3:code/@code = preceding-sibling::*/v3:actDefinition/v3:code/@code)]/v3:actDefinition/v3:code">
 							<xsl:variable name="code" select="@code"/>
 							<xsl:value-of select="@displayName"/>
-							<!-- TODO 
-							document code: 75030-7 is not existed in HPFB
-						-->
-							<xsl:if test="/v3:document[v3:code/@code = '75030-7'] and ../v3:subjectOf/v3:approval">
-								<xsl:text> - </xsl:text>
-							</xsl:if>
+
 							<xsl:variable name="itemCodes" select="../../../v3:performance/v3:actDefinition[v3:code/@code = $code]/v3:product/v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:code/@code"/>
 							<xsl:if test="$itemCodes">
 								<xsl:text>(</xsl:text>
@@ -1395,22 +1133,6 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 								<xsl:text>(</xsl:text>
 								<xsl:value-of select="@displayName"/>
 								<xsl:text>)</xsl:text>
-								<!-- TODO 
-								document code: 75030-7 is not existed in HPFB
-							-->
-								<xsl:if test="/v3:document/v3:code/@code='75030-7' and ../v3:id[@extension]">
-									<xsl:text>, </xsl:text>
-									<xsl:call-template name="hpfb-title">
-										<xsl:with-param name="code" select="'10042'"/>
-										<!-- licenseInfo -->
-									</xsl:call-template>&#xA0;
-									<xsl:text>(</xsl:text>
-									<xsl:value-of select="concat('Number: ', ../v3:id/@extension, ', ')"/>
-									<xsl:value-of select="concat('State: ', ../descendant::v3:territory/v3:code/@code, ', ')"/>
-									<xsl:value-of select="concat('Status: ', ../v3:statusCode/@code)"/>
-									<xsl:text>) </xsl:text>
-								</xsl:if>
-								<!-- End Of TODO -->
 								<xsl:for-each select="../v3:subjectOf/v3:action/v3:code[@code]">
 									<xsl:if test="position()!=last()">,</xsl:if>
 									<xsl:value-of select="@displayName"/>
@@ -1439,121 +1161,6 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					</td>
 				</tr>
 				<xsl:call-template name="data-contactParty"/>
-				<xsl:for-each select="./v3:assignedEntity[v3:performance/v3:actDefinition/v3:code/@code='C73330']/v3:assignedOrganization">
-					<xsl:if test="position() = 1">
-						<tr>
-							<th scope="col" class="formTitle">
-								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10094'"/>
-									<!-- US_AgentID -->
-								</xsl:call-template>
-							</th>
-							<th scope="col" class="formTitle">
-								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10003'"/>
-									<!-- address -->
-								</xsl:call-template>
-							</th>
-							<th scope="col" class="formTitle">
-								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10090'"/>
-									<!-- telephoneNumber -->
-								</xsl:call-template>
-							</th>
-							<th scope="col" class="formTitle">
-								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10022'"/>
-									<!-- emailAddress -->
-								</xsl:call-template>
-							</th>
-						</tr>
-					</xsl:if>
-					<tr class="formTableRowAlt">
-						<td class="formItem">
-							<xsl:value-of select="v3:name"/>
-							<xsl:for-each select="v3:id/@extension">
-								<xsl:text> (</xsl:text>
-								<xsl:value-of select="."/>
-								<xsl:text>)</xsl:text>
-							</xsl:for-each>
-						</td>
-						<td class="formItem">
-							<xsl:apply-templates mode="format" select="v3:addr"/>
-						</td>
-						<td class="formItem">
-							<xsl:value-of select=" substring-after(v3:telecom/@value[starts-with(.,'tel:')][1], 'tel:')"/>
-							<xsl:for-each select="v3:telecom/@value[starts-with(.,'fax:')]">
-								<br/>
-								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10023'"/>
-									<!-- fax -->
-								</xsl:call-template>:&#xA0;
-								<xsl:value-of select="substring-after(., 'fax:')"/>
-							</xsl:for-each>
-						</td>
-						<td class="formItem">
-							<xsl:value-of select=" substring-after(v3:telecom/@value[starts-with(.,'mailto:')][1], 'mailto:')"/>
-						</td>
-					</tr>
-				</xsl:for-each>
-
-				<xsl:for-each select="./v3:assignedEntity[v3:performance/v3:actDefinition/v3:code/@code='C73599']/v3:assignedOrganization">
-					<xsl:if test="position() = 1">
-						<tr>
-							<th scope="col" class="formTitle">
-								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10028'"/>
-									<!-- importerID -->
-								</xsl:call-template>
-							</th>
-							<th scope="col" class="formTitle">
-								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10003'"/>
-									<!-- address -->
-								</xsl:call-template>
-							</th>
-							<th scope="col" class="formTitle">
-								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10090'"/>
-									<!-- telephoneNumber -->
-								</xsl:call-template>
-							</th>
-							<th scope="col" class="formTitle">
-								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10022'"/>
-									<!-- emailAddress -->
-								</xsl:call-template>
-							</th>
-						</tr>
-					</xsl:if>
-					<tr class="formTableRowAlt">
-						<td class="formItem">
-							<xsl:value-of select="v3:name"/>
-							<xsl:for-each select="v3:id/@extension">
-								<xsl:text> (</xsl:text>
-								<xsl:value-of select="."/>
-								<xsl:text>)</xsl:text>
-							</xsl:for-each>
-						</td>
-						<td class="formItem">
-							<xsl:apply-templates mode="format" select="v3:addr"/>
-						</td>
-						<td class="formItem">
-							<xsl:value-of select=" substring-after(v3:telecom/@value[starts-with(.,'tel:')][1], 'tel:')"/>
-							<xsl:for-each select="v3:telecom/@value[starts-with(.,'fax:')]">
-								<br/>
-								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10023'"/>
-									<!-- fax -->
-								</xsl:call-template>:&#xA0;
-								<xsl:value-of select="substring-after(., 'fax:')"/>
-							</xsl:for-each>
-						</td>
-						<td class="formItem">
-							<xsl:value-of select=" substring-after(v3:telecom/@value[starts-with(.,'mailto:')][1], 'mailto:')"/>
-						</td>
-					</tr>
-				</xsl:for-each>
 			</table>
 		</xsl:if>
 	</xsl:template>
@@ -1624,47 +1231,6 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 								<!-- DIN_Owner -->
 							</xsl:call-template>&#xA0;-&#xA0;</span>
 						<xsl:value-of select="./v3:name"/>
-						<!-- TODO -->
-						<xsl:choose>
-							<xsl:when test="./v3:id[@root='1.3.6.1.4.1.519.1']/@extension">(<xsl:value-of select="./v3:id[@root='1.3.6.1.4.1.519.1']/@extension"/>)</xsl:when>
-							<xsl:when test="./v3:assignedEntity/v3:assignedOrganization/v3:id[@root='1.3.6.1.4.1.519.1']/@extension">(<xsl:value-of select="./v3:assignedEntity/v3:assignedOrganization/v3:id[@root='1.3.6.1.4.1.519.1']/@extension"/>)</xsl:when>
-							<xsl:otherwise/>
-						</xsl:choose>
-						<!-- TODO -->
-						<xsl:if test="/v3:document/v3:code/@code[. = '51726-8' or . = '72871-7']">
-							<span class="formHeadingTitle">
-								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10052'"/>
-									<!-- NDC_LabelerCode -->
-								</xsl:call-template>:&#xA0;</span>
-							<!-- TODO -->
-							<xsl:choose>
-								<xsl:when test="./v3:id[@root='2.16.840.1.113883.6.69']/@extension">
-									<xsl:value-of select="./v3:id[@root='2.16.840.1.113883.6.69']/@extension"/>
-								</xsl:when>
-								<xsl:when test="./v3:assignedEntity/v3:assignedOrganization/v3:id[@root='2.16.840.1.113883.6.69']/@extension">
-									<xsl:value-of select="./v3:assignedEntity/v3:assignedOrganization/v3:id[@root='2.16.840.1.113883.6.69']/@extension"/>
-								</xsl:when>
-								<xsl:otherwise/>
-							</xsl:choose>
-						</xsl:if>
-						<!-- TODO -->
-						<xsl:if test="/v3:document/v3:code/@code[. = '66105-8']">
-							<span class="formHeadingTitle">
-								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10044'"/>
-									<!-- manufacturerLicenseNumber -->
-								</xsl:call-template>:&#xA0;</span>
-							<xsl:choose>
-								<xsl:when test="./v3:id[not(@root='1.3.6.1.4.1.519.1')]/@extension">
-									<xsl:value-of select="./v3:id[not(@root='1.3.6.1.4.1.519.1')]/@extension"/>
-								</xsl:when>
-								<xsl:when test="./v3:assignedEntity/v3:assignedOrganization/v3:id[not(@root='1.3.6.1.4.1.519.1')]/@extension">
-									<xsl:value-of select="./v3:assignedEntity/v3:assignedOrganization/v3:id[not(@root='1.3.6.1.4.1.519.1')]/@extension"/>
-								</xsl:when>
-								<xsl:otherwise/>
-							</xsl:choose>
-						</xsl:if>
 					</td>
 				</tr>
 				<xsl:call-template name="data-contactParty"/>
@@ -1678,19 +1244,10 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				<tr>
 					<td colspan="4" class="formHeadingReg">
 						<span class="formHeadingTitle">
-							<!-- TODO -->
-							<xsl:choose>
-								<xsl:when test="/v3:document/v3:code/@code[. = '75030-7']">
-									<xsl:call-template name="hpfb-title">
-										<xsl:with-param name="code" select="'10072'"/>
-										<!-- reporter -->
-									</xsl:call-template>&#xA0;-&#xA0;</xsl:when>
-								<xsl:otherwise>
-									<xsl:call-template name="hpfb-title">
-										<xsl:with-param name="code" select="'10071'"/>
-										<!-- registrant -->
-									</xsl:call-template>&#xA0;-&#xA0;</xsl:otherwise>
-							</xsl:choose>
+							<xsl:call-template name="hpfb-title">
+								<xsl:with-param name="code" select="'10071'"/>
+								<!-- registrant -->
+							</xsl:call-template>&#xA0;-&#xA0;
 						</span>
 						<xsl:value-of select="./v3:name"/>
 						<xsl:if test="./v3:id/@extension">(<xsl:value-of select="./v3:id/@extension"/>)</xsl:if>
@@ -1727,14 +1284,19 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				</td>
 			</tr>
 			<tr>
-				<td>Country:</td>
+				<td>
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10106'"/>
+						<!-- Country -->
+					</xsl:call-template>
+				:</td>
 				<td>
 					<xsl:value-of select="./v3:country"/>
 				</td>
 			</tr>
 		</table>
 	</xsl:template>
-
+<!-- REVIEW TO HERE -->
 	<!-- This section will display all of the subject information in one easy to read table. This view is replacing the previous display of the data elements. -->
 	<xsl:template mode="subjects" match="/|@*|node()">
 		<xsl:apply-templates mode="subjects" select="@*|node()"/>
