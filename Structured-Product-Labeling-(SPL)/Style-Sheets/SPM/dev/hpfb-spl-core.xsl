@@ -393,7 +393,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 
 			<!-- Health Canada Change-->
 			<!--This code generates the prefix that matches what is shown in the Table of Contents -->
-			<xsl:if test="$tocObject = 'True' and not($sectionLevel ='1')">
+			<xsl:if test="not($sectionLevel ='1')">
 				<xsl:if test="$sectionLevel = 2">
 					<!--Health Canada Have to draw 2 -->
 					<xsl:choose>
@@ -505,7 +505,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 		</xsl:variable>
 		<xsl:variable name="code" select="v3:code/@code"/>
 
-		<xsl:variable name="heading" select="$codeLookup/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]/../Value[@ColumnRef=concat($doctype,'-level')]/SimpleValue"/>
+		<xsl:variable name="heading" select="$codeLookup/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]/../Value[@ColumnRef='level']/SimpleValue"/>
 		<xsl:if test="not ($code='150' or $code='160' or $code='170' or $code=$render440 or $code='520')">
 			<xsl:if test="$heading = 1">
 				<div class="pagebreak" />
@@ -1268,7 +1268,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 	<xsl:template mode="format" match="*/v3:addr">
 		<table>
 			<tr>
-				<td>Address:
+				<td>
 					<xsl:call-template name="hpfb-title">
 						<xsl:with-param name="code" select="'10003'"/>
 						<!-- Address -->
@@ -1299,7 +1299,10 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					</xsl:call-template>
 				:</td>
 				<td>
-					<xsl:value-of select="./v3:country"/>
+					<xsl:call-template name="hpfb-label">
+						<xsl:with-param name="codeSystem" select="$country-code-oid"/>
+						<xsl:with-param name="code" select="./v3:country/@code"/>
+					</xsl:call-template>
 				</td>
 			</tr>
 		</table>
