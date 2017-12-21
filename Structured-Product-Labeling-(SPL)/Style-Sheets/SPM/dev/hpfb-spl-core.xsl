@@ -393,7 +393,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 
 			<!-- Health Canada Change-->
 			<!--This code generates the prefix that matches what is shown in the Table of Contents -->
-			<xsl:if test="not($sectionLevel ='1')">
+			<xsl:if test="$code != '440' and not($sectionLevel ='1')">
 				<xsl:if test="$sectionLevel = 2">
 					<!--Health Canada Have to draw 2 -->
 					<xsl:choose>
