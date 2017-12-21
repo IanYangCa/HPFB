@@ -952,7 +952,8 @@ be represented
     color:red;
     font-size:120px;
     overflow: hidden;
-    text-overflow:clip;
+    text-align:center;
+	font-stretch: expanded;
 	white-space: nowrap;
 }
 
