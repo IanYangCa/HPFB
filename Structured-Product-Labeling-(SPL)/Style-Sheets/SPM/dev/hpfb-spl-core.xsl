@@ -91,7 +91,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 		<xsl:param name="parentPrefix" select="''"/>
 		<xsl:variable name="code" select="v3:code/@code"/>
 		<xsl:variable name="validCode" select="$section-id-oid"/>
-		<xsl:variable name="heading" select="$codeLookup/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]/../Value[@ColumnRef='heading_level']/SimpleValue"/>
+		<xsl:variable name="heading" select="$codeLookup/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]/../Value[@ColumnRef='level']/SimpleValue"/>
 		<!-- Determine most right prefix. -->
 		<xsl:variable name="prefix">
 			<xsl:choose>
@@ -282,7 +282,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 						</td>
 						<td class="borderCellLeft verticalTop">
 							<xsl:call-template name="hpfb-title">
-								<xsl:with-param name="code" select="'150'"/>
+								<xsl:with-param name="code" select="'10103'"/>
 							</xsl:call-template>:
 							<xsl:call-template name="string-ISO-date">
 								<xsl:with-param name="text" select="/v3:document/v3:effectiveTime/v3:originalText"/>
@@ -290,7 +290,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 							<br/>
 							<br/>
 							<xsl:call-template name="hpfb-title">
-								<xsl:with-param name="code" select="'160'"/>
+								<xsl:with-param name="code" select="'10105'"/>
 							</xsl:call-template>:
 							<xsl:call-template name="string-ISO-date">
 								<xsl:with-param name="text" select="/v3:document/v3:effectiveTime/@value"/>
@@ -359,7 +359,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 
 		<xsl:variable name="code" select="../v3:code/@code"/>
 		<xsl:variable name="validCode" select="$section-id-oid"/>
-		<xsl:variable name="tocObject" select="$codeLookup/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]/../Value[@ColumnRef='heading_level']/SimpleValue"/>
+		<xsl:variable name="tocObject" select="$codeLookup/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]/../Value[@ColumnRef='level']/SimpleValue"/>
 		<!-- Health Canada Change Draw H3,H4,H5 elements as H3 because they are too small otherwise -->
 		<xsl:variable name="eleSize">
 			<xsl:choose>
@@ -393,7 +393,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 
 			<!-- Health Canada Change-->
 			<!--This code generates the prefix that matches what is shown in the Table of Contents -->
-			<xsl:if test="$tocObject = 'T' and not($sectionLevel ='1')">
+			<xsl:if test="$tocObject = 'True' and not($sectionLevel ='1')">
 				<xsl:if test="$sectionLevel = 2">
 					<!--Health Canada Have to draw 2 -->
 					<xsl:choose>
