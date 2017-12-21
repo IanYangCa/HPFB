@@ -449,12 +449,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			</xsl:if>
 
 			<xsl:apply-templates select="@*"/>
-			<!-- TODO CHECK-->
-			<xsl:if test="boolean($show-section-numbers) and $sectionNumber">
-				<span class="SectionNumber">
-					<xsl:value-of select="$sectionNumber"/>
-				</span>
-			</xsl:if>
+
 			<xsl:call-template name="additionalStyleAttr"/>
 			<xsl:apply-templates mode="mixed" select="node()"/>
 		</xsl:element>
@@ -959,7 +954,10 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					<xsl:with-param name="styleCode" select="'Watermark'"/>
 				</xsl:call-template>
 				<xsl:variable name="watermarkText">
-					<xsl:value-of select="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$term-status-oid]/@displayName"/>
+					<xsl:call-template name="hpfb-label">
+						<xsl:with-param name="codeSystem" select="$term-status-oid"/>
+						<xsl:with-param name="code" select="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$term-status-oid]/@code"/>
+					</xsl:call-template>
 					&#160;&#160;
 						<xsl:call-template name="hpfb-title">
 							<xsl:with-param name="code" select="'10104'"/>
@@ -970,10 +968,10 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 						<xsl:with-param name="text">
 							<xsl:value-of select="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$term-status-oid]/../v3:effectiveTime/v3:high/@value"/>
 						</xsl:with-param>
-					</xsl:call-template>&#160;&#160;
+					</xsl:call-template>
 				</xsl:variable>
 				<div class="WatermarkTextStyle">
-					<xsl:value-of select="$watermarkText"/><xsl:value-of select="$watermarkText"/><xsl:value-of select="$watermarkText"/>
+					<xsl:value-of select="$watermarkText"/>
 				</div>
 			</xsl:if>
 			<table class="contentTablePetite" cellSpacing="0" cellPadding="3" width="100%">
@@ -1520,6 +1518,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 		</xsl:if>
 		<tr>
 			<td>
+<!-- TODO REMOVE LATER
 				<xsl:choose>
 					<xsl:when test="v3:asEntityWithGeneric and ../v3:subjectOf/v3:characteristic/v3:code[starts-with(@code, 'SPL')]">
 						<xsl:call-template name="characteristics-old"/>
@@ -1528,6 +1527,11 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 						<xsl:call-template name="characteristics-new"/>
 					</xsl:when>
 				</xsl:choose>
+-->
+				<xsl:if test="../v3:subjectOf/v3:characteristic">
+					<xsl:call-template name="characteristics-new"/>
+				</xsl:if>
+
 			</td>
 		</tr>
 		<xsl:if test="v3:asContent">
@@ -1551,14 +1555,14 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 	</xsl:template>
 	<!-- display the imprint information in the specified order.  a apply-template could be used here but then we would not be able to control what order the
 			 imprint information is displayed in since there isn't a requirement specifying that the characteristic must be programmed in a certain order-->
-	<!-- TODO -->
+	<!-- TODO REMOVE LATER -->
+	<!--
 	<xsl:template name="characteristics-old">
 		<table width="100%" cellpadding="3" cellspacing="0" class="formTablePetite">
 			<tr>
 				<td colspan="4" class="formHeadingTitle">
 					<xsl:call-template name="hpfb-title">
 						<xsl:with-param name="code" select="'10065'"/>
-						<!-- productCharacteristics -->
 					</xsl:call-template>
 				</td>
 			</tr>
@@ -1624,6 +1628,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			</xsl:if>
 		</table>
 	</xsl:template>
+	-->
 	<!-- End Of TODO -->
 
 	<xsl:template name="characteristics-new">
