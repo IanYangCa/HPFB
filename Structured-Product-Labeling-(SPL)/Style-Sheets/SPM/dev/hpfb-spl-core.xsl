@@ -91,9 +91,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 		<xsl:param name="parentPrefix" select="''"/>
 		<xsl:variable name="code" select="v3:code/@code"/>
 		<xsl:variable name="validCode" select="$section-id-oid"/>
-		<!-- Health Canada Lookup whether CODE is included in Table of Contents and find Heading level -->
-		<xsl:variable name="included" select="$codeLookup/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]/../Value[@ColumnRef=concat($doctype,'-toc')]/SimpleValue"/>
-		<xsl:variable name="heading" select="$codeLookup/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]/../Value[@ColumnRef=concat($doctype,'-level')]/SimpleValue"/>
+		<xsl:variable name="heading" select="$codeLookup/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]/../Value[@ColumnRef='heading_level']/SimpleValue"/>
 		<!-- Determine most right prefix. -->
 		<xsl:variable name="prefix">
 			<xsl:choose>
@@ -118,10 +116,13 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				<xsl:when test="$heading='3' or $heading='4' or $heading='5'">
 					<xsl:value-of select="count(../preceding-sibling::v3:component[v3:section/v3:code[@codeSystem=$validCode]]) + 1"/>
 				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="'5'"/>
+				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
 		<!-- Health Canada Draw the Heading element only if it should be included in TOC -->
-		<xsl:if test="$included='T'">
+		<xsl:if test="$codeLookup/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]/../Value[@ColumnRef='include_in_toc' and SimpleValue = 'True']">
 			<xsl:choose>
 				<!-- Health Canada Heading level 1 (part1,2,3) doesn't have a prefix -->
 				<xsl:when test="$heading='1'">
@@ -358,7 +359,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 
 		<xsl:variable name="code" select="../v3:code/@code"/>
 		<xsl:variable name="validCode" select="$section-id-oid"/>
-		<xsl:variable name="tocObject" select="$codeLookup/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]/../Value[@ColumnRef=concat($doctype,'-toc')]/SimpleValue"/>
+		<xsl:variable name="tocObject" select="$codeLookup/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]/../Value[@ColumnRef='heading_level']/SimpleValue"/>
 		<!-- Health Canada Change Draw H3,H4,H5 elements as H3 because they are too small otherwise -->
 		<xsl:variable name="eleSize">
 			<xsl:choose>
@@ -366,7 +367,14 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					<xsl:value-of select="'3'"/>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:value-of select="$sectionLevel"/>
+					<xsl:choose>
+						<xsl:when test="$sectionLevel">
+							<xsl:value-of select="$sectionLevel"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="count(ancestor::v3:section)"/>
+						</xsl:otherwise>
+					</xsl:choose>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
