@@ -957,18 +957,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					<xsl:call-template name="hpfb-label">
 						<xsl:with-param name="codeSystem" select="$term-status-oid"/>
 						<xsl:with-param name="code" select="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$term-status-oid]/@code"/>
-					</xsl:call-template>
-					&#160;&#160;
-						<xsl:call-template name="hpfb-title">
-							<xsl:with-param name="code" select="'10104'"/>
-							<!-- date -->
-						</xsl:call-template>
-						:&#160;
-					<xsl:call-template name="string-ISO-date">
-						<xsl:with-param name="text">
-							<xsl:value-of select="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$term-status-oid]/../v3:effectiveTime/v3:high/@value"/>
-						</xsl:with-param>
-					</xsl:call-template>
+					</xsl:call-template>&#160;&#160;<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10104'"/><!-- date --></xsl:call-template>:&#160;<xsl:call-template name="string-ISO-date"><xsl:with-param name="text"><xsl:value-of select="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$term-status-oid]/../v3:effectiveTime/v3:high/@value"/></xsl:with-param></xsl:call-template>
 				</xsl:variable>
 				<div class="WatermarkTextStyle">
 					<xsl:value-of select="$watermarkText"/>
@@ -2821,9 +2810,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 		<xsl:variable name="tempDoc" select="document(concat($oids-base-url,$codeSystem,$file-suffix))"/>
 		<xsl:variable name="node" select="$tempDoc/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]"/>
 		<xsl:variable name="value" select="$node/../Value[@ColumnRef=$display_language]/SimpleValue"/>
-		<xsl:if test="$value">
-			<xsl:value-of select="$value"/>
-		</xsl:if>
+		<xsl:if test="$value"><xsl:value-of select="$value"/></xsl:if>
 		<xsl:if test="not($value)">Error: code missing:(<xsl:value-of select="$code"/> in <xsl:value-of select="$codeSystem"/>)</xsl:if>
 	</xsl:template>
 	<xsl:template name="hpfb-title">
@@ -2839,9 +2826,9 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 
 <metaInformation>
 	<scenarios>
-		<scenario default="yes" name="HPFB" userelativepaths="no" externalpreview="yes" url="file:///c:/SPM/test/2.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test3.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
-		          profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no" validator="internal"
-		          customvalidator="">
+		<scenario default="yes" name="HPFB" userelativepaths="no" externalpreview="yes" url="file:///c:/SPM/test/4.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test3.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
+		          profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="renderx" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no"
+		          validator="internal" customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
 			<parameterValue name="show-section-numbers" value="'true()'"/>
 			<parameterValue name="show-data" value="'1'"/>

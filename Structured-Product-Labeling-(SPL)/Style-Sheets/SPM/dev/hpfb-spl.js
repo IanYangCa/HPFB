@@ -16,7 +16,7 @@ function initialWatermark(item, index){
 		var h_offset = - (width - $(table).width())/2; //Math.sin(angle)*width/2 + $(table).width()/2;
 		$(watermarkText).css("width", width);
 		$(watermarkText).css({top : v_offset, left: h_offset});
-		$(watermarkText).css("font-size", width / characters * 4 + "px");
+		$(watermarkText).css("font-size", width / characters * 2 + "px");
 		$(watermarkText).show();
 		$(watermarkText).css({'transform' :  'rotate(-' + angle + 'deg)'});
 	}
