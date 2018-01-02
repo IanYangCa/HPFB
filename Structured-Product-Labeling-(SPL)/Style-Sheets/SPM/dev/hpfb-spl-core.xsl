@@ -618,7 +618,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			</xsl:call-template>:
 			<xsl:call-template name="string-ISO-date">
 				<xsl:with-param name="text">
-					<xsl:value-of select="$revisionTimeCandidates"/>
+					<xsl:value-of select="$revisionTimeCandidates/v3:originalText"/>
 				</xsl:with-param>
 			</xsl:call-template>
 			<xsl:text>&#xA0;&#xA0;&#xA0;&#xA0;</xsl:text>
@@ -2320,7 +2320,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 									<!-- additive -->
 								</xsl:call-template>
 							</xsl:when>
-							<xsl:when test="@classCode = 'CNTM' and v3:quantity/v3:numerator/@value='0'">
+							<xsl:when test="@classCode = 'CNTM' and v3:quantity/v3:numerator/@value=0">
 								<xsl:call-template name="hpfb-title">
 									<xsl:with-param name="code" select="'10021'"/>
 									<!-- doesNotContain -->
