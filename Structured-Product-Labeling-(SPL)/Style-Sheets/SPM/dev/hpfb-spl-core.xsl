@@ -1508,16 +1508,6 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 		</xsl:if>
 		<tr>
 			<td>
-<!-- TODO REMOVE LATER
-				<xsl:choose>
-					<xsl:when test="v3:asEntityWithGeneric and ../v3:subjectOf/v3:characteristic/v3:code[starts-with(@code, 'SPL')]">
-						<xsl:call-template name="characteristics-old"/>
-					</xsl:when>
-					<xsl:when test="../v3:subjectOf/v3:characteristic">
-						<xsl:call-template name="characteristics-new"/>
-					</xsl:when>
-				</xsl:choose>
--->
 				<xsl:if test="../v3:subjectOf/v3:characteristic">
 					<xsl:call-template name="characteristics-new"/>
 				</xsl:if>
@@ -1543,83 +1533,6 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			</tr>
 		</xsl:if>
 	</xsl:template>
-	<!-- display the imprint information in the specified order.  a apply-template could be used here but then we would not be able to control what order the
-			 imprint information is displayed in since there isn't a requirement specifying that the characteristic must be programmed in a certain order-->
-	<!-- TODO REMOVE LATER -->
-	<!--
-	<xsl:template name="characteristics-old">
-		<table width="100%" cellpadding="3" cellspacing="0" class="formTablePetite">
-			<tr>
-				<td colspan="4" class="formHeadingTitle">
-					<xsl:call-template name="hpfb-title">
-						<xsl:with-param name="code" select="'10065'"/>
-					</xsl:call-template>
-				</td>
-			</tr>
-			<tr class="formTableRowAlt">
-				<xsl:call-template name="color">
-					<xsl:with-param name="path" select="../v3:subjectOf/v3:characteristic[v3:code/@code='1']"/>
-				</xsl:call-template>
-				<xsl:call-template name="score">
-					<xsl:with-param name="path" select="../v3:subjectOf/v3:characteristic[v3:code/@code='5']"/>
-				</xsl:call-template>
-			</tr>
-			<tr class="formTableRowAlt">
-				<xsl:call-template name="image">
-					<xsl:with-param name="path" select="../v3:subjectOf/v3:characteristic[v3:code/@code='2']"/>
-				</xsl:call-template>
-				<xsl:call-template name="production_amount">
-					<xsl:with-param name="path" select="../v3:subjectOf/v3:characteristic[v3:code/@code='6']"/>
-				</xsl:call-template>
-			</tr>
-			<tr class="formTableRow">
-				<xsl:call-template name="shape">
-					<xsl:with-param name="path" select="../v3:subjectOf/v3:characteristic[v3:code/@code='3']"/>
-				</xsl:call-template>
-				<xsl:call-template name="size">
-					<xsl:with-param name="path" select="../v3:subjectOf/v3:characteristic[v3:code/@code='11']"/>
-				</xsl:call-template>
-			</tr>
-			<tr class="formTableRowAlt">
-				<xsl:call-template name="flavor">
-					<xsl:with-param name="path" select="../v3:subjectOf/v3:characteristic[v3:code/@code='4']"/>
-				</xsl:call-template>
-				<xsl:call-template name="imprint">
-					<xsl:with-param name="path" select="../v3:subjectOf/v3:characteristic[v3:code/@code='12']"/>
-				</xsl:call-template>
-			</tr>
-			<tr class="formTableRowAlt">
-				<xsl:call-template name="pharmaceutical_standard">
-					<xsl:with-param name="path" select="../v3:subjectOf/v3:characteristic[v3:code/@code='13']"/>
-				</xsl:call-template>
-				<xsl:call-template name="scheduling_symbol">
-					<xsl:with-param name="path" select="../v3:subjectOf/v3:characteristic[v3:code/@code='14']"/>
-				</xsl:call-template>
-			</tr>
-			<tr class="formTableRowAlt">
-				<xsl:call-template name="therapeutic_class">
-					<xsl:with-param name="path" select="../v3:subjectOf/v3:characteristic[v3:code/@code='15']"/>
-				</xsl:call-template>
-			</tr>
-			<tr class="formTableRow">
-				<xsl:call-template name="contains">
-					<xsl:with-param name="path" select="../v3:subjectOf/v3:characteristic[v3:code/@code='SPLCONTAINS']"/>
-				</xsl:call-template>
-			</tr>
-			<xsl:if test="../v3:subjectOf/v3:characteristic[v3:code/@code='SPLCOATING']|../v3:subjectOf/v3:characteristic[v3:code/@code='SPLSYMBOL']">
-				<tr class="formTableRowAlt">
-					<xsl:call-template name="coating">
-						<xsl:with-param name="path" select="../v3:subjectOf/v3:characteristic[v3:code/@code='SPLCOATING']"/>
-					</xsl:call-template>
-					<xsl:call-template name="symbol">
-						<xsl:with-param name="path" select="../v3:subjectOf/v3:characteristic[v3:code/@code='SPLSYMBOL']"/>
-					</xsl:call-template>
-				</tr>
-			</xsl:if>
-		</table>
-	</xsl:template>
-	-->
-	<!-- End Of TODO -->
 
 	<xsl:template name="characteristics-new">
 		<table width="100%" cellpadding="3" cellspacing="0" class="formTablePetite">
