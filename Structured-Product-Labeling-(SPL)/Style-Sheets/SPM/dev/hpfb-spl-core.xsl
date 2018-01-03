@@ -1000,6 +1000,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 						<!-- if this is a multi-component subject then call to parts template -->
 						<xsl:when test="v3:part">
 							<xsl:apply-templates mode="subjects" select="v3:part"/>
+							<xsl:call-template name="ProductInfoIng"/>
 						</xsl:when>
 						<!-- otherwise it is a single product and we simply need to display the ingredients, imprint and packaging. -->
 						<xsl:otherwise>
