@@ -29,8 +29,8 @@ be represented
 	font-size: 12pt;	
 	background-color: rgba(255,255,255,0);
 	color: #000000;
-	margin-left: 9em;
-	margin-right: 9em;
+	padding-left: 5em;
+	padding-right: 5em;
 }
 }
 							
@@ -47,8 +47,8 @@ be represented
 		font-family: "Times New Roman", Times, serif;
 		font-size: 12pt;	
 		color: #000000;
-		margin-left: 0in;
-		margin-right: 0in;
+		margin-left: 1in;
+		margin-right: 1in;
 		margin-top: 0in;
 		margin-bottom: 0in;
 	}
@@ -59,7 +59,20 @@ be represented
 	.spl .pagebreak { 
 		page-break-before: always; 
 	}
+	.leftColumn {
+		border:0px;
+		visibility: hidden;
+	}
 
+	.rightColumn {
+		border:0px solid white;
+		height:100%;
+		overflow:auto;
+		width:100%;
+	}
+	.spl .tableOfContent {
+		visibility: visible;
+	}
 }
 .header3911 {	
 	font-family: Century Gothic,sans-serif;
@@ -89,6 +102,13 @@ be represented
 .spl h6 {
 	page-break-before: auto;
 	page-break-after: avoid;
+}
+.leftColumn a:hover {
+	color:grey;
+}
+
+.leftColumn h1 a:hover {
+	color:grey;
 }
 
 .spl div.Warning {
@@ -874,27 +894,22 @@ be represented
 	margin:0 auto;
 	width:80%;
 }
-.spl .titlePage .leftColunm{
+.leftColumn {
+	border:1px solid black;
 	float:left;
-	text-align:left;
-	width:49%;
+	height:100%;
+	width:25%;
+	overflow: auto;
 }
-.spl .titlePage .leftColunm .address{
-	width:100%;
-}
-.spl .titlePage .leftColunm .companyWebsite{
-	float:left;
-	text-align:left;
-	width:100%;
-}
-.spl .titlePage .rightColunm{
+
+.rightColumn {
+	border:1px solid black;
 	float:right;
-	text-align:right;
-	width:49%;
+	height:100%;
+	width:62%;
+	overflow: auto;
 }
-.spl .titlePage .rightColunm .date{
-	width:100%;
-}
+
 .spl .titlePage .submissionNumber {
 	clear:both;
 	font-size:1em;
@@ -905,10 +920,7 @@ be represented
 	width:80%;
 
 }
-.spl .titlePage .companyRight {
-	font-size:1em;
-	margin-top:35px;
-}
+
 .spl .titlePage table tr .borderCellLeft {
     border: 1px solid black;
     text-align: left;
@@ -959,4 +971,45 @@ be represented
 
 .spl .bold {
     font-weight: bold;
+}
+
+.expand {
+  height: 0px;
+  overflow: hidden;
+  transition: height 0.5s;
+  color: #FFF;
+}
+.toggle:checked ~ .expand {
+  height: auto;
+}
+.toggle:checked ~ a::before {
+  content: "-";
+}
+.pageHeader {
+    border: 1px solid black;
+    background-color:#eff0f1;
+	font-size: 1.2em;
+	font-weight:bold;
+	width:100%;
+}
+.pageHeader .pageTitle {
+	text-align: center;
+	padding-left:3px;
+	padding-right:3px;
+}
+.pageHeader .marketStatus {
+	float:left;
+	padding-left:3px;
+	text-align: left;
+	min-width: 33%;
+}
+.pageHeader .approveDate {
+	text-align: center;
+	width: 100%;
+}
+.pageHeader .revisionDate {
+	float:right;
+	padding-right:3px;
+	text-align: right;
+	width: 33%;
 }

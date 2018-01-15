@@ -219,10 +219,13 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				<link rel="stylesheet" type="text/css" href="{$css}"/>
 				<xsl:call-template name="include-custom-items"/>
 			</head>
-			<body class="spl" id="spl">
-				<xsl:attribute name="onload">
-					<xsl:text>setWatermarkBorder();</xsl:text>
-				</xsl:attribute>
+			<body onload="setWatermarkBorder();twoColumnsDisplay();">
+			<div class="pageHeader" id="pageHeader">
+			</div>
+			<div class="leftColumn" id="toc">
+				left column
+			</div>
+			<div class="spl rightColumn" id="spl">
 				<!-- Health Canada Generate Title Page -->
 				<xsl:call-template name="TitlePage"/>
 
@@ -230,9 +233,9 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				<xsl:apply-templates select="//v3:code[@code='440' and @codeSystem=$section-id-oid]/..">
 					<xsl:with-param name="render440" select="'xxx'"/>
 				</xsl:apply-templates>
-
-				<xsl:apply-templates mode="title" select="."/>
-
+				<div id="tableOfContent">
+					<xsl:apply-templates mode="title" select="."/>
+				</div>
 				<div class="Contents">
 					<!-- Not related documents [not(self::v3:relatedDocument[@typeCode = 'DRIV' or @typeCode = 'RPLC'])]-->
 					<xsl:apply-templates select="@*|node()">
@@ -255,11 +258,19 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					<xsl:text>&#xA0;</xsl:text>
 					<xsl:call-template name="distributorName"/>
 				</p>
+			</div>
 			</body>
 		</html>
 	</xsl:template>
 	<xsl:template name="TitlePage">
-		<div class="titlePage">
+		<xsl:variable name="titlePage">
+			<xsl:call-template name="hpfb-title">
+				<xsl:with-param name="code" select="'10'"/>
+				<!-- title page -->
+			</xsl:call-template>
+		</xsl:variable>
+		<div class="titlePage" id="titlePage">
+			<xsl:attribute name="toc"><xsl:value-of select="$titlePage"/></xsl:attribute>
 			<div class="pageTitle">
 				<xsl:value-of select="$documentTypes/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$root/v3:document/v3:code/@code]/../Value[@ColumnRef=$display_language]/SimpleValue"/>
 			</div>
@@ -269,7 +280,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					<!-- IncludePatientMedicationInformation -->
 				</xsl:call-template>
 			</div>
-			<div class="pageTitle">
+			<div class="pageTitle" id="pageTitle">
 				<xsl:value-of select="$root/v3:document/v3:title"/>
 			</div>
 			<div class="minSpace"/>
@@ -281,20 +292,24 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 							<xsl:call-template name="companyAddress"/>
 						</td>
 						<td class="borderCellLeft verticalTop">
+							<span id="approveDate">
 							<xsl:call-template name="hpfb-title">
 								<xsl:with-param name="code" select="'10103'"/>
 							</xsl:call-template>:
 							<xsl:call-template name="string-ISO-date">
 								<xsl:with-param name="text" select="/v3:document/v3:effectiveTime/v3:originalText"/>
 							</xsl:call-template>
+							</span>
 							<br/>
 							<br/>
+							<span id="revisionDate">
 							<xsl:call-template name="hpfb-title">
 								<xsl:with-param name="code" select="'10105'"/>
 							</xsl:call-template>:
 							<xsl:call-template name="string-ISO-date">
 								<xsl:with-param name="text" select="/v3:document/v3:effectiveTime/@value"/>
 							</xsl:call-template>
+							</span>
 						</td>
 					</tr>
 				</table>
@@ -2747,8 +2762,8 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
 			<parameterValue name="show-section-numbers" value="'true()'"/>
 			<parameterValue name="show-data" value="'1'"/>
-			<parameterValue name="css" value="'https://rawgit.com/IanYangCa/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/dev/hpfb-spl-core.css'"/>
-			<parameterValue name="resourcesdir" value="'https://rawgit.com/IanYangCa/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/dev/'"/>
+			<parameterValue name="css" value="'file://C:\Users\hcuser\git\IanYang\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\SPM\dev\hpfb-spl-core.css'"/>
+			<parameterValue name="resourcesdir" value="'file://C:\Users\hcuser\git\IanYang\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\SPM\dev\'"/>
 			<advancedProp name="sInitialMode" value=""/>
 			<advancedProp name="schemaCache" value="||"/>
 			<advancedProp name="bXsltOneIsOkay" value="true"/>

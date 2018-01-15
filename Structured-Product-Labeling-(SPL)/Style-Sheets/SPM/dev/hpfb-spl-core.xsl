@@ -225,11 +225,13 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				</xsl:attribute>
 				<!-- Health Canada Generate Title Page -->
 				<xsl:call-template name="TitlePage"/>
+				<div class="pagebreak" />
 
 				<!-- This is Foot Notes -->
 				<xsl:apply-templates select="//v3:code[@code='440' and @codeSystem=$section-id-oid]/..">
 					<xsl:with-param name="render440" select="'xxx'"/>
 				</xsl:apply-templates>
+				<div class="pagebreak" />
 
 				<xsl:apply-templates mode="title" select="."/>
 
@@ -2736,7 +2738,8 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 		</xsl:if>
 		<xsl:if test="not($value)">Error: code missing:(<xsl:value-of select="$code"/> in <xsl:value-of select="$section-id-oid"/>)</xsl:if>
 	</xsl:template>
-</xsl:transform><!-- Stylus Studio meta-information - (c) 2004-2009. Progress Software Corporation. All rights reserved.
+</xsl:transform>
+<!-- Stylus Studio meta-information - (c) 2004-2009. Progress Software Corporation. All rights reserved.
 
 <metaInformation>
 	<scenarios>
