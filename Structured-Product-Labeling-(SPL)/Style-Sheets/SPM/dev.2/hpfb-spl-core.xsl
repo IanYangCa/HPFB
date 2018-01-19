@@ -126,48 +126,48 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			<xsl:choose>
 				<!-- Health Canada Heading level 1 (part1,2,3) doesn't have a prefix -->
 				<xsl:when test="$heading='1'">
-					<a href="#{$code}">
 						<h1 id="{$code}h" style="text-transform:uppercase; font-size:1.5em;">
+					<a href="#{$code}">
 							<xsl:value-of select="v3:title"/>
-						</h1>
 					</a>
+						</h1>
 				</xsl:when>
 				<!-- Health Canada Heading level 2 doesn't havent any parent prefix -->
 				<xsl:when test="$heading='2'">
-					<a href="#{$code}">
 						<h2 id="{$code}h" style="text-transform:uppercase;padding-left:2em;margin-top:1.5ex;font-size:1.4em;">
+					<a href="#{$code}">
 							<xsl:value-of select="concat($prefix,'. ')"/>
 							<xsl:value-of select="v3:title"/>
-						</h2>
 					</a>
+						</h2>
 				</xsl:when>
 				<!-- Health Canada  Heading level 3,4,5 you concatenate the parent prefix with the prefix -->
 				<xsl:when test="$heading='3'">
-					<a href="#{$code}">
 						<h3 id="{$code}h" style="padding-left:4.5em;margin-top:1.3ex;font-size:1.3em;">
+					<a href="#{$code}">
 							<xsl:value-of select="concat($parentPrefix,'.')"/>
 							<xsl:value-of select="concat($prefix,' ')"/>
 							<xsl:value-of select="v3:title"/>
-						</h3>
 					</a>
+						</h3>
 				</xsl:when>
 				<xsl:when test="$heading='4'">
-					<a href="#{$code}">
 						<h4 id="{$code}h" style="padding-left:6em;margin-top:1ex;font-size:1.2em;">
+					<a href="#{$code}">
 							<xsl:value-of select="concat($parentPrefix,'.')"/>
 							<xsl:value-of select="concat($prefix,' ')"/>
 							<xsl:value-of select="v3:title"/>
-						</h4>
 					</a>
+						</h4>
 				</xsl:when>
 				<xsl:when test="$heading='5'">
-					<a href="#{$code}">
 						<h5 id="{$code}h" style="padding-left:7.5em;margin-top:0.8ex;margin-bottom:0.8ex;font-size:1.1em;">
+					<a href="#{$code}">
 							<xsl:value-of select="concat($parentPrefix,'.')"/>
 							<xsl:value-of select="concat($prefix,' ')"/>
 							<xsl:value-of select="v3:title"/>
-						</h5>
 					</a>
+						</h5>
 				</xsl:when>
 				<xsl:otherwise>Error: <xsl:value-of select="$code"/>/<xsl:value-of select="$heading"/></xsl:otherwise>
 			</xsl:choose>
@@ -190,7 +190,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 	<!-- DOCUMENT MODEL -->
 	<xsl:template mode="title" match="/|@*|node()"/>
 	<xsl:template mode="title" match="v3:document">
-		<div class="DocumentTitle toc">
+		<div class="DocumentTitle toc" id="tableOfContent">
 			<p class="DocumentTitle">
 				<!-- Health Canada Title Page -->
 				<!-- Health Canada Added these 3 lines to render the ToC-->
@@ -223,19 +223,19 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			<div class="pageHeader" id="pageHeader">
 			</div>
 			<div class="leftColumn" id="toc">
-				left column
+				<div id="toc_0" style="display:inline;white-space:nowrap;clear:  both;"><h1 style="text-transform: uppercase;white-space: nowrap;font-size: 18px; width:100%;background-color:#eff0f1;"><span style="font-weight:bold;" onclick="expandCollapseAll(this);">+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></h1></div>
 			</div>
 			<div class="spl rightColumn" id="spl">
 				<!-- Health Canada Generate Title Page -->
 				<xsl:call-template name="TitlePage"/>
 
 				<!-- This is Foot Notes -->
+				<div class="pagebreak"/>
 				<xsl:apply-templates select="//v3:code[@code='440' and @codeSystem=$section-id-oid]/..">
 					<xsl:with-param name="render440" select="'xxx'"/>
 				</xsl:apply-templates>
-				<div id="tableOfContent">
-					<xsl:apply-templates mode="title" select="."/>
-				</div>
+				<div class="pagebreak"/>
+				<xsl:apply-templates mode="title" select="."/>
 				<div class="Contents">
 					<!-- Not related documents [not(self::v3:relatedDocument[@typeCode = 'DRIV' or @typeCode = 'RPLC'])]-->
 					<xsl:apply-templates select="@*|node()">
@@ -2414,6 +2414,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 		</text>
 	</xsl:template>
 
+
 	<!-- Health Canada Change-->
 	<!-- PARAGRAPH MODEL -->
 	<xsl:template match="v3:paragraph">
@@ -2762,8 +2763,8 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
 			<parameterValue name="show-section-numbers" value="'true()'"/>
 			<parameterValue name="show-data" value="'1'"/>
-			<parameterValue name="css" value="'file://C:\Users\hcuser\git\IanYang\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\SPM\dev\hpfb-spl-core.css'"/>
-			<parameterValue name="resourcesdir" value="'file://C:\Users\hcuser\git\IanYang\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\SPM\dev\'"/>
+			<parameterValue name="css" value="'file://C:\Users\hcuser\git\IanYang\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\SPM\dev.2\hpfb-spl-core.css'"/>
+			<parameterValue name="resourcesdir" value="'file://C:\Users\hcuser\git\IanYang\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\SPM\dev.2\'"/>
 			<advancedProp name="sInitialMode" value=""/>
 			<advancedProp name="schemaCache" value="||"/>
 			<advancedProp name="bXsltOneIsOkay" value="true"/>
