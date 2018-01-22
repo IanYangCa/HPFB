@@ -1,5 +1,6 @@
 var tocNodes = [];
 var tocIndex = 0;
+var expandCollapse;
 function setWatermarkBorder(){
 	var watermarks = $(".Watermark");
 	if(watermarks){
@@ -35,8 +36,10 @@ function twoColumnsDisplay(){
 	
 	$("#spl").css('height', ($(window).height() - $("#pageHeader").height() - 10) + 'px');
 	$("#tableOfContent").hide();
+	expandCollapse = $("#tableOfContent").attr("expandCollapse");
 	buildTreeNodes();
 	drawToC($("#toc"), tocNodes);
+	add2Nodes();
 	$(".leftColumn h1").css("font-size","18px");
 	$(".leftColumn h2").css("font-size","16px");
 	$(".leftColumn h3").css("font-size","14px");
@@ -115,6 +118,13 @@ function drawToC(temp, items){
 		});
 	}
 }
+function add2Nodes(){
+	temp = $("#toc").append(
+			$("<div style='float:left;'>&nbsp;&nbsp;&nbsp;</div><h1 style='text-transform: uppercase; font-size: 18px;white-space:nowrap;'><a href='#prodDesc'>" + $("#prodDesc tbody tr th").html() + "</a></h1>")
+			).append(
+				$("<div style='float:left;'>&nbsp;&nbsp;&nbsp;</div><h1 style='text-transform: uppercase; font-size: 18px;white-space:nowrap;'><a href='#organizations'>" + $("#organizations tbody tr th").html() + "</a></h1>")
+			);
+}
 function toggleNodes(e){
 	nodeID = "#toc_" + (parseInt($(e).parent()[0].id.substring(4)) + 1 );
 	node = $(nodeID);
@@ -142,9 +152,9 @@ function displayChildren(node, show){
 		}
 	} else {
 		if(show){
-			$(node).html("&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+			$(node).html("&nbsp;-&nbsp;" + expandCollapse);
 		} else {
-			$(node).html("&nbsp;+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+			$(node).html("&nbsp;+&nbsp;" + expandCollapse);
 		}
 	}
 }
