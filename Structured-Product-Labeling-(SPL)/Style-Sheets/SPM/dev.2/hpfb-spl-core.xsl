@@ -191,6 +191,12 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 	<xsl:template mode="title" match="/|@*|node()"/>
 	<xsl:template mode="title" match="v3:document">
 		<div class="DocumentTitle toc" id="tableOfContent">
+			<xsl:attribute name="expandCollapse">
+				<xsl:call-template name="hpfb-title">
+					<xsl:with-param name="code" select="'10107'"/>
+					<!-- applicationProductConcept -->
+				</xsl:call-template>
+			</xsl:attribute>
 			<p class="DocumentTitle">
 				<!-- Health Canada Title Page -->
 				<!-- Health Canada Added these 3 lines to render the ToC-->
@@ -248,16 +254,36 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 						<xsl:call-template name="PLRIndications"/>
 
 						<xsl:apply-templates mode="subjects" select="//v3:section/v3:subject/*[self::v3:manufacturedProduct or self::v3:identifiedSubstance]"/>
+						<table class="contentTablePetite" cellSpacing="0" width="100%" id="organizations">
+						<tbody>
+					<tr>
+						<th align="left" class="formHeadingTitle">
+							<strong>
+								<xsl:call-template name="hpfb-title">
+									<xsl:with-param name="code" select="'10109'"/>
+									<!-- Organization -->
+								</xsl:call-template>
+							</strong>
+						</th>
+					</tr>
+						<tr><td>
 						<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization"/>
+						</td></tr>
+						<tr><td>
 						<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization"/>
+						</td></tr>
+						<tr><td>
 						<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization"/>
+						</td></tr>
+						</tbody>
+						</table>
 					</div>
 				</xsl:if>
-				<p>
+<!--				<p>
 					<xsl:call-template name="effectiveDate"/>
 					<xsl:text>&#xA0;</xsl:text>
 					<xsl:call-template name="distributorName"/>
-				</p>
+				</p>-->
 			</div>
 			</body>
 		</html>
@@ -623,13 +649,13 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 		</xsl:if>
 	</xsl:template>
 
-	<xsl:template name="effectiveDate">
+<!--	<xsl:template name="effectiveDate">
 		<div class="EffectiveDate">
 			<xsl:variable name="revisionTimeCandidates" select="v3:effectiveTime|v3:availabilityTime"/>
 			<xsl:variable name="revisionTime" select="$revisionTimeCandidates/@value"/>
 			<xsl:call-template name="hpfb-title">
 				<xsl:with-param name="code" select="'10075'"/>
-				<!-- revisionTimeCandidates -->
+				 revisionTimeCandidates 
 			</xsl:call-template>:
 			<xsl:call-template name="string-ISO-date">
 				<xsl:with-param name="text">
@@ -639,7 +665,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			<xsl:text>&#xA0;&#xA0;&#xA0;&#xA0;</xsl:text>
 			<xsl:call-template name="hpfb-title">
 				<xsl:with-param name="code" select="'10074'"/>
-				<!-- revisionTime -->
+				 revisionTime 
 			</xsl:call-template>:
 			<xsl:call-template name="string-ISO-date">
 				<xsl:with-param name="text">
@@ -647,15 +673,15 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				</xsl:with-param>
 			</xsl:call-template>
 		</div>
-	</xsl:template>
+	</xsl:template>-->
 
-	<xsl:template name="distributorName">
+<!--	<xsl:template name="distributorName">
 		<div class="DistributorName">
 			<xsl:if test="v3:author/v3:assignedEntity/v3:representedOrganization/v3:name != ''">
 				<xsl:value-of select="v3:author/v3:assignedEntity/v3:representedOrganization/v3:name"/>
 			</xsl:if>
 		</div>
-	</xsl:template>
+	</xsl:template>-->
 
 	<xsl:template name="displayConditionsOfUse">
 		<tr>
@@ -978,7 +1004,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					<xsl:value-of select="$watermarkText"/>
 				</div>
 			</xsl:if>
-			<table class="contentTablePetite" cellSpacing="0" cellPadding="3" width="100%">
+			<table class="contentTablePetite" cellSpacing="0" cellPadding="3" width="100%" id="prodDesc">
 				<xsl:if test="../v3:subjectOf/v3:marketingAct/v3:code[@codeSystem=$marketing-status-oid]/../v3:effectiveTime/v3:high">
 					<xsl:call-template name="styleCodeAttr">
 						<xsl:with-param name="styleCode" select="'contentTablePetite'"/>
@@ -2189,11 +2215,20 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 		<table width="100%" cellpadding="3" cellspacing="0" class="formTablePetite">
 			<tr>
 				<td colspan="3" class="formHeadingTitle">
-					<xsl:if test="v3:ingredient[@classCode = 'INGR' or starts-with(@classCode,'ACTI')]">Other</xsl:if>
-					<xsl:call-template name="hpfb-title">
-						<xsl:with-param name="code" select="'10037'"/>
-						<!-- ingredients -->
-					</xsl:call-template>
+					<xsl:choose>
+					<xsl:when test="v3:ingredient[@classCode = 'INGR' or starts-with(@classCode,'ACTI')]">
+						<xsl:call-template name="hpfb-title">
+							<xsl:with-param name="code" select="'10110'"/>
+							<!-- other ingredients-->
+						</xsl:call-template>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:call-template name="hpfb-title">
+							<xsl:with-param name="code" select="'10037'"/>
+							<!-- ingredients -->
+						</xsl:call-template>
+					</xsl:otherwise>
+					</xsl:choose>
 				</td>
 			</tr>
 			<tr>
@@ -2763,8 +2798,8 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
 			<parameterValue name="show-section-numbers" value="'true()'"/>
 			<parameterValue name="show-data" value="'1'"/>
-			<parameterValue name="css" value="'file://C:\Users\hcuser\git\IanYang\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\SPM\dev.2\hpfb-spl-core.css'"/>
-			<parameterValue name="resourcesdir" value="'file://C:\Users\hcuser\git\IanYang\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\SPM\dev.2\'"/>
+			<parameterValue name="css" value="'file://C:\Users\hcuser\git\HPFB\master\Structured-Product-Labeling-(SPL)\Style-Sheets\SPM\dev.2\hpfb-spl-core.css'"/>
+			<parameterValue name="resourcesdir" value="'file://C:\Users\hcuser\git\HPFB\master\Structured-Product-Labeling-(SPL)\Style-Sheets\SPM\dev.2\'"/>
 			<advancedProp name="sInitialMode" value=""/>
 			<advancedProp name="schemaCache" value="||"/>
 			<advancedProp name="bXsltOneIsOkay" value="true"/>
