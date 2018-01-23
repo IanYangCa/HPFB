@@ -279,11 +279,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 						</table>
 					</div>
 				</xsl:if>
-<!--				<p>
-					<xsl:call-template name="effectiveDate"/>
-					<xsl:text>&#xA0;</xsl:text>
-					<xsl:call-template name="distributorName"/>
-				</p>-->
+
 			</div>
 			</body>
 		</html>
@@ -648,40 +644,6 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			</table>
 		</xsl:if>
 	</xsl:template>
-
-<!--	<xsl:template name="effectiveDate">
-		<div class="EffectiveDate">
-			<xsl:variable name="revisionTimeCandidates" select="v3:effectiveTime|v3:availabilityTime"/>
-			<xsl:variable name="revisionTime" select="$revisionTimeCandidates/@value"/>
-			<xsl:call-template name="hpfb-title">
-				<xsl:with-param name="code" select="'10075'"/>
-				 revisionTimeCandidates 
-			</xsl:call-template>:
-			<xsl:call-template name="string-ISO-date">
-				<xsl:with-param name="text">
-					<xsl:value-of select="$revisionTimeCandidates/v3:originalText"/>
-				</xsl:with-param>
-			</xsl:call-template>
-			<xsl:text>&#xA0;&#xA0;&#xA0;&#xA0;</xsl:text>
-			<xsl:call-template name="hpfb-title">
-				<xsl:with-param name="code" select="'10074'"/>
-				 revisionTime 
-			</xsl:call-template>:
-			<xsl:call-template name="string-ISO-date">
-				<xsl:with-param name="text">
-					<xsl:value-of select="$revisionTime"/>
-				</xsl:with-param>
-			</xsl:call-template>
-		</div>
-	</xsl:template>-->
-
-<!--	<xsl:template name="distributorName">
-		<div class="DistributorName">
-			<xsl:if test="v3:author/v3:assignedEntity/v3:representedOrganization/v3:name != ''">
-				<xsl:value-of select="v3:author/v3:assignedEntity/v3:representedOrganization/v3:name"/>
-			</xsl:if>
-		</div>
-	</xsl:template>-->
 
 	<xsl:template name="displayConditionsOfUse">
 		<tr>
@@ -2792,7 +2754,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 
 <metaInformation>
 	<scenarios>
-		<scenario default="yes" name="HPFB" userelativepaths="no" externalpreview="yes" url="file:///c:/SPM/test/4.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test3.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
+		<scenario default="yes" name="HPFB" userelativepaths="no" externalpreview="yes" url="file:///c:/SPM/test/5.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test3.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
 		          profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="renderx" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no"
 		          validator="internal" customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
