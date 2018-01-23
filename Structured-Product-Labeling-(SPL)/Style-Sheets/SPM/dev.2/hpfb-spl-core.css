@@ -933,7 +933,9 @@ be represented
 	border:1px solid black;
 	float:right;
 	height:100%;
-	width:62%;
+	padding-left:1px !important;
+	padding-right:0px !important;
+	width:74%;
 	overflow: auto;
 }
 
@@ -978,7 +980,7 @@ be represented
     background:white;
     display:block;
     min-height:50%; 
-    min-width:50%;
+    min-width:10%;
 }
 .spl table.WatermarkText{
     z-index:1;
