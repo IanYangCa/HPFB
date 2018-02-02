@@ -71,6 +71,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 
 	<xsl:template name="include-custom-items">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<script src="{$resourcesdir}hpfb-spl.js" type="text/javascript" charset="utf-8">/* */</script>
 	</xsl:template>
 	<!-- Process mixins if they exist -->
@@ -90,8 +91,10 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 		<!-- Health Canada Import previous prefix level -->
 		<xsl:param name="parentPrefix" select="''"/>
 		<xsl:variable name="code" select="v3:code/@code"/>
+		<xsl:variable name="sectionID" select="./@ID"/>
 		<xsl:variable name="validCode" select="$section-id-oid"/>
 		<xsl:variable name="heading" select="$codeLookup/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]/../Value[@ColumnRef='level']/SimpleValue"/>
+
 		<!-- Determine most right prefix. -->
 		<xsl:variable name="prefix">
 			<xsl:choose>
@@ -126,56 +129,44 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			<xsl:choose>
 				<!-- Health Canada Heading level 1 (part1,2,3) doesn't have a prefix -->
 				<xsl:when test="$heading='1'">
-						<h1 id="{$code}h" style="text-transform:uppercase; font-size:1.5em;">
-					<a href="#{$code}">
-							<xsl:value-of select="v3:title"/>
-					</a>
-						</h1>
+					<h1 id="{$sectionID}h"><a href="#{$sectionID}"><xsl:value-of select="v3:title"/></a></h1>
 				</xsl:when>
 				<!-- Health Canada Heading level 2 doesn't havent any parent prefix -->
 				<xsl:when test="$heading='2'">
-						<h2 id="{$code}h" style="text-transform:uppercase;padding-left:2em;margin-top:1.5ex;font-size:1.4em;">
-					<a href="#{$code}">
-							<xsl:value-of select="concat($prefix,'. ')"/>
-							<xsl:value-of select="v3:title"/>
-					</a>
-						</h2>
+					<h2 id="{$sectionID}h" style="padding-left:2em;margin-top:1.5ex;"><a href="#{$sectionID}"><xsl:value-of select="concat($prefix,'. ')"/><xsl:value-of select="v3:title"/></a></h2>
 				</xsl:when>
-				<!-- Health Canada  Heading level 3,4,5 you concatenate the parent prefix with the prefix -->
 				<xsl:when test="$heading='3'">
-						<h3 id="{$code}h" style="padding-left:4.5em;margin-top:1.3ex;font-size:1.3em;">
-					<a href="#{$code}">
-							<xsl:value-of select="concat($parentPrefix,'.')"/>
-							<xsl:value-of select="concat($prefix,' ')"/>
-							<xsl:value-of select="v3:title"/>
-					</a>
-						</h3>
+					<h3 id="{$sectionID}h" style="padding-left:4.5em;margin-top:1.3ex;">
+						<a href="#{$sectionID}">
+								<xsl:value-of select="concat($parentPrefix,'.')"/>
+								<xsl:value-of select="concat($prefix,' ')"/>
+								<xsl:value-of select="v3:title"/>
+						</a>
+					</h3>
 				</xsl:when>
 				<xsl:when test="$heading='4'">
-						<h4 id="{$code}h" style="padding-left:6em;margin-top:1ex;font-size:1.2em;">
-					<a href="#{$code}">
-							<xsl:value-of select="concat($parentPrefix,'.')"/>
-							<xsl:value-of select="concat($prefix,' ')"/>
-							<xsl:value-of select="v3:title"/>
-					</a>
-						</h4>
+					<h4 id="{$sectionID}h" style="padding-left:6em;margin-top:1ex;">
+						<a href="#{$sectionID}">
+								<xsl:value-of select="concat($parentPrefix,'.')"/>
+								<xsl:value-of select="concat($prefix,' ')"/>
+								<xsl:value-of select="v3:title"/>
+						</a>
+					</h4>
 				</xsl:when>
 				<xsl:when test="$heading='5'">
-						<h5 id="{$code}h" style="padding-left:7.5em;margin-top:0.8ex;margin-bottom:0.8ex;font-size:1.1em;">
-					<a href="#{$code}">
-							<xsl:value-of select="concat($parentPrefix,'.')"/>
-							<xsl:value-of select="concat($prefix,' ')"/>
-							<xsl:value-of select="v3:title"/>
-					</a>
-						</h5>
+					<h5 id="{$sectionID}h" style="padding-left:7.5em;margin-top:0.8ex;margin-bottom:0.8ex;">
+						<a href="#{$sectionID}">
+								<xsl:value-of select="concat($parentPrefix,'.')"/>
+								<xsl:value-of select="concat($prefix,' ')"/>
+								<xsl:value-of select="v3:title"/>
+						</a>
+					</h5>
 				</xsl:when>
 				<xsl:otherwise>Error: <xsl:value-of select="$code"/>/<xsl:value-of select="$heading"/></xsl:otherwise>
 			</xsl:choose>
 		</xsl:if>
-		<!--Health Canada Call the template for the subsequent sections -->
 		<xsl:apply-templates select="v3:component/v3:section" mode="tableOfContents">
 			<xsl:with-param name="parentPrefix">
-				<!--Health Canada  Send the rendered prefix down to nested elements. -->
 				<xsl:choose>
 					<xsl:when test="$heading='1' or $heading='2'">
 						<xsl:value-of select="$prefix"/>
@@ -187,7 +178,6 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			</xsl:with-param>
 		</xsl:apply-templates>
 	</xsl:template>
-	<!-- DOCUMENT MODEL -->
 	<xsl:template mode="title" match="/|@*|node()"/>
 	<xsl:template mode="title" match="v3:document">
 		<div class="DocumentTitle toc" id="tableOfContent">
@@ -198,8 +188,6 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				</xsl:call-template>
 			</xsl:attribute>
 			<p class="DocumentTitle">
-				<!-- Health Canada Title Page -->
-				<!-- Health Canada Added these 3 lines to render the ToC-->
 				<span class="formHeadingTitle">
 					<xsl:apply-templates select="v3:component" mode="tableOfContents"/>
 				</span>
@@ -211,7 +199,6 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 		</div>
 	</xsl:template>
 	<xsl:template match="/v3:document">
-		<!-- GS: this template needs thorough refactoring -->
 		<html>
 			<head>
 				<meta name="documentId" content="{/v3:document/v3:id/@root}"/>
@@ -222,64 +209,62 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					<!-- GS: this isn't right because the title can have markup -->
 					<xsl:value-of select="v3:title"/>
 				</title>
+				<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
 				<link rel="stylesheet" type="text/css" href="{$css}"/>
 				<xsl:call-template name="include-custom-items"/>
 			</head>
 			<body onload="setWatermarkBorder();twoColumnsDisplay();">
-			<div class="pageHeader" id="pageHeader">
-			</div>
-			<div class="leftColumn" id="toc">
-				<div id="toc_0" style="display:inline;white-space:nowrap;clear:  both;"><h1 style="text-transform: uppercase;white-space: nowrap;font-size: 18px; width:100%;background-color:#eff0f1;"><span style="font-weight:bold;" onclick="expandCollapseAll(this);">+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></h1></div>
-			</div>
-			<div class="spl rightColumn" id="spl">
-				<!-- Health Canada Generate Title Page -->
-				<xsl:call-template name="TitlePage"/>
-
-				<!-- This is Foot Notes -->
-				<div class="pagebreak"/>
-				<xsl:apply-templates select="//v3:code[@code='440' and @codeSystem=$section-id-oid]/..">
-					<xsl:with-param name="render440" select="'xxx'"/>
-				</xsl:apply-templates>
-				<div class="pagebreak"/>
-				<xsl:apply-templates mode="title" select="."/>
-				<div class="Contents">
-					<!-- Not related documents [not(self::v3:relatedDocument[@typeCode = 'DRIV' or @typeCode = 'RPLC'])]-->
-					<xsl:apply-templates select="@*|node()">
-						<xsl:with-param name="render440" select="'440'"/>
-					</xsl:apply-templates>
+			<div class="pageHeader" id="pageHeader"></div>
+			<div class="contentBody">
+				<div class="triangle-left"></div><div class="triangle-right"></div>
+				<div class="leftColumn" id="toc">
+					<div id="toc_0"><h1 style="background-color:#eff0f1;"><span style="font-weight:bold;" onclick="expandCollapseAll(this);">+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></h1></div>
 				</div>
-				<div class="pagebreak"/>
-				<xsl:if test="boolean($show-data)">
-					<div class="DataElementsTable">
-						<xsl:call-template name="PLRIndications"/>
-
-						<xsl:apply-templates mode="subjects" select="//v3:section/v3:subject/*[self::v3:manufacturedProduct or self::v3:identifiedSubstance]"/>
-						<table class="contentTablePetite" cellSpacing="0" width="100%" id="organizations">
-						<tbody>
-					<tr>
-						<th align="left" class="formHeadingTitle">
-							<strong>
-								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10109'"/>
-									<!-- Organization -->
-								</xsl:call-template>
-							</strong>
-						</th>
-					</tr>
-						<tr><td>
-						<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization"/>
-						</td></tr>
-						<tr><td>
-						<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization"/>
-						</td></tr>
-						<tr><td>
-						<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization"/>
-						</td></tr>
-						</tbody>
-						</table>
+				<div class="spl rightColumn" id="spl">
+					<xsl:call-template name="TitlePage"/>
+					<div class="pagebreak"/>
+					<xsl:apply-templates select="//v3:code[@code='440' and @codeSystem=$section-id-oid]/..">
+						<xsl:with-param name="render440" select="'xxx'"/>
+					</xsl:apply-templates>
+					<div class="pagebreak"/>
+					<xsl:apply-templates mode="title" select="."/>
+					<div class="Contents">
+						<xsl:apply-templates select="@*|node()">
+							<xsl:with-param name="render440" select="'440'"/>
+						</xsl:apply-templates>
 					</div>
-				</xsl:if>
+					<div class="pagebreak"/>
+					<xsl:if test="boolean($show-data)">
+						<div class="DataElementsTable">
+							<xsl:call-template name="PLRIndications"/>
 
+							<xsl:apply-templates mode="subjects" select="//v3:section/v3:subject/*[self::v3:manufacturedProduct or self::v3:identifiedSubstance]"/>
+							<table class="contentTablePetite" cellSpacing="0" width="100%" id="organizations">
+							<tbody>
+								<tr>
+									<th align="left" class="formHeadingTitle">
+										<strong>
+											<xsl:call-template name="hpfb-title">
+												<xsl:with-param name="code" select="'10109'"/>
+												<!-- Organization -->
+											</xsl:call-template>
+										</strong>
+									</th>
+								</tr>
+								<tr><td>
+								<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization"/>
+								</td></tr>
+								<tr><td>
+								<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization"/>
+								</td></tr>
+								<tr><td>
+								<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization"/>
+								</td></tr>
+							</tbody>
+							</table>
+						</div>
+					</xsl:if>
+				</div>
 			</div>
 			</body>
 		</html>
@@ -419,13 +404,13 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 		<!-- Health Canada Changed variable name to eleSize-->
 		<xsl:element name="h{$eleSize}">
 			<xsl:if test="$eleSize = '1'">
-				<xsl:attribute name="style">font-size:1.5em;</xsl:attribute>
+				<xsl:attribute name="style">font-size:1.1em;</xsl:attribute>
 			</xsl:if>
 			<xsl:if test="$eleSize = '2'">
-				<xsl:attribute name="style">font-size:1.3em;</xsl:attribute>
+				<xsl:attribute name="style">font-size:1em;</xsl:attribute>
 			</xsl:if>
 			<xsl:if test="$eleSize = '3'">
-				<xsl:attribute name="style">font-size:1.2em;</xsl:attribute>
+				<xsl:attribute name="style">font-size:0.9em;</xsl:attribute>
 			</xsl:if>
 
 			<!-- Health Canada Change-->
@@ -536,6 +521,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			<xsl:apply-templates mode="sectionNumber" select="ancestor-or-self::v3:section"/>
 		</xsl:variable>
 		<xsl:variable name="code" select="v3:code/@code"/>
+		<xsl:variable name="sectionID" select="./@ID"/>
 
 		<xsl:variable name="heading" select="$codeLookup/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]/../Value[@ColumnRef='level']/SimpleValue"/>
 		<xsl:if test="not ($code='150' or $code='160' or $code='170' or $code=$render440 or $code='520')">
@@ -543,9 +529,13 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				<div class="pagebreak" />
 			</xsl:if>
 			<div class="Section">
+				<xsl:attribute name="toc-include">
+					<xsl:value-of select="$codeLookup/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]/../Value[@ColumnRef='include_in_toc']/SimpleValue"/>
+				</xsl:attribute>
+				
 				<xsl:for-each select="v3:code">
 					<xsl:attribute name="data-sectionCode">
-						<xsl:value-of select="@code"/>
+						<xsl:value-of select="$sectionID"/>
 					</xsl:attribute>
 				</xsl:for-each>
 				<xsl:call-template name="styleCodeAttr">
@@ -553,9 +543,14 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					<xsl:with-param name="additionalStyleCode" select="'Section'"/>
 				</xsl:call-template>
 				<!-- Health Canada Changed the below line to get code of section for anchors-->
-				<xsl:for-each select="v3:code/@code">
+<!--				<xsl:for-each select="v3:code/@code">
 					<a name="{.}"/>
-				</xsl:for-each>
+				</xsl:for-each>-->
+				<a>
+					<xsl:attribute name="name">
+						<xsl:value-of select="$sectionID"/>
+					</xsl:attribute>
+				</a>
 				<p/>
 				<xsl:apply-templates select="v3:title">
 					<xsl:with-param name="sectionLevel" select="$heading"/>
@@ -2401,7 +2396,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 
 	<xsl:template match="v3:text[not(parent::v3:observationMedia)]">
 		<!-- Health Canada Change added font size attribute below-->
-		<text style="font-size:1.1em;">
+		<text style="font-size:0.8em;">
 			<xsl:apply-templates select="@*"/>
 			<xsl:apply-templates mode="mixed" select="node()"/>
 			<xsl:apply-templates mode="rems" select="../v3:subject2[v3:substanceAdministration/v3:componentOf/v3:protocol]"/>
@@ -2754,7 +2749,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 
 <metaInformation>
 	<scenarios>
-		<scenario default="yes" name="HPFB" userelativepaths="no" externalpreview="yes" url="file:///c:/SPM/test/5.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test3.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
+		<scenario default="yes" name="HPFB" userelativepaths="no" externalpreview="yes" url="file:///c:/SPM/test/5.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test5.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
 		          profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="renderx" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no"
 		          validator="internal" customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
