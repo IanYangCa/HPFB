@@ -22,13 +22,17 @@ be represented
 */
 
 /* @media screen { */
+body {
+	background-color: #eff0f1;
+	margin:10px 0 0 0;
+}
 .spl {
 	font-family: "Times New Roman", Times, serif;
 	font-size: 12pt;	
 	background-color: rgba(255,255,255,0);
 	color: #000000;
-	padding-left: 5em;
-	padding-right: 5em;
+	padding-left: 3px;
+	padding-right: 3px;
 }
 /* } */
 @media (min-width:481px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ }
@@ -162,8 +166,8 @@ be represented
 	text-align: left;
 }
 .spl div.Section {	
-	margin-left:4ex;
-	margin-right:4ex;
+/* 	margin-left:4ex; */
+/* 	margin-right:4ex; */
 }
 .spl div.Section h1 {	
 	text-indent: 0em;
@@ -934,11 +938,10 @@ be represented
 	width:100%;
 }
 .leftColumn {
-	border:1px solid black;
-	border-right: 5px solid lightgrey;
+	border-right: 12px solid lightgrey;
+	background-color:white;
 	display:inline;
 	float:left;
-	height:100%;
 	width:25%;
 	overflow: auto;
 	white-space:nowrap;
@@ -955,12 +958,10 @@ be represented
 	font-size: 0.7em !important;
 }
 .rightColumn {
-	border:1px solid black;
-	float:right;
+	background-color:white;
+	float:left;
 	height:100%;
-	padding-left:0px !important;
-	padding-right:0px !important;
-	width:73.5%;
+	width:70%;
 	overflow: auto;
 }
 
@@ -1043,29 +1044,71 @@ be represented
   content: "-";
 }
 .pageHeader {
-    border: 1px solid black;
-    background-color:#eff0f1;
     display:inline-block;
 	font-size: 0.9em;
 	font-weight:bold;
-	width:100%;
+	width:99.8%;
 }
 .pageHeader .pageTitle {
+	height:25px;
 	text-align: center;
-	padding-left:3px;
-	padding-right:3px;
+	padding-left:5px;
+	padding-right:5px;
+	overflow:auto;
+	white-space:nowrap;
+	width: 100%;
+}
+.pageHeader #pageHeaderTitle{
+	text-align: center;
+	padding-left:10px;
+	padding-right:5px;
 	overflow:auto;
 	white-space:nowrap;
 }
+.pageHeader #approvedRevisionDateLabel {
+	display: inline-block;
+	font-size: 80%;
+	text-align: left;
+	padding-left:3px;
+	padding-right:1px;
+	white-space:nowrap;
+}
+.pageHeader #approvedRevisionDateValue {
+	font-size: 80%;
+	text-align: left;
+	padding-left:1px;
+	padding-right:5px;
+	white-space:nowrap;
+}
+.pageHeader #headerBrandName {
+	font-size: 80%;
+	text-align: left;
+	padding-left:5px;
+	padding-right:1px;
+	white-space:nowrap;
+}
+.pageHeader #pageHeaderTitle {
+	font-size: 80%;
+	text-align: left;
+	overflow:auto;
+	padding-left:1px;
+	padding-right:5px;
+	white-space:nowrap;
+}
+.pageHeader table {
+	border-spacing: 0;
+	width: 100%;
+}
 ::-webkit-scrollbar{
-	width:5px;
-   	height: 5px;
+	width:15px;
+   	height: 15px;
 }
 ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey; 
+    box-shadow: inset 0 0 0 LIGHTGREY; 
+    background-color: #F4F4F4;
 }
 ::-webkit-scrollbar-thumb {
-    background: darkcyan; 
+    background-color: lightgrey;
 }
 
 .pageHeader .marketStatus {
@@ -1075,33 +1118,36 @@ be represented
 	min-width: 33%;
 }
 .pageHeader .approveDate {
-	text-align: center;
+}
+.pageHeader .leftApproveDate {
+	border: 1px solid black;
+	float:left;
 	font-size: 80%;
-	width: 100%;
+	height:25px;
+	text-align: center;
+	padding-left:5px;
+	padding-right:5px;
+	width: 120px;
 }
 .pageHeader .revisionDate {
-	float:right;
-	font-size: 80%;
-	padding-right:3px;
-	text-align: right;
-	width: 33%;
+	padding-top:3px;
 }
 .triangle-left {
 	display:none !important;
 	width: 0;
 	height: 0;
-	border-top: 6px solid transparent;
-	border-right: 8px solid red;
-	border-bottom: 6px solid transparent;
+	border-top: 12px solid transparent;
+	border-right: 12px solid red;
+	border-bottom: 12px solid transparent;
 	z-index:3;
 }
 .triangle-right {
 	display:none !important;
 	width: 0;
 	height: 0;
-	border-top: 6px solid transparent;
-	border-left: 8px solid red;
-	border-bottom: 6px solid transparent;
+	border-top: 12px solid transparent;
+	border-left: 12px solid red;
+	border-bottom: 12px solid transparent;
 	z-index:3;
 }
 @media screen and (min-width: 300px) and (max-width: 580px) {

@@ -190,6 +190,24 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			<p class="DocumentTitle">
 				<span class="formHeadingTitle">
 					<xsl:apply-templates select="v3:component" mode="tableOfContents"/>
+					<xsl:text disable-output-escaping="yes">
+						&lt;h1 id=&#39;productDescriptionh&#39;&gt;&lt;a href=&#39;#prodDesc&#39;&gt;
+					</xsl:text>
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10066'"/>
+						<!-- productInformation -->
+					</xsl:call-template>
+					<xsl:text disable-output-escaping="yes">&lt;/a&gt;&lt;/h1&gt;</xsl:text>
+					<xsl:call-template name="productNames"/>
+					<xsl:text disable-output-escaping="yes">
+						&lt;h1 id=&#39;organizationsh&#39;&gt;&lt;a href=&#39;#organizations&#39;&gt;
+					</xsl:text>
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10109'"/>
+						<!-- Organization -->
+					</xsl:call-template>
+					<xsl:text disable-output-escaping="yes">&lt;/a&gt;&lt;/h1&gt;</xsl:text>
+					<xsl:call-template name="organizations"/>
 				</span>
 			</p>
 			<xsl:if test="not(//v3:manufacturedProduct) and /v3:document/v3:code/@displayName">
@@ -197,6 +215,72 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				<br/>
 			</xsl:if>
 		</div>
+	</xsl:template>
+	<xsl:template name="productNames">
+		<xsl:for-each select="//v3:manufacturedProduct/v3:manufacturedProduct">
+			<h2 id="product{count(preceding::v3:manufacturedProduct/v3:manufacturedProduct)}h" style="padding-left:2em;margin-top:1.5ex;"><a href="#product{count(preceding::v3:manufacturedProduct/v3:manufacturedProduct)}">
+			<xsl:value-of select="./v3:name"/>
+			<xsl:variable name="strength">
+				<xsl:for-each select="./v3:ingredient[starts-with(@classCode,'ACTI')]/v3:quantity/v3:numerator">
+					<xsl:apply-templates mode="productNames" select="."/>
+				</xsl:for-each>
+			</xsl:variable>
+			<xsl:if test="$strength !=''">
+				<xsl:variable name="strLen" select="string-length($strength)"/>
+				<xsl:value-of select="concat(' - ', substring($strength, 1, $strLen - 1))"/>
+			</xsl:if>
+			</a></h2>
+		</xsl:for-each>
+	</xsl:template>
+	<xsl:template mode="productNames" match="node()">
+		<xsl:choose>
+		<xsl:when test="./@value">
+			<xsl:value-of select="./@value"/><xsl:value-of select="'/'"/>
+		</xsl:when>
+		<xsl:when test=".">
+			<xsl:value-of select="'-'"/><xsl:value-of select="'/'"/>
+		</xsl:when>
+		</xsl:choose>
+	</xsl:template>
+	<xsl:template name="organizations">
+		<xsl:for-each select="//v3:author/v3:assignedEntity/v3:representedOrganization">
+			<xsl:if test="(count(./v3:name)&gt;0)">
+				<h2 id="dinOwner{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization)}h" style="padding-left:2em;margin-top:1.5ex;"><a href="#dinOwner{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization)}">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10020'"/>
+						<!-- DIN_Owner -->
+					</xsl:call-template>
+				</a></h2>
+			</xsl:if>
+		</xsl:for-each>
+		<xsl:for-each select="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization">
+			<xsl:variable name="role_id" select="./v3:id[@root=$organization-role-oid]/@extension"/>
+			<xsl:variable name="role_name" select="(document(concat($oids-base-url,$organization-role-oid,$file-suffix)))/gc:CodeList/SimpleCodeList/Row[./Value[@ColumnRef='code']/SimpleValue=$role_id]/Value[@ColumnRef=$display_language]/SimpleValue"/>
+			<h2 id="{$role_name}{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization)}h" style="padding-left:2em;margin-top:1.5ex;"><a href="#{$role_name}{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization)}">
+				<xsl:choose>
+					<!-- replace with HPFB codes -->
+					<xsl:when test="string($role_name) != 'NaN'">
+						<xsl:value-of select="$role_name"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:call-template name="hpfb-title">
+							<xsl:with-param name="code" select="'10056'"/>
+							<!-- otherParty -->
+						</xsl:call-template>
+					</xsl:otherwise>
+				</xsl:choose>
+			</a></h2>
+		</xsl:for-each>
+		<xsl:for-each select="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization">
+			<xsl:if test="(count(./v3:name)&gt;0)">
+				<h2 id="otherpart{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization)}h" style="padding-left:2em;margin-top:1.5ex;"><a href="#otherpart{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization)}">
+					<xsl:call-template name="hpfb-title">
+							<xsl:with-param name="code" select="'10071'"/>
+							<!-- registrant -->
+					</xsl:call-template>&#xA0;-&#xA0;<xsl:value-of select="./v3:name"/>
+				</a></h2>
+			</xsl:if>
+		</xsl:for-each>
 	</xsl:template>
 	<xsl:template match="/v3:document">
 		<html>
@@ -214,7 +298,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				<xsl:call-template name="include-custom-items"/>
 			</head>
 			<body onload="setWatermarkBorder();twoColumnsDisplay();">
-			<div class="pageHeader" id="pageHeader"></div>
+			<div class="pageHeader" id="pageHeader"><table><tbody><tr><td><div id="approvedRevisionDateLabel"></div></td><td><div id="approvedRevisionDateValue"></div></td><td><div id="headerBrandName"></div></td><td><div id="pageHeaderTitle"></div></td></tr></tbody></table></div>
 			<div class="contentBody">
 				<div class="triangle-left"></div><div class="triangle-right"></div>
 				<div class="leftColumn" id="toc">
@@ -276,7 +360,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				<!-- title page -->
 			</xsl:call-template>
 		</xsl:variable>
-		<div class="titlePage" id="titlePage">
+		<div class="titlePage" id="titlePage" tabindex="1">
 			<xsl:attribute name="toc"><xsl:value-of select="$titlePage"/></xsl:attribute>
 			<div class="pageTitle">
 				<xsl:value-of select="$documentTypes/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$root/v3:document/v3:code/@code]/../Value[@ColumnRef=$display_language]/SimpleValue"/>
@@ -288,7 +372,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				</xsl:call-template>
 			</div>
 			<div class="pageTitle" id="pageTitle">
-				<xsl:value-of select="$root/v3:document/v3:title"/>
+				<xsl:apply-templates mode="mixed" select="$root/v3:document/v3:title"/>
 			</div>
 			<div class="minSpace"/>
 			<div class="minSpace"/>
@@ -300,22 +384,27 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 						</td>
 						<td class="borderCellLeft verticalTop">
 							<span id="approveDate">
-							<xsl:call-template name="hpfb-title">
-								<xsl:with-param name="code" select="'10103'"/>
-							</xsl:call-template>:
+								<xsl:attribute name="headerDateLabel">
+									<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10120'"/></xsl:call-template>
+								</xsl:attribute>
+								<xsl:attribute name="headerBrandName">
+									<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10130'"/></xsl:call-template>
+								</xsl:attribute>
+							<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10103'"/></xsl:call-template>:
+							<span id="approveDateValue">
 							<xsl:call-template name="string-ISO-date">
 								<xsl:with-param name="text" select="/v3:document/v3:effectiveTime/v3:originalText"/>
-							</xsl:call-template>
+							</xsl:call-template></span>
 							</span>
 							<br/>
 							<br/>
 							<span id="revisionDate">
 							<xsl:call-template name="hpfb-title">
 								<xsl:with-param name="code" select="'10105'"/>
-							</xsl:call-template>:
+							</xsl:call-template>:<span id="revisionDateValue">
 							<xsl:call-template name="string-ISO-date">
 								<xsl:with-param name="text" select="/v3:document/v3:effectiveTime/@value"/>
-							</xsl:call-template>
+							</xsl:call-template></span>
 							</span>
 						</td>
 					</tr>
@@ -532,6 +621,11 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				<xsl:attribute name="toc-include">
 					<xsl:value-of select="$codeLookup/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$code]/../Value[@ColumnRef='include_in_toc']/SimpleValue"/>
 				</xsl:attribute>
+				<xsl:if test="$code = '440'">
+					<xsl:attribute name="tabindex">
+						<xsl:value-of select="'2'"/>
+					</xsl:attribute>
+				</xsl:if>
 				
 				<xsl:for-each select="v3:code">
 					<xsl:attribute name="data-sectionCode">
@@ -1041,10 +1135,10 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 	</xsl:template>
 	<xsl:template mode="subjects" match="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization">
 		<xsl:if test="./v3:name">
-			<table width="100%" cellpadding="3" cellspacing="0" class="formTableMorePetite">
+			<xsl:variable name="role_id" select="./v3:id[@root=$organization-role-oid]/@extension"/>
+			<xsl:variable name="role_name" select="(document(concat($oids-base-url,$organization-role-oid,$file-suffix)))/gc:CodeList/SimpleCodeList/Row[./Value[@ColumnRef='code']/SimpleValue=$role_id]/Value[@ColumnRef=$display_language]/SimpleValue"/>
+			<table width="100%" cellpadding="3" cellspacing="0" class="formTableMorePetite" id="{$role_name}{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization)}">
 				<!-- replace with the label for the role -->
-				<xsl:variable name="role_id" select="./v3:id[@root=$organization-role-oid]/@extension"/>
-				<xsl:variable name="role_name" select="(document(concat($oids-base-url,$organization-role-oid,$file-suffix)))/gc:CodeList/SimpleCodeList/Row[./Value[@ColumnRef='code']/SimpleValue=$role_id]/Value[@ColumnRef=$display_language]/SimpleValue"/>
 				<tr>
 					<td colspan="5" class="formHeadingReg">
 						<span class="formHeadingTitle">
@@ -1216,7 +1310,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 	<!-- DIN info -->
 	<xsl:template mode="subjects" match="//v3:author/v3:assignedEntity/v3:representedOrganization">
 		<xsl:if test="(count(./v3:name)&gt;0)">
-			<table width="100%" cellpadding="3" cellspacing="0" class="formTableMorePetite">
+			<table width="100%" cellpadding="3" cellspacing="0" class="formTableMorePetite" id="dinOwner{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization)}">
 				<tr>
 					<td colspan="4" class="formHeadingReg">
 						<span class="formHeadingTitle">
@@ -1234,7 +1328,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 
 	<xsl:template mode="subjects" match="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization">
 		<xsl:if test="./v3:name">
-			<table width="100%" cellpadding="3" cellspacing="0" class="formTableMorePetite">
+			<table width="100%" cellpadding="3" cellspacing="0" class="formTableMorePetite" id="otherpart{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization)}">
 				<tr>
 					<td colspan="4" class="formHeadingReg">
 						<span class="formHeadingTitle">
@@ -1368,7 +1462,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 		</xsl:variable>
 
 		<tr>
-			<td class="contentTableTitle">
+			<td class="contentTableTitle" id="product{count(preceding::v3:manufacturedProduct/v3:manufacturedProduct)}">
 				<strong>
 					<xsl:value-of select="$medName"/>&#xA0;
 					<xsl:call-template name="string-uppercase">
