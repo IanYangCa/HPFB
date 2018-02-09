@@ -194,8 +194,8 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 						&lt;h1 id=&#39;productDescriptionh&#39;&gt;&lt;a href=&#39;#prodDesc&#39;&gt;
 					</xsl:text>
 					<xsl:call-template name="hpfb-title">
-						<xsl:with-param name="code" select="'10066'"/>
-						<!-- productInformation -->
+						<xsl:with-param name="code" select="'10000'"/>
+						<!-- productDescription -->
 					</xsl:call-template>
 					<xsl:text disable-output-escaping="yes">&lt;/a&gt;&lt;/h1&gt;</xsl:text>
 					<xsl:call-template name="productNames"/>
