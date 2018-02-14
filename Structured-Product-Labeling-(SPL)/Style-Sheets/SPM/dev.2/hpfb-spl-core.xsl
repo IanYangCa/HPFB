@@ -70,12 +70,8 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 	<xsl:variable name="characteristics" select="document(concat($oids-base-url,$product-characteristics-oid,$file-suffix))"/>
 
 	<xsl:template name="include-custom-items">
-		<link rel="stylesheet" type="text/css" href="{$resourcesdir}jqx.base.css"/>
-
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-		<script src="{$resourcesdir}jqxcore.js" type="text/javascript" charset="utf-8">/* */</script>
-		<script src="{$resourcesdir}jqxsplitter.js" type="text/javascript" charset="utf-8">/* */</script>
 		<script src="{$resourcesdir}hpfb-spl.js" type="text/javascript" charset="utf-8">/* */</script>
 	</xsl:template>
 	<!-- Process mixins if they exist -->
