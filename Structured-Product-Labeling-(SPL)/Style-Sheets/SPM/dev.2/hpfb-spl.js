@@ -17,10 +17,10 @@ $(window).resize(function(){
 		location.href = currentId ;
 	}
 });
+
 function setWatermarkBorder(){
 	var watermarks = $(".Watermark");
 	if(watermarks){
-		//watermarks.forEach(initialWatermark);
 		initialWatermark(watermarks, 1);
 	}
 }
@@ -41,16 +41,14 @@ function initialWatermark(item, index){
 	}
 }
 function twoColumnsDisplay(){
-//	$("#pageHeaderTitle").height($("#approvedRevisionDateLabel").height() + $("#approvedRevisionDateValue").height() + 5);
 	$("#tableOfContent").hide();
 	expandCollapse = $("#tableOfContent").attr("expandCollapse");
 	if(tocNodes.length < 1){
+		$("#toc_0999 h1").html(expandCollapse);
+		$("#toc_0999 h1").on('click', function(){expandCollapseAll($(this).prev());});
 		$("#approvedRevisionDateLabel").html($("#approveDate").attr("headerdatelabel"));
 		$("#headerBrandName").html($("#approveDate").attr("headerBrandName"));
 		$("#approvedRevisionDateValue").html($("#approveDateValue").html() + "/" + $("#revisionDateValue").html());
-//		$("#approvedRevisionDateLabel").parent().width($("#approvedRevisionDateLabel").width()+5);
-//		$("#approvedRevisionDateValue").parent().width($("#approvedRevisionDateValue").width()+5);
-//		$("#headerBrandName").parent().width($("#headerBrandName").width()+5);
 		insertComa = false;
 		headerTitle = "";
 		$("h2 a[href^='#product']").each(function(){
@@ -62,7 +60,7 @@ function twoColumnsDisplay(){
 			headerTitle += title.substring(0, title.lastIndexOf(' - '));
 		});
 		$("#pageHeaderTitle").html(headerTitle);
-		$("#pageHeaderTitle").parent().width("100%");
+
 		buildTreeNodes();
 		drawToC($("#toc"), tocNodes);
 		leftBoxWidth = $(".leftColumn").outerWidth();
@@ -74,6 +72,7 @@ function twoColumnsDisplay(){
 		$(".leftColumn").css('height', ($(window).height() - $("#pageHeader").outerHeight() - 18));
 		$(".rightColumn").css('height', $(".leftColumn").outerHeight() + 15);
 	}
+	$("#pageHeaderTitle").width($(window).width() - $("#approvedRevisionDateLabel").parent().width() - $("#approvedRevisionDateValue").parent().width() - $("#headerBrandName").parent().width());
 	$(".leftColumn").resizable({
 	        autoHide: true,
 	        handles: 'e',
@@ -282,7 +281,6 @@ function isMobile() {
 	  return check;
 	};function tocOnClick(){
 		$(".leftColumn a").each(function(index, value){
-//			console.log($(this).attr('href'));
 			$(this).on('click', function(){ currentId = $(this).attr('href'); location.href = currentId;});
 			
 		});
