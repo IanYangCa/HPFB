@@ -70,8 +70,12 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 	<xsl:variable name="characteristics" select="document(concat($oids-base-url,$product-characteristics-oid,$file-suffix))"/>
 
 	<xsl:template name="include-custom-items">
+		<link rel="stylesheet" type="text/css" href="{$resourcesdir}jqx.base.css"/>
+
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="{$resourcesdir}jqxcore.js" type="text/javascript" charset="utf-8">/* */</script>
+		<script src="{$resourcesdir}jqxsplitter.js" type="text/javascript" charset="utf-8">/* */</script>
 		<script src="{$resourcesdir}hpfb-spl.js" type="text/javascript" charset="utf-8">/* */</script>
 	</xsl:template>
 	<!-- Process mixins if they exist -->
@@ -298,11 +302,11 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				<xsl:call-template name="include-custom-items"/>
 			</head>
 			<body onload="setWatermarkBorder();twoColumnsDisplay();">
-			<div class="pageHeader" id="pageHeader"><table><tbody><tr><td><div id="approvedRevisionDateLabel"></div></td><td><div id="approvedRevisionDateValue"></div></td><td><div id="headerBrandName"></div></td><td><div id="pageHeaderTitle"></div></td></tr></tbody></table></div>
-			<div class="contentBody">
+			<div class="pageHeader" id="pageHeader"><span id="approvedRevisionDateLabel"></span><span id="approvedRevisionDateValue"></span><span id="headerBrandName"></span><span id="pageHeaderTitle"></span></div>
 				<div class="triangle-left"></div><div class="triangle-right"></div>
+			<div class="contentBody" id="jqxSplitter">
 				<div class="leftColumn" id="toc">
-					<div id="toc_0"><h1 style="background-color:lightgrey;"><span style="font-weight:bold;" onclick="expandCollapseAll(this);">+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></h1></div>
+					<div id="toc_0999"><span onclick="expandCollapseAll(this);">&#160;+&#160;</span><h1></h1></div>
 				</div>
 				<div class="spl rightColumn" id="spl">
 					<xsl:call-template name="TitlePage"/>
@@ -2843,7 +2847,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 
 <metaInformation>
 	<scenarios>
-		<scenario default="yes" name="HPFB" userelativepaths="no" externalpreview="yes" url="file:///e:/CPID-1.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test5.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
+		<scenario default="yes" name="HPFB" userelativepaths="no" externalpreview="yes" url="file:///c:/SPM/test/5.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test5.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
 		          profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="renderx" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no"
 		          validator="internal" customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
