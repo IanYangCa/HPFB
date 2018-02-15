@@ -4,8 +4,8 @@
 	<!-- "/.." means the value come from parent or caller parameter -->
 	<xsl:param name="oids-base-url" select="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'" />
 	<!-- Where to find JavaScript and CSS resources -->
-	<xsl:param name="resourcesdir" select="'https://rawgit.com/IanYangCa/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/CPID/'" />
-	<xsl:param name="css" select="concat($resourcesdir, 'hpfb-spl-core.css')" />
+	<xsl:param name="resourcesdir" select="'https://rawgit.com/IanYangCa/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/CPID/dev/'" />
+	<xsl:param name="css" select="concat($resourcesdir, 'hpfb-cpid-core.css')" />
 	<!-- is there any reason we render HTML 1.0?  -->
 	<xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
 	<xsl:strip-space elements="*"/>
