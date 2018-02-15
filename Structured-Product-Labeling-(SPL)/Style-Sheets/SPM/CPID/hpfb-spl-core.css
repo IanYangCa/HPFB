@@ -31,8 +31,8 @@ body {
 	font-size: 12pt;	
 	background-color: rgba(255,255,255,0);
 	color: #000000;
-	padding-left: 30px;
-	padding-right: 30px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 /* } */
 @media (min-width:481px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ }
@@ -938,7 +938,6 @@ body {
 	width:100%;
 }
 .leftColumn {
-	border-right: 12px solid lightgrey;
 	background-color:white;
 	display:inline;
 	float:left;
@@ -957,21 +956,16 @@ body {
 .leftColumn h5 {
 	font-size: 0.7em !important;
 }
-.leftColumn #toc_0999 {
-	display:inline;
-}
-.leftColumn #toc_0999 span {
-	float: left;
-	margin-top: 10px;
-}
-.leftColumn #toc_0999 h1 {
+.leftColumn #toc_0999 h1 span {
 	color: blue;
-	text-decoration: underline;
+	float: left;
+	text-decoration-line: underline;
 }
 .leftColumn #toc_0999 h1:hover {
 	color: grey;
 }
 .rightColumn {
+	border-left: 12px solid lightgrey;
 	background-color:white;
 	float:left;
 	height:100%;
@@ -1058,8 +1052,7 @@ body {
   content: "-";
 }
 .pageHeader {
-	display: inline;
-    float: left;
+    display:inline-block;
 	font-size: 0.9em;
 	font-weight:bold;
 	width:99.8%;
@@ -1074,7 +1067,6 @@ body {
 	width: 100%;
 }
 .pageHeader #pageHeaderTitle{
-	font-size: 80%;
 	text-align: center;
 	padding-left:10px;
 	padding-right:5px;
@@ -1082,6 +1074,7 @@ body {
 	white-space:nowrap;
 }
 .pageHeader #approvedRevisionDateLabel {
+	display: inline-block;
 	font-size: 80%;
 	text-align: left;
 	padding-left:3px;
@@ -1102,7 +1095,14 @@ body {
 	padding-right:1px;
 	white-space:nowrap;
 }
-
+.pageHeader #pageHeaderTitle {
+	font-size: 80%;
+	text-align: left;
+	overflow:auto;
+	padding-left:1px;
+	padding-right:5px;
+	white-space:nowrap;
+}
 .pageHeader table {
 	border-spacing: 0;
 	width: 100%;
