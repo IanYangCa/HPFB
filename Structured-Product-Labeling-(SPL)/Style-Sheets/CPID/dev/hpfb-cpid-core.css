@@ -33,6 +33,11 @@ body {
 	color: #000000;
 	padding-left: 10px;
 	padding-right: 10px;
+	margin-left: 10px;
+	margin-right:10px;
+}
+.cpidHiddenFields {
+	display: none;
 }
 /* } */
 @media (min-width:481px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ }
@@ -445,8 +450,9 @@ body {
 }
 
 .spl table	{
-	white-space: wrap;
+	border: 2px solid black;
 	font-size: 100%;
+	white-space: wrap;
 /*
 	border-top-style: none;
 	border-bottom-style: none;
@@ -458,6 +464,7 @@ body {
 	border-collapse: collapse;
 	border-color: black;
 	border-width: thin;
+	width: 100%;
 }
 
 /*
@@ -792,9 +799,11 @@ body {
 }
 .spl .formTitle {
 	background-color: #CCCCCC;
-	border: 1px solid #FFFFFF;
-	font-size: 125%;
+/* 	border: 1px solid #FFFFFF; */
+	border: 1px solid black;
+	font-size: 80%;
 	font-weight: bold;
+	width:30%;
 }
 .spl .formHeadingTitle {
 	border: none;
@@ -804,8 +813,9 @@ body {
 }
 .spl .formHeadingReg {
 	background-color: #CCCCCC;
-	border: 1px solid #FFFFFF;
-	font-size: 125%;
+/* 	border: 1px solid #FFFFFF; */
+	font-size: 100%;
+	font-weight: bold;
 }
 .spl .formTableRow {
 	background-color: #FFFFFF;
@@ -814,14 +824,14 @@ body {
 	background-color: #F2F2F2;
 }
 .spl .formLabel {
-	border: 1px solid #FFFFFF;
+/* 	border: 1px solid #FFFFFF; */
 	background-color: #DDDDDD;
 	font-size: 115%;
 	font-weight: bold;
 }
 .spl .formItem {
-	border: 1px solid #CCCCCC;
-	font-size: 110%;
+	border: 1px solid black;
+	font-size: 100%;
 }
 .spl .formTitle a:link {
 	font-weight: bold;
@@ -956,21 +966,29 @@ body {
 .leftColumn h5 {
 	font-size: 0.7em !important;
 }
-.leftColumn #toc_0999 h1 span {
-	color: blue;
+.leftColumn #toc_0999 {
+	display:inline;
+}
+.leftColumn #toc_0999 span {
 	float: left;
-	text-decoration-line: underline;
+	margin-top: 10px;
+}
+.leftColumn #toc_0999 h1 {
+	color: blue;
+	text-decoration: underline;
 }
 .leftColumn #toc_0999 h1:hover {
 	color: grey;
 }
 .rightColumn {
-	border-left: 12px solid lightgrey;
 	background-color:white;
 	float:left;
 	height:100%;
 	width:70%;
 	overflow: auto;
+}
+.rightColumn #overviewImage {
+	padding-top: 3px;
 }
 
 .spl .titlePage .submissionNumber {
@@ -1066,13 +1084,7 @@ body {
 	white-space:nowrap;
 	width: 100%;
 }
-.pageHeader #pageHeaderTitle{
-	text-align: center;
-	padding-left:10px;
-	padding-right:5px;
-	overflow:auto;
-	white-space:nowrap;
-}
+
 .pageHeader #approvedRevisionDateLabel {
 	display: inline-block;
 	font-size: 80%;
@@ -1091,7 +1103,7 @@ body {
 .pageHeader #headerBrandName {
 	font-size: 80%;
 	text-align: left;
-	padding-left:15px;
+	padding-left:20px;
 	padding-right:1px;
 	white-space:nowrap;
 }
@@ -1102,6 +1114,7 @@ body {
 	padding-left:1px;
 	padding-right:5px;
 	white-space:nowrap;
+	width:60%
 }
 .pageHeader table {
 	border-spacing: 0;
@@ -1140,23 +1153,18 @@ body {
 .pageHeader .revisionDate {
 	padding-top:3px;
 }
-.triangle-left {
-	display:none !important;
-	width: 0;
-	height: 0;
-	border-top: 12px solid transparent;
-	border-right: 12px solid red;
-	border-bottom: 12px solid transparent;
-	z-index:3;
+
+.overview #topPageImage {
+	margin-top:10px;
+	margin-bottom:10px;
 }
-.triangle-right {
-	display:none !important;
-	width: 0;
-	height: 0;
-	border-top: 12px solid transparent;
-	border-left: 12px solid red;
-	border-bottom: 12px solid transparent;
-	z-index:3;
+
+.overview #topPageFootImage {
+	margin-top:20px;
+}
+.addressContainer .address .label {
+	display: inline-block;
+	min-width: 4em;
 }
 @media screen and (min-width: 300px) and (max-width: 580px) {
 	.leftColumn {
