@@ -120,7 +120,7 @@
 					<div class="pagebreak"/>
 					<xsl:apply-templates mode="title" select="."/>
 					<div id="overviewImage">
-						<img alt="Health Canada" src="cpid_header_Canada.jpg"/>
+						<img alt="Health Canada" src="https://rawgit.com/IanYangCa/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/CPID/dev/cpid_header_Canada.jpg"/>
 					</div>
 					<div class="Contents">
 						<xsl:apply-templates select="./v3:component">
@@ -135,10 +135,10 @@
 	</xsl:template>
 	<xsl:template name="overview">
 		<div class="overview">
-		<table>
+		<table class="contentTablePetite" cellspacing="0" width="100%">
 			<tbody>
 				<tr>
-					<td colspan="4" id="summaryProducts" class="formHeadingReg">
+					<td colspan="4" id="summaryProducts" class="formHeadingTitle">
 						<xsl:call-template name="hpfb-title">
 							<xsl:with-param name="code" select="'10113'"/>
 							<!-- SUMMARY OF PRODUCT INFORMATION -->
@@ -188,7 +188,9 @@
 						</xsl:call-template>
 					</td>
 					<td class="formItem" colspan="3">
-						<xsl:apply-templates mode="showFormCode" select="//v3:manufacturedProduct/v3:manufacturedProduct/v3:formCode/@displayName"/>
+						<xsl:for-each select="//v3:manufacturedProduct/v3:manufacturedProduct/v3:formCode/@displayName">
+							<xsl:value-of select="."/>;&#160;&#160;
+						</xsl:for-each>
 					</td>
 				</tr>
 				<tr>
@@ -199,7 +201,9 @@
 						</xsl:call-template>
 					</td>
 					<td class="formItem" colspan="3">
-						<xsl:apply-templates mode="showFormCode" select="//v3:consumedIn/v3:substanceAdministration/v3:routeCode/@displayName"/>
+						<xsl:for-each select="//v3:consumedIn/v3:substanceAdministration/v3:routeCode/@displayName">
+							<xsl:value-of select="."/>;&#160;&#160;
+						</xsl:for-each>
 					</td>
 				</tr>
 				<tr>
@@ -226,16 +230,16 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="formItem" colspan="4">
+					<td class="formHeadingReg" colspan="4">
 						footer??
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		<table>
+		<table class="contentTablePetite" cellspacing="0" width="100%">
 		<tbody>
 			<tr>
-				<td colspan="2" id="administrativeSummary" class="formHeadingReg">
+				<td colspan="2" id="administrativeSummary" class="formHeadingTitle">
 					<xsl:call-template name="hpfb-title">
 						<xsl:with-param name="code" select="'10140'"/>
 						<!-- Administrative SUMMARY -->
@@ -289,13 +293,13 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">Health Canada use only
+				<td colspan="2" class="formItem">Health Canada use only
 				</td>
 			</tr>
 		</tbody>
 		</table>
 		<div id="topPageFootImage">
-			<img alt="Health Canada" src="Canada.jpg"/>
+			<img alt="Health Canada" src="https://rawgit.com/IanYangCa/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/CPID/dev/Canada.jpg"/>
 		</div>
 		</div>
 	</xsl:template>
@@ -307,16 +311,16 @@
 					<!-- Non-proprietary or Common Name of Drug Substance (Medicinal Ingredient) -->
 				</xsl:call-template>
 			</td>
-			<td class="formValue">
+			<td class="formItem">
 				<xsl:value-of select="./v3:ingredientSubstance/v3:code/@displayName"/>
 			</td>
-			<td class="formTitle">
+			<td class="formTitle" style="width:7em;">
 				<xsl:call-template name="hpfb-title">
 					<xsl:with-param name="code" select="'10086'"/>
 					<!-- Strength -->
 				</xsl:call-template>
 			</td>
-			<td class="formValue">
+			<td class="formItem">
 				<xsl:value-of select="./v3:quantity/v3:numerator/@value"/>&#160;
 				<xsl:value-of select="./v3:quantity/v3:numerator/@unit"/>
 			</td>
@@ -467,6 +471,9 @@
 		<xsl:variable name="organizations" select="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:id[@root=$organization-role-oid and @extension=$index]/.."/>
 		<xsl:if test="$organizations">
 			<xsl:variable name="role_name" select="(document(concat($oids-base-url,$organization-role-oid,$file-suffix)))/gc:CodeList/SimpleCodeList/Row[./Value[@ColumnRef='code']/SimpleValue=$index]/Value[@ColumnRef=$display_language]/SimpleValue"/>
+			<tr><td>
+			<table cellpadding="3" cellspacing="0" class="formTableMorePetite" width="100%">
+			<tbody>
 			<tr>
 				<td colspan="4" class="formHeadingReg">
 					<xsl:value-of select="$role_name"/>
@@ -493,7 +500,7 @@
 				</td>
 				<td class="formTitle">
 					<xsl:call-template name="hpfb-title">
-						<xsl:with-param name="code" select="'10003'"/>
+						<xsl:with-param name="code" select="'10128'"/>
 						<!-- MF # or CEP # -->
 					</xsl:call-template>
 				</td>
@@ -501,6 +508,9 @@
 			<xsl:apply-templates mode="manufacture" select="$organizations">
 				<xsl:with-param name="index" select="$index"/>
 			</xsl:apply-templates>
+			</tbody>
+			</table>
+			</td></tr>
 		</xsl:if>
 		<xsl:if test="$index &lt; 25">
 			<xsl:call-template name="manufactures">
@@ -510,7 +520,7 @@
 	</xsl:template>
 	<xsl:template mode="manufacture" match="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization">
 		<xsl:param name="index" select="/.."/>
-		<tr>
+		<tr class="formTableRowAlt">
 			<td class="formItem">
 				<xsl:value-of select="./v3:name"/>
 			</td>
@@ -568,7 +578,7 @@
 	</xsl:template>
 	<xsl:template name="performances">
 		<xsl:for-each select="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:performance">
-		<table>
+		<table class="contentTablePetite" cellspacing="0" width="100%">
 		<tbody>
 			<tr>
 				<td colspan="3" class="formHeadingReg">
@@ -607,7 +617,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="3">footer???
+				<td colspan="3" class="formHeadingReg">footer???
 				</td>
 			</tr>
 		</tbody>
@@ -615,7 +625,7 @@
 		</xsl:for-each>
 	</xsl:template>
 	<xsl:template name="storageConditions">
-		<table>
+		<table class="contentTablePetite" cellspacing="0" width="100%">
 		<tbody>
 			<tr>
 				<td colspan="3" class="formHeadingReg">???
@@ -658,7 +668,7 @@
 				</tr>
 			</xsl:for-each>
 			<tr>
-				<td colspan="3">footer???
+				<td colspan="3" class="formHeadingReg">footer???
 				</td>
 			</tr>
 		</tbody>
@@ -677,6 +687,21 @@
 				<!-- Health Canada Heading level 1 (part1,2,3) doesn't have a prefix -->
 				<xsl:when test="$heading='1'">
 					<h1 id="{$sectionID}h"><a href="#{$sectionID}"><xsl:value-of select="v3:title"/></a></h1>
+			<!--code="5056" codeSystem="2.16.840.1.113883.2.20.6.8"-->
+					<xsl:if test="$code = '5056' and $section-id-oid = v3:code/@codeSystem">
+						<h2 id="summaryProductsh"><a href="#summaryProducts">
+							<xsl:call-template name="hpfb-title">
+								<xsl:with-param name="code" select="'10113'"/>
+								<!-- SUMMARY OF PRODUCT INFORMATION -->
+							</xsl:call-template>
+						</a></h2>
+						<h2 id="administrativeSummaryh"><a href="#administrativeSummary">
+							<xsl:call-template name="hpfb-title">
+								<xsl:with-param name="code" select="'10140'"/>
+								<!-- Administrative SUMMARY -->
+							</xsl:call-template>
+						</a></h2>
+					</xsl:if>
 				</xsl:when>
 				<!-- Health Canada Heading level 2 doesn't havent any parent prefix -->
 				<xsl:when test="$heading='2'">
@@ -814,13 +839,16 @@
 				<xsl:call-template name="overview"/>
 			</xsl:when>
 			<xsl:when test="../v3:code[@code='5053']">
-				<table>
+				<table class="contentTablePetite" cellspacing="0"  width="100%">
 				<tbody>
+					<tr>
+						<td align="left" class="formHeadingTitle"><strong>Organizations</strong></td>
+					</tr>
 					<xsl:call-template name="manufactures">
 						<xsl:with-param name="index" select="'1'"/>
 					</xsl:call-template>
 					<tr>
-						<td colspan="4" class="tablefooter">footer???
+						<td colspan="4" class="formHeadingReg">footer???
 						</td>
 					</tr>
 				</tbody>
@@ -832,7 +860,25 @@
 			<xsl:when test="../v3:code[@code='5022']">
 				<xsl:call-template name="storageConditions"/>
 			</xsl:when>
+			<xsl:when test="../v3:code[@code='5031']">
+				<table class="contentTablePetite" cellspacing="0" width="100%">
+				<tbody>
+					<tr>
+						<td align="left" class="formHeadingTitle"><strong>Organizations</strong></td>
+					</tr>
+					<xsl:call-template name="manufactures">
+						<xsl:with-param name="index" select="'1'"/>
+					</xsl:call-template>
+					<tr>
+						<td colspan="4" class="formHeadingReg">footer???
+						</td>
+					</tr>
+				</tbody>
+				</table>
+			</xsl:when>
 			<xsl:otherwise>
+			</xsl:otherwise>
+		</xsl:choose>
 				<text style="font-size:0.8em;">
 					<xsl:apply-templates select="@*"/>
 					<xsl:apply-templates mode="mixed" select="node()"/>
@@ -841,8 +887,6 @@
 						<xsl:with-param name="isTableOfContent" select="'no'"/>
 					</xsl:call-template>
 				</text>
-			</xsl:otherwise>
-		</xsl:choose>
 	</xsl:template>
 	<xsl:template match="v3:flushfootnotes" name="flushfootnotes">
 		<xsl:variable name="footnotes" select=".//v3:footnote[not(ancestor::v3:table)]"/>
@@ -1257,15 +1301,6 @@
 	</xsl:template>
 	<xsl:template mode="showDataWithBR" match="*">
 		<xsl:value-of select="."/><xsl:text disable-output-escaping="yes">&lt;br/&gt;</xsl:text>
-	</xsl:template>
-	<xsl:template mode="showFormCode" match="*">
-		<xsl:variable select="./@code" name="t_code"/>
-		<xsl:variable select="./@codeSystem" name="t_codeSystem"/>
-		<xsl:call-template name="hpfb-label">
-			<xsl:with-param name="code" select="$t_code"/>
-			<xsl:with-param name="codeSystem" select="$t_codeSystem"/>
-		</xsl:call-template>
-		<xsl:text disable-output-escaping="yes">&lt;br/&gt;</xsl:text>
 	</xsl:template>
 	<xsl:template name="hpfb-label">
 		<xsl:param name="codeSystem" select="/.."/>
