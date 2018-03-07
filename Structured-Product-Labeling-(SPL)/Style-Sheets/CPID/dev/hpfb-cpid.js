@@ -115,7 +115,7 @@ function drawToC(temp, items){
 		items.forEach(function(item){
 			temp1 = $("<div id=toc_" + tocIndex++ +" style='display:inline;white-space:nowrap;clear:both;'></div>");
 			if(item['children'].length > 0){
-				node = $("<span style='float:left;'>&nbsp;+&nbsp;</span>");
+				node = $("<span style='float:left;font-'>&nbsp;+&nbsp;</span>");
 				$(node).on('click', function(){toggleNodes(this);});
 				$(temp1).append($(node));
 			} else {
