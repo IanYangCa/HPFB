@@ -450,20 +450,13 @@ body {
 }
 
 .spl table	{
-	border: 2px solid black;
 	font-size: 100%;
 	white-space: wrap;
-/*
-	border-top-style: none;
-	border-bottom-style: none;
-	border-right-style: none;
-	border-left-style: none;
-*/
 	margin-top: 3ex;
 	margin-bottom: 3ex;
 	border-collapse: collapse;
-	border-color: black;
-	border-width: thin;
+/* 	border-color: black; */
+/* 	border-width: thin; */
 	width: 100%;
 }
 
@@ -490,12 +483,12 @@ body {
 	border-right-style: none;
 	border-left-style: none;
 	border-collapse: collapse;
+/*
 	border-color: black;
 	border-width: thin;
-/*
+*/
 	padding-top: 1px;
 	padding-bottom: 1px;
-*/
 }
 
 .spl td.twocolumn {
@@ -767,7 +760,7 @@ body {
 	background-color: #EAEAEA;
 }
 .spl .contentTablePetite {
-	border: 1px solid #999999;
+	border: 0px solid #999999;
 	background-color: #EAEAEA;
 	font-size: 80%;
 }
@@ -795,13 +788,12 @@ body {
 .spl .formTableMorePetite {
 	border: 1px solid #FFFFFF;
 	border-collapse: collapse;
-	font-size: 60%;
+	font-size: 90%;
 }
 .spl .formTitle {
 	background-color: #CCCCCC;
-/* 	border: 1px solid #FFFFFF; */
-	border: 1px solid black;
-	font-size: 80%;
+ 	border: 1px solid #FFFFFF;
+	font-size: 130%;
 	font-weight: bold;
 	width:30%;
 }
@@ -813,8 +805,8 @@ body {
 }
 .spl .formHeadingReg {
 	background-color: #CCCCCC;
-/* 	border: 1px solid #FFFFFF; */
-	font-size: 100%;
+ 	border: 1px solid #FFFFFF; 
+	font-size: 130%;
 	font-weight: bold;
 }
 .spl .formTableRow {
@@ -830,7 +822,7 @@ body {
 	font-weight: bold;
 }
 .spl .formItem {
-	border: 1px solid black;
+	border: 1px solid #FFFFFF;
 	font-size: 100%;
 }
 .spl .formTitle a:link {
@@ -1093,10 +1085,10 @@ body {
 	padding-right:1px;
 	white-space:nowrap;
 }
-.pageHeader #approvedRevisionDateValue {
+.pageHeader #headerDateValue {
 	font-size: 80%;
 	text-align: left;
-	padding-left:1px;
+	padding-left:5px;
 	padding-right:5px;
 	white-space:nowrap;
 }
