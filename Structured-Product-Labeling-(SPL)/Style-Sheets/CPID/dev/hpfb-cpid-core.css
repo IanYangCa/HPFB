@@ -1064,7 +1064,6 @@ body {
 .pageHeader {
     display:inline-block;
 	font-size: 0.9em;
-	font-weight:bold;
 	width:99.8%;
 }
 .pageHeader .pageTitle {
@@ -1077,23 +1076,21 @@ body {
 	width: 100%;
 }
 
-.pageHeader #approvedRevisionDateLabel {
-	display: inline-block;
-	font-size: 80%;
+.pageHeader #headerDateLabel {
+	font-weight:bold;
 	text-align: left;
-	padding-left:3px;
-	padding-right:1px;
+	padding-left:5px;
+	padding-right:5px;
 	white-space:nowrap;
 }
 .pageHeader #headerDateValue {
-	font-size: 80%;
 	text-align: left;
 	padding-left:5px;
 	padding-right:5px;
 	white-space:nowrap;
 }
 .pageHeader #headerBrandName {
-	font-size: 80%;
+	font-weight:bold;
 	text-align: left;
 	padding-left:20px;
 	padding-right:1px;

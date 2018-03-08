@@ -82,14 +82,6 @@
 				<xsl:attribute name="headerBrandName">
 					<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10130'"/></xsl:call-template>
 				</xsl:attribute>
-				<xsl:attribute name="headerDateValue">
-					<xsl:call-template name="string-ISO-date">
-						<xsl:with-param name="text" select="/v3:document/v3:effectiveTime/v3:originalText"/>
-					</xsl:call-template>/
-					<xsl:call-template name="string-ISO-date">
-						<xsl:with-param name="text" select="/v3:document/v3:effectiveTime/@value"/>
-					</xsl:call-template>
-				</xsl:attribute>
 			</div>
 			<div class="pageHeader" id="pageHeader">
 				<table><tbody>
@@ -298,9 +290,9 @@
 			</tr>
 		</tbody>
 		</table>
-		<div id="topPageFootImage">
+<!--		<div id="topPageFootImage">
 			<img alt="Health Canada" src="https://rawgit.com/IanYangCa/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/CPID/dev/Canada.jpg"/>
-		</div>
+		</div>-->
 		</div>
 	</xsl:template>
 	<xsl:template mode="nonProprietarySubstance" match="*">
@@ -313,6 +305,7 @@
 			</td>
 			<td class="formItem">
 				<xsl:value-of select="./v3:ingredientSubstance/v3:code/@displayName"/>
+				(<xsl:value-of select="./v3:ingredientSubstance/v3:code/@code"/>)
 			</td>
 			<td class="formTitle" style="width:7em;">
 				<xsl:call-template name="hpfb-title">
@@ -1329,8 +1322,8 @@
 		          profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no" validator="internal"
 		          customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
-			<parameterValue name="css" value="'file://C:\Users\hcuser\git\HPFB\master\Structured-Product-Labeling-(SPL)\Style-Sheets\CPID\dev\hpfb-cpid-core.css'"/>
-			<parameterValue name="resourcesdir" value="'file://C:\Users\hcuser\git\HPFB\master\Structured-Product-Labeling-(SPL)\Style-Sheets\CPID\dev\'"/>
+			<parameterValue name="css" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\CPID\dev\hpfb-cpid-core.css'"/>
+			<parameterValue name="resourcesdir" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\CPID\dev\'"/>
 			<advancedProp name="sInitialMode" value=""/>
 			<advancedProp name="schemaCache" value="||"/>
 			<advancedProp name="bXsltOneIsOkay" value="true"/>
