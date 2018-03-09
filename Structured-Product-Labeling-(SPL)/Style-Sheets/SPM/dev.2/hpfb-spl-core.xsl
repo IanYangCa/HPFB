@@ -1183,12 +1183,12 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 							<!-- ID_FEI -->
 						</xsl:call-template>
 					</th>
-					<th scope="col" class="formTitle">
+<!--					<th scope="col" class="formTitle">
 						<xsl:call-template name="hpfb-title">
 							<xsl:with-param name="code" select="'10010'"/>
-							<!-- businessOperations -->
+							 businessOperations 
 						</xsl:call-template>
-					</th>
+					</th>-->
 				</tr>
 				<tr class="formTableRowAlt">
 					<td class="formItem">
@@ -1533,10 +1533,9 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 										<!-- routeOfAdministration -->
 									</xsl:call-template>
 								</td>
-								<td class="formItem">
+								<td class="formItem" colspan="3">
 									<xsl:for-each select="../v3:consumedIn/*[self::v3:substanceAdministration or self::v3:substanceAdministration1]/v3:routeCode">
-										<xsl:if test="position() &gt; 1">,</xsl:if>
-										<xsl:value-of select="@displayName"/>
+										<xsl:value-of select="@displayName"/>;&#160;&#160;
 									</xsl:for-each>
 								</td>
 							</xsl:if>
@@ -1552,12 +1551,12 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 							</xsl:if>
 						</tr>
 					</xsl:if>
-					<xsl:if test="../../../v3:effectiveTime[v3:low/@value or v3:high/@value]  or  ../v3:effectiveTime[v3:low/@value and v3:high/@value]">
+<!--					<xsl:if test="../../../v3:effectiveTime[v3:low/@value or v3:high/@value]  or  ../v3:effectiveTime[v3:low/@value and v3:high/@value]">
 						<tr class="formTableRowAlt">
 							<td class="formLabel">
 								<xsl:call-template name="hpfb-title">
 									<xsl:with-param name="code" select="'10070'"/>
-									<!-- reportingPeriod -->
+									== reportingPeriod ==
 								</xsl:call-template>
 							</td>
 							<td class="formItem">
@@ -1571,7 +1570,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 								<td class="formItem"/>
 							</xsl:if>
 						</tr>
-					</xsl:if>
+					</xsl:if>-->
 				</table>
 			</td>
 		</tr>
@@ -2839,40 +2838,3 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 		<xsl:if test="not($value)">Error: code missing:(<xsl:value-of select="$code"/> in <xsl:value-of select="$section-id-oid"/>)</xsl:if>
 	</xsl:template>
 </xsl:transform>
-<!-- Stylus Studio meta-information - (c) 2004-2009. Progress Software Corporation. All rights reserved.
-
-<metaInformation>
-	<scenarios>
-		<scenario default="yes" name="HPFB" userelativepaths="no" externalpreview="yes" url="file:///c:/SPM/test/5.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test5.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
-		          profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="renderx" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no"
-		          validator="internal" customvalidator="">
-			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
-			<parameterValue name="show-section-numbers" value="'true()'"/>
-			<parameterValue name="show-data" value="'1'"/>
-			<parameterValue name="css" value="'file://C:\Users\hcuser\git\HPFB\master\Structured-Product-Labeling-(SPL)\Style-Sheets\SPM\dev.2\hpfb-spl-core.css'"/>
-			<parameterValue name="resourcesdir" value="'file://C:\Users\hcuser\git\HPFB\master\Structured-Product-Labeling-(SPL)\Style-Sheets\SPM\dev.2\'"/>
-			<advancedProp name="sInitialMode" value=""/>
-			<advancedProp name="schemaCache" value="||"/>
-			<advancedProp name="bXsltOneIsOkay" value="true"/>
-			<advancedProp name="bSchemaAware" value="true"/>
-			<advancedProp name="bGenerateByteCode" value="true"/>
-			<advancedProp name="bXml11" value="false"/>
-			<advancedProp name="iValidation" value="0"/>
-			<advancedProp name="bExtensions" value="true"/>
-			<advancedProp name="iWhitespace" value="0"/>
-			<advancedProp name="sInitialTemplate" value=""/>
-			<advancedProp name="bTinyTree" value="true"/>
-			<advancedProp name="xsltVersion" value="2.0"/>
-			<advancedProp name="bWarnings" value="true"/>
-			<advancedProp name="bUseDTD" value="false"/>
-			<advancedProp name="iErrorHandling" value="fatal"/>
-		</scenario>
-	</scenarios>
-	<MapperMetaTag>
-		<MapperInfo srcSchemaPathIsRelative="yes" srcSchemaInterpretAsXML="no" destSchemaPath="" destSchemaRoot="" destSchemaPathIsRelative="yes" destSchemaInterpretAsXML="no"/>
-		<MapperBlockPosition></MapperBlockPosition>
-		<TemplateContext></TemplateContext>
-		<MapperFilter side="source"></MapperFilter>
-	</MapperMetaTag>
-</metaInformation>
--->
