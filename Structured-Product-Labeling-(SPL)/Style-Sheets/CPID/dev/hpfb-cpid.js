@@ -45,7 +45,7 @@ function twoColumnsDisplay(){
 		headerTitle = "";
 		$("h2 a[href^='#product']").each(function(){
 			if(insertComa){
-				headerTitle += ", "
+				headerTitle += ";&nbsp;&nbsp;"
 			}
 			insertComa = true;
 			title = $(this).html();

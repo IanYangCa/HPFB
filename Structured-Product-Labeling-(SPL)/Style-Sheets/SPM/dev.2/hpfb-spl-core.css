@@ -1074,7 +1074,7 @@ body {
 	width: 100%;
 }
 .pageHeader #pageHeaderTitle{
-	font-size: 80%;
+	font-weight: normal;
 	text-align: center;
 	padding-left:10px;
 	padding-right:5px;
@@ -1082,21 +1082,19 @@ body {
 	white-space:nowrap;
 }
 .pageHeader #approvedRevisionDateLabel {
-	font-size: 80%;
 	text-align: left;
 	padding-left:3px;
 	padding-right:1px;
 	white-space:nowrap;
 }
 .pageHeader #approvedRevisionDateValue {
-	font-size: 80%;
+	font-weight: normal;
 	text-align: left;
 	padding-left:1px;
 	padding-right:5px;
 	white-space:nowrap;
 }
 .pageHeader #headerBrandName {
-	font-size: 80%;
 	text-align: left;
 	padding-left:15px;
 	padding-right:1px;
