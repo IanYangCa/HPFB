@@ -2708,6 +2708,12 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
+	<xsl:template mode="mixed" match="v3:linkHtml">
+		<xsl:element name="a">
+			<xsl:attribute name="href"><xsl:value-of select="./@href"/></xsl:attribute>
+			<xsl:value-of select="./@title"/>
+		</xsl:element>
+	</xsl:template>
 	<!-- TABLE MODEL -->
 	<!-- Health Canada Change-->
 	<xsl:template match="v3:table">
@@ -2838,3 +2844,40 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 		<xsl:if test="not($value)">Error: code missing:(<xsl:value-of select="$code"/> in <xsl:value-of select="$section-id-oid"/>)</xsl:if>
 	</xsl:template>
 </xsl:transform>
+<!-- Stylus Studio meta-information - (c) 2004-2009. Progress Software Corporation. All rights reserved.
+
+<metaInformation>
+	<scenarios>
+		<scenario default="yes" name="Scenario1" userelativepaths="no" externalpreview="yes" url="file:///e:/7.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test5.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
+		          profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no" validator="internal"
+		          customvalidator="">
+			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
+			<parameterValue name="show-section-numbers" value="'1'"/>
+			<parameterValue name="show-data" value="'1'"/>
+			<parameterValue name="css" value="'https://rawgit.com/IanYangCa/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/dev.2/hpfb-spl-core.css'"/>
+			<parameterValue name="resourcesdir" value="'https://rawgit.com/IanYangCa/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/dev.2/'"/>
+			<advancedProp name="sInitialMode" value=""/>
+			<advancedProp name="schemaCache" value="||"/>
+			<advancedProp name="bXsltOneIsOkay" value="true"/>
+			<advancedProp name="bSchemaAware" value="true"/>
+			<advancedProp name="bGenerateByteCode" value="true"/>
+			<advancedProp name="bXml11" value="false"/>
+			<advancedProp name="iValidation" value="0"/>
+			<advancedProp name="bExtensions" value="true"/>
+			<advancedProp name="iWhitespace" value="0"/>
+			<advancedProp name="sInitialTemplate" value=""/>
+			<advancedProp name="bTinyTree" value="true"/>
+			<advancedProp name="xsltVersion" value="2.0"/>
+			<advancedProp name="bWarnings" value="true"/>
+			<advancedProp name="bUseDTD" value="false"/>
+			<advancedProp name="iErrorHandling" value="fatal"/>
+		</scenario>
+	</scenarios>
+	<MapperMetaTag>
+		<MapperInfo srcSchemaPathIsRelative="yes" srcSchemaInterpretAsXML="no" destSchemaPath="" destSchemaRoot="" destSchemaPathIsRelative="yes" destSchemaInterpretAsXML="no"/>
+		<MapperBlockPosition></MapperBlockPosition>
+		<TemplateContext></TemplateContext>
+		<MapperFilter side="source"></MapperFilter>
+	</MapperMetaTag>
+</metaInformation>
+-->
