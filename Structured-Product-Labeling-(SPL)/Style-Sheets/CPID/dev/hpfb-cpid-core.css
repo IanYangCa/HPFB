@@ -433,9 +433,9 @@ body {
        text-decoration: line-through;
 }
 
-.spl a:link    { text-decoration: none; }
-.spl a:visited { text-decoration: none; }
-.spl a:active  { text-decoration: none; }
+.spl a:link    { text-decoration: underline; }
+.spl a:visited { text-decoration: underline; }
+.spl a:active  { text-decoration: underline; }
 
 /* use <span class="sub"> to avoid ugly uneven line spacing in IE */
 .spl .Sub { 
