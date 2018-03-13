@@ -2711,7 +2711,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 	<xsl:template mode="mixed" match="v3:linkHtml">
 		<xsl:element name="a">
 			<xsl:attribute name="href"><xsl:value-of select="./@href"/></xsl:attribute>
-			<xsl:value-of select="./@title"/>
+			<xsl:value-of select="."/>
 		</xsl:element>
 	</xsl:template>
 	<!-- TABLE MODEL -->
