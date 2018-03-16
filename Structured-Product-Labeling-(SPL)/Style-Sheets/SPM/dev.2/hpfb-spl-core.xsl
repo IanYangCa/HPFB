@@ -2125,13 +2125,13 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					<xsl:for-each select="(v3:ingredientSubstance|v3:inactiveIngredientSubstance)[1]">
 						<td class="formItem">
 							<strong>
-								<xsl:value-of select="v3:name"/>
+								<xsl:value-of select="v3:code/@displayName"/>
 							</strong>
 							<xsl:text> (</xsl:text>
 							<xsl:for-each select="v3:code/@code">
 								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10093'"/>
-									<!-- UNII -->
+									<xsl:with-param name="code" select="'10015'"/>
+									<!-- ID -->
 								</xsl:call-template>:
 								<xsl:value-of select="."/>
 							</xsl:for-each>
@@ -2198,13 +2198,13 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					<xsl:for-each select="(v3:ingredientSubstance|v3:activeIngredientSubstance)[1]">
 						<td class="formItem">
 							<strong>
-								<xsl:value-of select="v3:name"/>
+								<xsl:value-of select="v3:code/@displayName"/>
 							</strong>
 							<xsl:text> (</xsl:text>
 							<xsl:for-each select="v3:code/@code">
 								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10093'"/>
-									<!-- UNII -->
+									<xsl:with-param name="code" select="'10015'"/>
+									<!-- ID -->
 								</xsl:call-template>:
 								<xsl:value-of select="."/>
 								<xsl:if test="position()!=last()">
@@ -2343,13 +2343,13 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					<xsl:for-each select="(v3:ingredientSubstance|v3:activeIngredientSubstance)[1]">
 						<td class="formItem">
 							<strong>
-								<xsl:value-of select="v3:name"/>
+								<xsl:value-of select="v3:code/@displayName"/>
 							</strong>
 							<xsl:text> (</xsl:text>
 							<xsl:for-each select="v3:code/@code">
 								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10093'"/>
-									<!-- UNII -->
+									<xsl:with-param name="code" select="'10015'"/>
+									<!-- ID -->
 								</xsl:call-template>:
 								<xsl:value-of select="."/>
 							</xsl:for-each>
