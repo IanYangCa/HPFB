@@ -24,6 +24,7 @@
 	<xsl:variable name="marketing-category-oid" select="'2.16.840.1.113883.2.20.6.11'"/>
 	<xsl:variable name="ingredient-id-oid" select="'2.16.840.1.113883.2.20.6.14'"/>
 	<xsl:variable name="marketing-status-oid" select="'2.16.840.1.113883.2.20.6.18'"/>
+	<xsl:variable name="organization-oid" select="'2.16.840.1.113883.2.20.6.31'"/>
 	<xsl:variable name="organization-role-oid" select="'2.16.840.1.113883.2.20.6.33'"/>
 	<xsl:variable name="pharmaceutical-standard-oid" select="'2.16.840.1.113883.2.20.6.5'"/>
 	<xsl:variable name="product-characteristics-oid" select="'2.16.840.1.113883.2.20.6.23'"/>
@@ -305,7 +306,7 @@
 			</td>
 			<td class="formItem">
 				<xsl:value-of select="./v3:ingredientSubstance/v3:code/@displayName"/>
-				(<xsl:value-of select="./v3:ingredientSubstance/v3:code/@code"/>)
+				(<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10093'"/></xsl:call-template>:&#160;<xsl:value-of select="./v3:ingredientSubstance/v3:code/@code"/>)
 			</td>
 			<td class="formTitle" style="width:7em;">
 				<xsl:call-template name="hpfb-title">
@@ -460,60 +461,67 @@
 		</xsl:for-each>
 	</xsl:template>
 	<xsl:template name="manufactures">
-		<xsl:param name="index" select="/.."/>
-		<xsl:variable name="organizations" select="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:id[@root=$organization-role-oid and @extension=$index]/.."/>
+<!--		<xsl:param name="index" select="/.."/>-->
+		<xsl:variable name="organizations" select="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization"/>
 		<xsl:if test="$organizations">
-			<xsl:variable name="role_name" select="(document(concat($oids-base-url,$organization-role-oid,$file-suffix)))/gc:CodeList/SimpleCodeList/Row[./Value[@ColumnRef='code']/SimpleValue=$index]/Value[@ColumnRef=$display_language]/SimpleValue"/>
 			<tr><td>
+<!--			<xsl:variable name="role_name" select="(document(concat($oids-base-url,$organization-role-oid,$file-suffix)))/gc:CodeList/SimpleCodeList/Row[./Value[@ColumnRef='code']/SimpleValue=$index]/Value[@ColumnRef=$display_language]/SimpleValue"/>-->
 			<table cellpadding="3" cellspacing="0" class="formTableMorePetite" width="100%">
 			<tbody>
 			<tr>
-				<td colspan="4" class="formHeadingReg">
-					<xsl:value-of select="$role_name"/>
+				<td class="formTitle">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10027'"/>
+						<!-- Org ID -->
+					</xsl:call-template>
 				</td>
-			</tr>
-			<tr>
 				<td class="formTitle">
 					<xsl:call-template name="hpfb-title">
 						<xsl:with-param name="code" select="'10051'"/>
-						<!-- name -->
+						<!-- Org Name -->
 					</xsl:call-template>
 				</td>
 				<td class="formTitle">
 					<xsl:call-template name="hpfb-title">
 						<xsl:with-param name="code" select="'10003'"/>
-						<!-- address -->
+						<!-- Org Address -->
 					</xsl:call-template>
 				</td>
 				<td class="formTitle">
 					<xsl:call-template name="hpfb-title">
-						<xsl:with-param name="code" select="'10127'"/>
-						<!-- Responsibility -->
-					</xsl:call-template>
-				</td>
-				<td class="formTitle">
-					<xsl:call-template name="hpfb-title">
-						<xsl:with-param name="code" select="'10128'"/>
-						<!-- MF # or CEP # -->
+						<xsl:with-param name="code" select="'10076'"/>
+						<!-- Role - Product - Substance -->
 					</xsl:call-template>
 				</td>
 			</tr>
-			<xsl:apply-templates mode="manufacture" select="$organizations">
-				<xsl:with-param name="index" select="$index"/>
-			</xsl:apply-templates>
+			<xsl:for-each select="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization">
+			<xsl:call-template name="manufacture">
+				<xsl:with-param name="index" select="position()"/>
+			</xsl:call-template>
+			</xsl:for-each>
+
 			</tbody>
 			</table>
 			</td></tr>
 		</xsl:if>
-		<xsl:if test="$index &lt; 25">
+<!--		<xsl:if test="$index &lt; 25">
 			<xsl:call-template name="manufactures">
 				<xsl:with-param name="index" select="$index + 1"/>
 			</xsl:call-template>
-		</xsl:if>
+		</xsl:if>-->
 	</xsl:template>
-	<xsl:template mode="manufacture" match="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization">
+	<xsl:template name="manufacture">
 		<xsl:param name="index" select="/.."/>
-		<tr class="formTableRowAlt">
+		<tr>
+			<xsl:attribute name="class">
+				<xsl:choose>
+					<xsl:when test="$index mod 2 = 0">formTableRow</xsl:when>
+					<xsl:otherwise>formTableRowAlt</xsl:otherwise>
+				</xsl:choose>
+			</xsl:attribute>
+			<td class="formItem">
+				<xsl:value-of select="./v3:id[@root=$organization-oid]/@extension"/>
+			</td>
 			<td class="formItem">
 				<xsl:value-of select="./v3:name"/>
 			</td>
@@ -521,9 +529,20 @@
 				<xsl:apply-templates mode="format" select="./v3:addr"/>
 			</td>
 			<td class="formItem">
-				<xsl:value-of select="$index"/>
-			</td>
-			<td class="formItem">
+				<xsl:for-each select="../v3:performance">
+				<div style="white-space:nowrap;">
+				<xsl:value-of select="v3:actDefinition/v3:code[@codeSystem='2.16.840.1.113883.2.20.6.33']/@displayName"/>
+				&#160;-&#160;
+				<xsl:for-each select="v3:actDefinition/v3:product">
+					<xsl:if test="position() &gt; 1">
+						;&#160;&#160;
+					</xsl:if>
+					<xsl:value-of select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:code/@code"/>
+					&#160;-&#160;
+					<xsl:value-of select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId[@root='2.16.840.1.113883.2.20.6.14']/@extension"/>
+				</xsl:for-each>
+				</div>
+				</xsl:for-each>
 			</td>
 		</tr>
 	</xsl:template>
@@ -1324,7 +1343,7 @@
 
 <metaInformation>
 	<scenarios>
-		<scenario default="yes" name="CPID" userelativepaths="no" externalpreview="yes" url="file:///e:/CPID-2.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/cpid.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
+		<scenario default="yes" name="CPID" userelativepaths="no" externalpreview="yes" url="file:///e:/CPID-3.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/cpid.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
 		          profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no" validator="internal"
 		          customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
