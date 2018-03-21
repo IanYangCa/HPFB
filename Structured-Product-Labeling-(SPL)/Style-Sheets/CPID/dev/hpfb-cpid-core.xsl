@@ -13,6 +13,7 @@
 	<xsl:param name="oids-base-url" select="/.."/>
 	<xsl:param name="resourcesdir" select="/.."/>
 	<xsl:param name="css" select="/.."/>
+	<xsl:param name="language" select="/.."/>
 
 	<xsl:output method="html" version="1.0" encoding="UTF-8" indent="no" doctype-public="-"/>
 	<xsl:strip-space elements="*"/>
@@ -330,14 +331,15 @@
 				</xsl:call-template>
 			</xsl:attribute>
 			<p class="DocumentTitle">
+						<!-- productDescription 10000 -->
+						<!-- Organization 10109 -->
 				<span class="formHeadingTitle">
 					<xsl:apply-templates select="v3:component" mode="tableOfContents"/>
-					<xsl:text disable-output-escaping="yes">
+<!--					<xsl:text disable-output-escaping="yes">
 						&lt;h1 id=&#39;productDescriptionh&#39;&gt;&lt;a href=&#39;#prodDesc&#39;&gt;
 					</xsl:text>
 					<xsl:call-template name="hpfb-title">
 						<xsl:with-param name="code" select="'10000'"/>
-						<!-- productDescription -->
 					</xsl:call-template>
 					<xsl:text disable-output-escaping="yes">&lt;/a&gt;&lt;/h1&gt;</xsl:text>
 					<xsl:call-template name="productNames"/>
@@ -346,10 +348,9 @@
 					</xsl:text>
 					<xsl:call-template name="hpfb-title">
 						<xsl:with-param name="code" select="'10109'"/>
-						<!-- Organization -->
 					</xsl:call-template>
 					<xsl:text disable-output-escaping="yes">&lt;/a&gt;&lt;/h1&gt;</xsl:text>
-					<xsl:call-template name="organizations"/>
+					<xsl:call-template name="organizations"/>-->
 				</span>
 			</p>
 			<xsl:if test="not(//v3:manufacturedProduct) and /v3:document/v3:code/@displayName">
@@ -461,7 +462,6 @@
 		</xsl:for-each>
 	</xsl:template>
 	<xsl:template name="manufactures">
-<!--		<xsl:param name="index" select="/.."/>-->
 		<xsl:variable name="organizations" select="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization"/>
 		<xsl:if test="$organizations">
 			<tr><td>
@@ -532,14 +532,17 @@
 				<xsl:for-each select="../v3:performance">
 				<div style="white-space:nowrap;">
 				<xsl:value-of select="v3:actDefinition/v3:code[@codeSystem='2.16.840.1.113883.2.20.6.33']/@displayName"/>
-				&#160;-&#160;
+				:&#160;
 				<xsl:for-each select="v3:actDefinition/v3:product">
 					<xsl:if test="position() &gt; 1">
 						;&#160;&#160;
 					</xsl:if>
 					<xsl:value-of select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:code/@code"/>
+					<xsl:if test="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId">
 					&#160;-&#160;
-					<xsl:value-of select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId[@root='2.16.840.1.113883.2.20.6.14']/@extension"/>
+					<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId[@root='2.16.840.1.113883.2.20.6.14']/@extension"/><xsl:with-param name="codeSystem" select="$ingredient-id-oid"/></xsl:call-template>
+					(<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10093'"/><xsl:with-param name="language" select="$language"/></xsl:call-template>:&#160;v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId[@root='2.16.840.1.113883.2.20.6.14']/@extension"/>)
+					</xsl:if>
 				</xsl:for-each>
 				</div>
 				</xsl:for-each>
@@ -704,13 +707,11 @@
 						<h2 id="summaryProductsh"><a href="#summaryProducts">
 							<xsl:call-template name="hpfb-title">
 								<xsl:with-param name="code" select="'10113'"/>
-								<!-- SUMMARY OF PRODUCT INFORMATION -->
 							</xsl:call-template>
 						</a></h2>
 						<h2 id="administrativeSummaryh"><a href="#administrativeSummary">
 							<xsl:call-template name="hpfb-title">
 								<xsl:with-param name="code" select="'10140'"/>
-								<!-- Administrative SUMMARY -->
 							</xsl:call-template>
 						</a></h2>
 					</xsl:if>
@@ -857,7 +858,7 @@
 						<td align="left" class="formHeadingTitle"><strong>Organizations</strong></td>
 					</tr>
 					<xsl:call-template name="manufactures">
-						<xsl:with-param name="index" select="'1'"/>
+						<xsl:with-param name="language" select="$language"/>
 					</xsl:call-template>
 					<tr>
 						<td colspan="4" class="formHeadingReg">footer???
@@ -1349,6 +1350,7 @@
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
 			<parameterValue name="css" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\CPID\dev\hpfb-cpid-core.css'"/>
 			<parameterValue name="resourcesdir" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\CPID\dev\'"/>
+			<parameterValue name="language" value="'eng'"/>
 			<advancedProp name="sInitialMode" value=""/>
 			<advancedProp name="schemaCache" value="||"/>
 			<advancedProp name="bXsltOneIsOkay" value="true"/>
