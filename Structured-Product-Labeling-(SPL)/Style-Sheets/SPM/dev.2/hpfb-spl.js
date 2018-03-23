@@ -48,7 +48,7 @@ function twoColumnsDisplay(){
 		$("#toc_0999 h1").on('click', function(){expandCollapseAll($(this).prev());});
 		$("#approvedRevisionDateLabel").html($("#approveDate").attr("headerdatelabel"));
 		$("#headerBrandName").html($("#approveDate").attr("headerBrandName"));
-		$("#approvedRevisionDateValue").html($("#approveDateValue").html() + "/" + $("#revisionDateValue").html());
+		$("#approvedRevisionDateValue").html($("#approveDateValue").html() + "&nbsp;/&nbsp;" + $("#revisionDateValue").html());
 		insertComa = false;
 		headerTitle = "";
 		$("h2 a[href^='#product']").each(function(){

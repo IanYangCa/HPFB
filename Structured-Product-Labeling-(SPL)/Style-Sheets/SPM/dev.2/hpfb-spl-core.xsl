@@ -746,7 +746,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				<xsl:when test="./v3:observationCriterion">
 					<td class="formItem">
 						<xsl:call-template name="hpfb-title">
-							<xsl:with-param name="code" select="'10015'"/>
+							<xsl:with-param name="code" select="'10093'"/>
 							<!-- conditionOfUse -->
 						</xsl:call-template>
 					</td>
@@ -760,7 +760,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				<xsl:when test="./v3:substanceAdministrationCriterion">
 					<td class="formItem">
 						<xsl:call-template name="hpfb-title">
-							<xsl:with-param name="code" select="'10015'"/>
+							<xsl:with-param name="code" select="'10093'"/>
 							<!-- conditionOfUse -->
 						</xsl:call-template>
 					</td>
@@ -2130,7 +2130,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 							<xsl:text> (</xsl:text>
 							<xsl:for-each select="v3:code/@code">
 								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10015'"/>
+									<xsl:with-param name="code" select="'10093'"/>
 									<!-- ID -->
 								</xsl:call-template>:
 								<xsl:value-of select="."/>
@@ -2203,7 +2203,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 							<xsl:text> (</xsl:text>
 							<xsl:for-each select="v3:code/@code">
 								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10015'"/>
+									<xsl:with-param name="code" select="'10093'"/>
 									<!-- ID -->
 								</xsl:call-template>:
 								<xsl:value-of select="."/>
@@ -2348,7 +2348,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 							<xsl:text> (</xsl:text>
 							<xsl:for-each select="v3:code/@code">
 								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10015'"/>
+									<xsl:with-param name="code" select="'10093'"/>
 									<!-- ID -->
 								</xsl:call-template>:
 								<xsl:value-of select="."/>
