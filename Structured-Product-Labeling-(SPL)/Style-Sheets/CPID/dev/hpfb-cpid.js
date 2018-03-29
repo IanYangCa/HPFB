@@ -60,7 +60,7 @@ function twoColumnsDisplay(){
 			width: '100%',
 			height: ($(window).height() - $("#pageHeader").outerHeight() - 35 ),
 			panels:[{size:'200'}],
-			splitBarSize: 5
+			splitBarSize: 10
 		});
 	}
 	collapseAll();

@@ -92,7 +92,7 @@
 					</span><span id="headerDateValue">
 						<xsl:call-template name="string-ISO-date">
 							<xsl:with-param name="text" select="/v3:document/v3:effectiveTime/v3:originalText"/>
-						</xsl:call-template>/
+						</xsl:call-template>&#160;/
 						<xsl:call-template name="string-ISO-date">
 							<xsl:with-param name="text" select="/v3:document/v3:effectiveTime/@value"/>
 						</xsl:call-template>
@@ -526,28 +526,90 @@
 				<xsl:value-of select="./v3:name"/>
 			</td>
 			<td class="formItem">
-				<xsl:apply-templates mode="format" select="./v3:addr"/>
+				<xsl:apply-templates mode="FORMAT" select="./v3:addr"/>
 			</td>
 			<td class="formItem">
 				<xsl:for-each select="../v3:performance">
 				<div style="white-space:nowrap;">
-				<xsl:value-of select="v3:actDefinition/v3:code[@codeSystem='2.16.840.1.113883.2.20.6.33']/@displayName"/>
-				:&#160;
+				<xsl:value-of select="v3:actDefinition/v3:code[@codeSystem='2.16.840.1.113883.2.20.6.33']/@displayName"/>:&#160;
 				<xsl:for-each select="v3:actDefinition/v3:product">
 					<xsl:if test="position() &gt; 1">
 						;&#160;&#160;
 					</xsl:if>
-					<xsl:value-of select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:code/@code"/>
+					<xsl:value-of select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:code[@codeSystem='2.16.840.1.113883.2.20.6.55']/@code"/>
 					<xsl:if test="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId">
 					&#160;-&#160;
 					<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId[@root='2.16.840.1.113883.2.20.6.14']/@extension"/><xsl:with-param name="codeSystem" select="$ingredient-id-oid"/></xsl:call-template>
-					(<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10093'"/><xsl:with-param name="language" select="$language"/></xsl:call-template>:&#160;v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId[@root='2.16.840.1.113883.2.20.6.14']/@extension"/>)
+					(<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10093'"/><xsl:with-param name="language" select="$language"/></xsl:call-template>:&#160;<xsl:value-of select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId[@root='2.16.840.1.113883.2.20.6.14']/@extension"/>)
 					</xsl:if>
 				</xsl:for-each>
 				</div>
 				</xsl:for-each>
 			</td>
 		</tr>
+	</xsl:template>
+	<xsl:template mode="FORMAT" match="*/v3:addr">
+		<div class="addressContainer">
+			<div class="address">
+				<span class="label" style="width:5em;">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10003'"/>
+						<!-- Address -->
+					</xsl:call-template>:
+				</span>
+				<span class="value">
+					<xsl:value-of select="./v3:streetAddressLine"/>
+				</span>
+			</div>
+			<xsl:if test="v3:city">
+			<div class="address">
+				<span class="label" style="width:5em;">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10011'"/>
+						<!-- cityStateZip -->
+					</xsl:call-template>:&#160;
+				</span>
+				<span class="value"><xsl:value-of select="./v3:city"/></span>
+			</div>
+			</xsl:if>
+			<xsl:if test="v3:state">
+			<div class="address">
+				<span class="label" style="width:5em;">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10142'"/>
+						<!-- Province -->
+					</xsl:call-template>:&#160;</span>
+				<span class="value"><xsl:value-of select="./v3:state"/></span>
+			</div>
+			</xsl:if>
+			<xsl:if test="v3:postalCode">
+			<div class="address">
+				<span class="label" style="width:5em;">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10143'"/>
+						<!-- Postal Code -->
+					</xsl:call-template>:
+				</span>
+				<span class="value"><xsl:value-of select="v3:postalCode"/></span>
+			</div>
+			</xsl:if>
+			<xsl:if test="v3:country">
+			<div class="address">
+				<span class="label" style="width:5em;">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10106'"/>
+						<!-- Country -->
+					</xsl:call-template>:
+				</span>
+				<span class="value">
+					<xsl:call-template name="hpfb-label">
+						<xsl:with-param name="codeSystem" select="$country-code-oid"/>
+						<xsl:with-param name="code" select="./v3:country/@code"/>
+					</xsl:call-template>
+				</span>
+			</div>
+			</xsl:if>
+		</div>
 	</xsl:template>
 	<xsl:template mode="format" match="*/v3:addr">
 		<div class="addressContainer">

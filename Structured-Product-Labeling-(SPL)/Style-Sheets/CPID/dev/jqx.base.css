@@ -2874,8 +2874,10 @@ of the horizontal scrollbar.*/
 .jqx-splitter-collapse-button-vertical
 {
     cursor: pointer;
-    width: 5px;
-    height: 45px;
+/*     width: 5px; */
+/*     height: 45px; */
+	width: 0;
+	height: 0;
 }
 /* This class is added when the user disable the splitter. */
 .jqx-splitter-splitbar-collapsed

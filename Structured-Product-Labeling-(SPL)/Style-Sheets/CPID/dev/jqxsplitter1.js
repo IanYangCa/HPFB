@@ -477,7 +477,7 @@
 				this.splitBar.width(this._splitBarSize)
 			}
 			if (this.orientation === "vertical") {
-				this.splitBarButton.width(this._splitBarSize);
+				this.splitBarButton.width(0);//this._splitBarSize);
 				this.splitBarButton.height(45)
 			} else {
 				this.splitBarButton.height(this._splitBarSize);
@@ -485,10 +485,24 @@
 			}
 			this.splitBarButton.css("position", "relative");
 			if (this.orientation === "vertical") {
-				this.splitBarButton.css("top", "50%");
-				this.splitBarButton.css("left", "0");
-				this.splitBarButton.css("margin-top", "-23px");
-				this.splitBarButton.css("margin-left", "-0px")
+				this.splitBarButton.css("border-top", this._splitBarSize + "px solid transparent");
+				if(this.splitBar.position().left > 1 || arguments.callee.caller.caller.name == 'createInstance'){
+					this.splitBarButton.css("border-right", this._splitBarSize + "px solid red");
+					this.splitBarButton.css("border-left", "");
+				} else {
+					this.splitBarButton.css("border-left", this._splitBarSize + "px solid red");
+					this.splitBarButton.css("border-right", "");
+					this.splitBar.addClass(this.toThemeProperty("jqx-splitter-splitbar-collapsed"));
+					this.splitBarButton.on('click', function(e){alert(e);});
+				}
+				this.splitBarButton.css("border-bottom", this._splitBarSize + "px solid transparent");
+				this.splitBarButton.css("margin-top", this.splitBar.height()/2 + "px");
+				this.splitBarButton.css("margin-left", "0px");
+				this.splitBarButton.css("height", "0");
+				this.splitBarButton.css("width", "0");
+				this.splitBarButton.css("z-index", "3");
+				this.splitBarButton.width(0);
+				this.splitBarButton.css("background", "#efefef");
 			} else {
 				this.splitBarButton.css("left", "50%");
 				this.splitBarButton.css("top", "0");
@@ -516,6 +530,8 @@
 				this.panels[b].collapsed = true;
 				this.panels[b].element[0].style.visibility = "hidden";
 				this.splitBar.addClass(this.toThemeProperty("jqx-splitter-splitbar-collapsed"));
+				this.splitBarButton.css("border-right", "0px","important");
+//				this.splitBarButton.css("border-left", this._splitBarSize + "px solid red");
 				this._layoutPanels();
 				this._raiseEvent(2, {
 					index: b,
@@ -606,7 +622,7 @@
 			if (!this.showSplitBar) {
 				m = 0
 			}
-			var i = this.host[q]();
+			var i = this.host[q]() - 30;
 			var k = i / 100;
 			var s = 1 / k;
 			var p = s * m;
@@ -643,7 +659,7 @@
 					if (j.orientation == "vertical") {
 						j.splitBar[0].style.borderLeftColor = "";
 						j.splitBar[0].style.borderRightColor = "";
-						j.splitBarButton[0].style.width = parseInt(j._splitBarSize) + "px";
+//						j.splitBarButton[0].style.width = parseInt(j._splitBarSize) + "px";
 						j.splitBarButton[0].style.left = "0px"
 					} else {
 						j.splitBar[0].style.borderTopColor = "";
@@ -655,7 +671,7 @@
 						if (i - m == w) {
 							if (j.orientation == "vertical") {
 								j.splitBar[0].style.borderRightColor = "transparent";
-								j.splitBarButton[0].style.width = parseInt(j._splitBarSize + 1) + "px"
+//								j.splitBarButton[0].style.width = parseInt(j._splitBarSize + 1) + "px"
 							} else {
 								j.splitBar[0].style.borderBottomColor = "transparent";
 								j.splitBarButton[0].style.height = parseInt(j._splitBarSize + 1) + "px"
@@ -664,7 +680,7 @@
 							if (w == 0) {
 								if (j.orientation == "vertical") {
 									j.splitBar[0].style.borderLeftColor = "transparent";
-									j.splitBarButton[0].style.width = parseInt(j._splitBarSize + 1) + "px";
+//									j.splitBarButton[0].style.width = parseInt(j._splitBarSize + 1) + "px";
 									j.splitBarButton[0].style.left = "-1px"
 								} else {
 									j.splitBar[0].style.borderTopColor = "transparent";
@@ -712,7 +728,7 @@
 							h.css(q, parseFloat(o) + "%")
 						}
 					} else {
-						var d = i - n - m - 25;
+						var d = i - n - m ;
 						if (h[0].style[q] != n + "px") {
 							h[q](n)
 						}
@@ -754,7 +770,7 @@
 			b[1].min = this.panels[1].min;
 			b[0].collapsible = this.panels[0].collapsible;
 			b[1].collapsible = this.panels[1].collapsible;
-			b[0].collapsed = this.panels[0].collapsed;
+			b[0].collapsed = this.panels[0].collapsed || b[0].size < 1;
 			b[1].collapsed = this.panels[1].collapsed;
 			e.args.panels = b;
 			return this.host.trigger(e)
