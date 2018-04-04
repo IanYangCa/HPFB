@@ -72,6 +72,8 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 	<xsl:template name="include-custom-items">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="{$resourcesdir}jqxcore.js" type="text/javascript" charset="utf-8">/* */</script>
+		<script src="{$resourcesdir}jqxsplitter1.js" type="text/javascript" charset="utf-8">/* */</script>
 		<script src="{$resourcesdir}hpfb-spl.js" type="text/javascript" charset="utf-8">/* */</script>
 	</xsl:template>
 	<!-- Process mixins if they exist -->
@@ -294,6 +296,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					<xsl:value-of select="v3:title"/>
 				</title>
 				<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+				<link rel="stylesheet" type="text/css" href="{$resourcesdir}jqx.base.css"/>
 				<link rel="stylesheet" type="text/css" href="{$css}"/>
 				<xsl:call-template name="include-custom-items"/>
 			</head>
@@ -2855,7 +2858,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			<parameterValue name="show-section-numbers" value="'1'"/>
 			<parameterValue name="show-data" value="'1'"/>
 			<parameterValue name="css" value="'https://rawgit.com/IanYangCa/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/dev.2/hpfb-spl-core.css'"/>
-			<parameterValue name="resourcesdir" value="'https://rawgit.com/IanYangCa/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/dev.2/'"/>
+			<parameterValue name="resourcesdir" value="'C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\SPM\dev.2\'"/>
 			<advancedProp name="sInitialMode" value=""/>
 			<advancedProp name="schemaCache" value="||"/>
 			<advancedProp name="bXsltOneIsOkay" value="true"/>
