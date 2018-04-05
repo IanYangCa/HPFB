@@ -61,7 +61,7 @@ function twoColumnsDisplay(){
 		$("#jqxSplitter").jqxSplitter({
 			width: '100%',
 			height: ($(window).height() - $("#pageHeader").outerHeight() - 29 ),
-			panels:[{size:'200'}],
+			panels:[{size:'200', defaultSize:'200'}],
 			splitBarSize: 10
 		});
 	}

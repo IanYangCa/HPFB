@@ -167,7 +167,10 @@
 			this._layoutPanels();
 			this._raiseEvent(0, {
 				panels: this.panels
-			})
+			});
+			if(this.panels[0].size < 1){
+				this.panels[0].collapsed = true;
+			}
 		},
 		_stopDrag: function () {
 			if (this._dragging) {
@@ -216,6 +219,7 @@
 						if (!f.collapsed) {
 							c.collapse()
 						} else {
+							if(f.size < 1){ f.size = f.defaultSize;}
 							c.expand()
 						}
 					};
@@ -493,7 +497,6 @@
 					this.splitBarButton.css("border-left", this._splitBarSize + "px solid red");
 					this.splitBarButton.css("border-right", "");
 					this.splitBar.addClass(this.toThemeProperty("jqx-splitter-splitbar-collapsed"));
-					this.splitBarButton.on('click', function(e){alert(e);});
 				}
 				this.splitBarButton.css("border-bottom", this._splitBarSize + "px solid transparent");
 				this.splitBarButton.css("margin-top", this.splitBar.height()/2 + "px");
@@ -622,7 +625,7 @@
 			if (!this.showSplitBar) {
 				m = 0
 			}
-			var i = this.host[q]() - 30;
+			var i = this.host[q]() - 60;
 			var k = i / 100;
 			var s = 1 / k;
 			var p = s * m;
