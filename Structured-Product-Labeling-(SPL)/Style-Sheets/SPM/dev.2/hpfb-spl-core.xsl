@@ -2470,9 +2470,9 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				</th>
 				<td class="formItem">
 					<xsl:variable name="approval" select="current()/../../../v3:subjectOf/v3:approval/v3:code[@codeSystem = $marketing-category-oid]"/>
-					<xsl:value-of select="$approval/@displayName"/>
-					<xsl:text>:</xsl:text>
-					<xsl:value-of select="$approval/@code"/>
+					<xsl:value-of select="$approval/@displayName"/>(
+					<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10093'"/></xsl:call-template>:&#160;
+					<xsl:value-of select="$approval/@code"/>)
 				</td>
 				<td class="formItem">
 					<xsl:for-each select="../v3:quantity">
