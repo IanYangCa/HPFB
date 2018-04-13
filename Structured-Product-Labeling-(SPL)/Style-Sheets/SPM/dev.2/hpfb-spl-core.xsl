@@ -48,11 +48,10 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 	<xsl:variable name="din-oid" select="'2.16.840.1.113883.2.20.6.42'"/>
 
 	<xsl:variable name="doc_language">
-		<xsl:call-template name="string-lowercase">
-			<xsl:with-param name="text">
-				<xsl:value-of select="/v3:document/v3:languageCode/@code"/>
-			</xsl:with-param>
-		</xsl:call-template>
+		<xsl:choose>
+		<xsl:when test="/v3:document/v3:languageCode/@code = '1'">eng</xsl:when>
+		<xsl:otherwise>fra</xsl:otherwise>
+		</xsl:choose>
 	</xsl:variable>
 	<xsl:variable name="display_language" select="concat('name-',$doc_language)"/>
 	<xsl:variable name="doctype" select="/v3:document/v3:code/@code"/>
