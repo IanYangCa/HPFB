@@ -3,7 +3,7 @@ var tocNodes = [];
 var tocIndex = 0;
 var currentId = "";
 var expandCollapse;
-$(window).resize(function(e){
+$(window).resize(function(){
 	setWatermarkBorder();
 	if(currentId != ""){
 		location.href = currentId ;
@@ -59,8 +59,8 @@ function twoColumnsDisplay(){
 		$("#jqxSplitter").jqxSplitter({
 			width: '100%',
 			height: ($(window).height() - $("#pageHeader").outerHeight() - 35 ),
-			panels:[{size:'200'}],
-			splitBarSize: 5
+			panels:[{size:'200', defaultSize:'200'}],
+			splitBarSize: 10
 		});
 	}
 	collapseAll();

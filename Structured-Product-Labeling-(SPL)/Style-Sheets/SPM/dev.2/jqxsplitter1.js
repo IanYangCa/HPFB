@@ -625,7 +625,7 @@
 			if (!this.showSplitBar) {
 				m = 0
 			}
-			var i = this.host[q]() - 30;
+			var i = this.host[q]() - 60;
 			var k = i / 100;
 			var s = 1 / k;
 			var p = s * m;
