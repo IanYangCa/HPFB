@@ -454,9 +454,12 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 
 			<div class="submissionNumber">
 				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'170'"/>
+					<xsl:with-param name="code" select="'10015'"/>
 				</xsl:call-template>:
-				<xsl:value-of select="/descendant-or-self::*[@code='170' and @codeSystem=$section-id-oid]/../v3:text"/>
+				<xsl:for-each select="$root/v3:document/v3:templateId[@root='2.16.840.1.113883.2.20.6.49']">
+					<xsl:if test="position() &gt; 1">;&#160;&#160;</xsl:if>
+					<xsl:value-of select="./@extension"/>
+				</xsl:for-each>
 			</div>
 			<div class="minSpace"/>
 			<div class="minSpace"/>
@@ -477,11 +480,13 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			<br/>
 			<xsl:value-of select="$organization/v3:contactParty/v3:addr/v3:postalCode"/>
 			<br/>
+			<xsl:if test="$organization/v3:contactParty/v3:addr/v3:country">
 			<xsl:call-template name="hpfb-label">
 				<xsl:with-param name="codeSystem" select="$country-code-oid"/>
 				<xsl:with-param name="code" select="$organization/v3:contactParty/v3:addr/v3:country/@code"/>
 			</xsl:call-template>
 			<br/>
+			</xsl:if>
 		</p>
 	</xsl:template>
 	<xsl:template name="assignedOrganization">
@@ -491,10 +496,13 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					<xsl:value-of select="current()/v3:name"/>
 				</td>
 				<td class="borderCellLeft">
-					<xsl:call-template name="hpfb-label">
-						<xsl:with-param name="codeSystem" select="$organization-role-oid"/>
-						<xsl:with-param name="code" select="current()/v3:id[@root=$organization-role-oid]/@extension"/>
-					</xsl:call-template>
+					<xsl:for-each select="../v3:performance/v3:actDefinition/v3:code[@codeSystem=$organization-role-oid]">
+						<xsl:if test="position() &gt; 1 " >;&#160;&#160;</xsl:if>
+						<xsl:call-template name="hpfb-label">
+							<xsl:with-param name="codeSystem" select="$organization-role-oid"/>
+							<xsl:with-param name="code" select="./@code"/>
+						</xsl:call-template>
+					</xsl:for-each>
 				</td>
 			</tr>
 		</xsl:for-each>
@@ -1170,30 +1178,18 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 	</xsl:template>
 	<xsl:template mode="subjects" match="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization">
 		<xsl:if test="./v3:name">
-			<xsl:variable name="role_id" select="./v3:id[@root=$organization-role-oid]/@extension"/>
-			<xsl:variable name="role_name" select="(document(concat($oids-base-url,$organization-role-oid,$file-suffix)))/gc:CodeList/SimpleCodeList/Row[./Value[@ColumnRef='code']/SimpleValue=$role_id]/Value[@ColumnRef=$display_language]/SimpleValue"/>
-			<table width="100%" cellpadding="3" cellspacing="0" class="formTableMorePetite"
-			       id="{$role_name}{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization)}">
+<!--			<xsl:variable name="role_id" select="./v3:temp[@codeSystem=$organization-role-oid]/@code"/>
+			<xsl:variable name="role_name" select="(document(concat($oids-base-url,$organization-role-oid,$file-suffix)))/gc:CodeList/SimpleCodeList/Row[./Value[@ColumnRef='code']/SimpleValue=$role_id]/Value[@ColumnRef=$display_language]/SimpleValue"/>-->
+			<table width="100%" cellpadding="3" cellspacing="0" class="formTableMorePetite" id="{'organizationId'}{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization)}">
 				<!-- replace with the label for the role -->
-				<tr>
+<!--				<tr>
 					<td colspan="5" class="formHeadingReg">
 						<span class="formHeadingTitle">
-							<xsl:variable name="extension" select="current()/id[@root='']/@extension"/>
-							<xsl:choose>
-								<!-- replace with HPFB codes -->
-								<xsl:when test="string($role_name) != 'NaN'">
-									<xsl:value-of select="$role_name"/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:call-template name="hpfb-title">
-										<xsl:with-param name="code" select="'10056'"/>
-										<!-- otherParty -->
-									</xsl:call-template>
-								</xsl:otherwise>
-							</xsl:choose>
+							<xsl:for-each select="../v3:performance/v3:actDefinition[@codeSystem='$organization-role-oid']/v3:code"/>
+								<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="."/><xsl:with-param name="codeSystem" select="$organization-role-oid"/></xsl:call-template>
 						</span>
 					</td>
-				</tr>
+				</tr>-->
 				<tr>
 					<th scope="col" class="formTitle">
 						<xsl:call-template name="hpfb-title">
@@ -1219,16 +1215,13 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 							<!-- ID_FEI -->
 						</xsl:call-template>
 					</th>
-					<!--					<th scope="col" class="formTitle">
-						<xsl:call-template name="hpfb-title">
-							<xsl:with-param name="code" select="'10010'"/>
-							 businessOperations 
-						</xsl:call-template>
-					</th>-->
 				</tr>
 				<tr class="formTableRowAlt">
 					<td class="formItem">
-						<xsl:value-of select="$role_name"/>
+							<xsl:for-each select="../v3:performance/v3:actDefinition/v3:code[@codeSystem=$organization-role-oid]">
+								<xsl:if test="position() &gt; 1"><br/></xsl:if>
+								<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="./@code"/><xsl:with-param name="codeSystem" select="$organization-role-oid"/></xsl:call-template>
+							</xsl:for-each>
 					</td>
 					<td class="formItem">
 						<xsl:value-of select="./v3:name"/>
@@ -1239,7 +1232,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					<td class="formItem">
 						<xsl:value-of select="./v3:id/@extension"/>
 					</td>
-					<td class="formItem">
+<!--					<td class="formItem">
 						<xsl:for-each select="../v3:performance[not(v3:actDefinition/v3:code/@code = preceding-sibling::*/v3:actDefinition/v3:code/@code)]/v3:actDefinition/v3:code">
 							<xsl:variable name="code" select="@code"/>
 							<xsl:value-of select="@displayName"/>
@@ -1264,7 +1257,6 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 									<xsl:if test="../v3:code[@displayName = 'other']">
 										<xsl:call-template name="hpfb-title">
 											<xsl:with-param name="code" select="'10091'"/>
-											<!-- text -->
 										</xsl:call-template>-
 										<xsl:value-of select="../v3:text/text()"/>
 										<xsl:if test="../v3:subjectOf/v3:document">
@@ -1282,7 +1274,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 							</xsl:for-each>
 							<xsl:if test="position()!=last()">,</xsl:if>
 						</xsl:for-each>
-					</td>
+					</td>-->
 				</tr>
 				<xsl:call-template name="data-contactParty"/>
 			</table>
@@ -1332,7 +1324,6 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 						<xsl:text>FAX: </xsl:text>
 						<xsl:call-template name="hpfb-title">
 							<xsl:with-param name="code" select="'10076'"/>
-							<!-- role -->
 						</xsl:call-template>
 						<xsl:value-of select="substring-after(., 'fax:')"/>
 					</xsl:for-each>
@@ -1411,10 +1402,12 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 						<!-- Country -->
 					</xsl:call-template>:</td>
 				<td>
-					<xsl:call-template name="hpfb-label">
+					<xsl:if test="./v3:country">
+						<xsl:call-template name="hpfb-label">
 						<xsl:with-param name="codeSystem" select="$country-code-oid"/>
 						<xsl:with-param name="code" select="./v3:country/@code"/>
 					</xsl:call-template>
+					</xsl:if>
 				</td>
 			</tr>
 		</table>
@@ -2880,7 +2873,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 
 <metaInformation>
 	<scenarios>
-		<scenario default="yes" name="Scenario1" userelativepaths="no" externalpreview="yes" url="file:///e:/7.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test5.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
+		<scenario default="yes" name="Scenario1" userelativepaths="no" externalpreview="yes" url="file:///e:/10.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test5.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
 		          profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no" validator="internal"
 		          customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
