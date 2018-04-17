@@ -357,7 +357,45 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 												</strong>
 											</th>
 										</tr>
-										<tr>
+										<tr><td>
+							<table width="100%" cellpadding="3" cellspacing="0" class="formTableMorePetite" style="font-size:80%" id="organizationId{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization)}">
+								<thead>
+								<tr>
+									<th scope="col" class="formTitle">
+										<xsl:call-template name="hpfb-title">
+											<xsl:with-param name="code" select="'10051'"/>
+											<!-- name -->
+										</xsl:call-template>
+									</th>
+									<th scope="col" class="formTitle">
+										<xsl:call-template name="hpfb-title">
+											<xsl:with-param name="code" select="'10027'"/>
+											<!-- ID_FEI -->
+										</xsl:call-template>
+									</th>
+									<th scope="col" class="formTitle">
+										<xsl:call-template name="hpfb-title">
+											<xsl:with-param name="code" select="'10003'"/>
+											<!-- address -->
+										</xsl:call-template>
+									</th>
+									<th scope="col" class="formTitle">
+										<xsl:call-template name="hpfb-title">
+											<xsl:with-param name="code" select="'10076'"/>
+											<!-- role -->
+										</xsl:call-template>
+									</th>
+								</tr>
+								</thead>
+								<tbody>
+												<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization"/>
+												<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization"/>
+												<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization"/>
+								</tbody>
+							</table></td>
+
+										</tr>
+<!--										<tr>
 											<td>
 												<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization"/>
 											</td>
@@ -371,7 +409,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 											<td>
 												<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization"/>
 											</td>
-										</tr>
+										</tr>-->
 									</tbody>
 								</table>
 							</div>
@@ -1151,7 +1189,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 						</td>
 					</tr>
 					<tr>
-						<td class="normalizer">
+						<td>
 							<xsl:call-template name="MarketingInfo"/>
 						</td>
 					</tr>
@@ -1180,7 +1218,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 		<xsl:if test="./v3:name">
 <!--			<xsl:variable name="role_id" select="./v3:temp[@codeSystem=$organization-role-oid]/@code"/>
 			<xsl:variable name="role_name" select="(document(concat($oids-base-url,$organization-role-oid,$file-suffix)))/gc:CodeList/SimpleCodeList/Row[./Value[@ColumnRef='code']/SimpleValue=$role_id]/Value[@ColumnRef=$display_language]/SimpleValue"/>-->
-			<table width="100%" cellpadding="3" cellspacing="0" class="formTableMorePetite" id="{'organizationId'}{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization)}">
+<!--			<table width="100%" cellpadding="3" cellspacing="0" class="formTableMorePetite" id="{'organizationId'}{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization)}">-->
 				<!-- replace with the label for the role -->
 <!--				<tr>
 					<td colspan="5" class="formHeadingReg">
@@ -1190,47 +1228,47 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 						</span>
 					</td>
 				</tr>-->
-				<tr>
-					<th scope="col" class="formTitle">
-						<xsl:call-template name="hpfb-title">
-							<xsl:with-param name="code" select="'10076'"/>
-							<!-- role -->
-						</xsl:call-template>
-					</th>
+<!--				<tr>
 					<th scope="col" class="formTitle">
 						<xsl:call-template name="hpfb-title">
 							<xsl:with-param name="code" select="'10051'"/>
-							<!-- name -->
-						</xsl:call-template>
-					</th>
-					<th scope="col" class="formTitle">
-						<xsl:call-template name="hpfb-title">
-							<xsl:with-param name="code" select="'10003'"/>
-							<!-- address -->
+							<- name ->
 						</xsl:call-template>
 					</th>
 					<th scope="col" class="formTitle">
 						<xsl:call-template name="hpfb-title">
 							<xsl:with-param name="code" select="'10027'"/>
-							<!-- ID_FEI -->
+							<- ID_FEI ->
 						</xsl:call-template>
 					</th>
-				</tr>
+					<th scope="col" class="formTitle">
+						<xsl:call-template name="hpfb-title">
+							<xsl:with-param name="code" select="'10003'"/>
+							<- address ->
+						</xsl:call-template>
+					</th>
+					<th scope="col" class="formTitle">
+						<xsl:call-template name="hpfb-title">
+							<xsl:with-param name="code" select="'10076'"/>
+							<- role ->
+						</xsl:call-template>
+					</th>
+				</tr>-->
 				<tr class="formTableRowAlt">
 					<td class="formItem">
-							<xsl:for-each select="../v3:performance/v3:actDefinition/v3:code[@codeSystem=$organization-role-oid]">
-								<xsl:if test="position() &gt; 1"><br/></xsl:if>
-								<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="./@code"/><xsl:with-param name="codeSystem" select="$organization-role-oid"/></xsl:call-template>
-							</xsl:for-each>
+						<xsl:value-of select="./v3:name"/>
 					</td>
 					<td class="formItem">
-						<xsl:value-of select="./v3:name"/>
+						<xsl:value-of select="./v3:id/@extension"/>
 					</td>
 					<td class="formItem">
 						<xsl:apply-templates mode="format" select="./v3:addr"/>
 					</td>
 					<td class="formItem">
-						<xsl:value-of select="./v3:id/@extension"/>
+							<xsl:for-each select="../v3:performance/v3:actDefinition/v3:code[@codeSystem=$organization-role-oid]">
+								<xsl:if test="position() &gt; 1"><br/></xsl:if>
+								<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="./@code"/><xsl:with-param name="codeSystem" select="$organization-role-oid"/></xsl:call-template>
+							</xsl:for-each>
 					</td>
 <!--					<td class="formItem">
 						<xsl:for-each select="../v3:performance[not(v3:actDefinition/v3:code/@code = preceding-sibling::*/v3:actDefinition/v3:code/@code)]/v3:actDefinition/v3:code">
@@ -1276,8 +1314,8 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 						</xsl:for-each>
 					</td>-->
 				</tr>
-				<xsl:call-template name="data-contactParty"/>
-			</table>
+<!--				<xsl:call-template name="data-contactParty"/>
+			</table>-->
 		</xsl:if>
 	</xsl:template>
 	<xsl:template name="data-contactParty">
@@ -1287,24 +1325,20 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					<th scope="col" class="formTitle">
 						<xsl:call-template name="hpfb-title">
 							<xsl:with-param name="code" select="'10016'"/>
-							<!-- contact -->
 						</xsl:call-template>
 					</th>
 					<th scope="col" class="formTitle">
 						<xsl:call-template name="hpfb-title">
 							<xsl:with-param name="code" select="'10003'"/>
-							<!-- address -->
 						</xsl:call-template>
 					</th>
 					<th scope="col" class="formTitle">
 						<xsl:call-template name="hpfb-title">
-							<!-- telephoneNumber -->
 							<xsl:with-param name="code" select="'10090'"/>
 						</xsl:call-template>
 					</th>
 					<th scope="col" class="formTitle">
 						<xsl:call-template name="hpfb-title">
-							<!-- emailAddress -->
 							<xsl:with-param name="code" select="'10022'"/>
 						</xsl:call-template>
 					</th>
@@ -1337,38 +1371,72 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 	<!-- DIN info -->
 	<xsl:template mode="subjects" match="//v3:author/v3:assignedEntity/v3:representedOrganization">
 		<xsl:if test="(count(./v3:name)&gt;0)">
-			<table width="100%" cellpadding="3" cellspacing="0" class="formTableMorePetite" id="dinOwner{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization)}">
-				<tr>
+<!--				<tr>
 					<td colspan="4" class="formHeadingReg">
 						<span class="formHeadingTitle">
 							<xsl:call-template name="hpfb-title">
 								<xsl:with-param name="code" select="'10020'"/>
-								<!-- DIN_Owner -->
+								<- DIN_Owner ->
 							</xsl:call-template>&#xA0;-&#xA0;</span>
 						<xsl:value-of select="./v3:name"/>
 					</td>
-				</tr>
-				<xsl:call-template name="data-contactParty"/>
-			</table>
+				</tr>-->
+				<xsl:call-template name="data-contactParty-new"><xsl:with-param name="orgRole" select="'0'"/></xsl:call-template>
 		</xsl:if>
+	</xsl:template>
+	<xsl:template name="data-contactParty-new">
+		<xsl:param name="orgRole" select="/.."/>
+			<tr class="formTableRowAlt">
+				<td class="formItem">
+					<xsl:value-of select="v3:name"/>
+				</td>
+				<td class="formItem">
+					<xsl:value-of select="v3:id[@root='2.16.840.1.113883.2.20.6.31']/@extension"/>
+				</td>
+				<td class="formItem">
+					<xsl:apply-templates mode="format" select="v3:contactParty/v3:addr"/>
+				</td>
+				<td class="formItem">
+					<xsl:choose>
+					<xsl:when test="$orgRole = '0'">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10020'"/>
+						<!-- DIN_Owner -->
+					</xsl:call-template>
+					</xsl:when>
+					<xsl:when test="$orgRole = '1'">
+						<xsl:call-template name="hpfb-title">
+							<xsl:with-param name="code" select="'10071'"/>
+							<!-- registrant -->
+						</xsl:call-template>
+					</xsl:when>
+					<xsl:otherwise>
+							<xsl:for-each select="../v3:performance/v3:actDefinition/v3:code[@codeSystem=$organization-role-oid]">
+								<xsl:if test="position() &gt; 1"><br/></xsl:if>
+								<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="./@code"/><xsl:with-param name="codeSystem" select="$organization-role-oid"/></xsl:call-template>
+							</xsl:for-each>
+					</xsl:otherwise>
+					</xsl:choose>
+				</td>
+			</tr>
 	</xsl:template>
 
 	<xsl:template mode="subjects" match="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization">
 		<xsl:if test="./v3:name">
-			<table width="100%" cellpadding="3" cellspacing="0" class="formTableMorePetite" id="otherpart{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization)}">
-				<tr>
+<!--			<table width="100%" cellpadding="3" cellspacing="0" class="formTableMorePetite" id="otherpart{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization)}">-->
+<!--				<tr>
 					<td colspan="4" class="formHeadingReg">
 						<span class="formHeadingTitle">
 							<xsl:call-template name="hpfb-title">
 								<xsl:with-param name="code" select="'10071'"/>
-								<!-- registrant -->
+								<- registrant ->
 							</xsl:call-template>&#xA0;-&#xA0;</span>
 						<xsl:value-of select="./v3:name"/>
 						<xsl:if test="./v3:id/@extension">(<xsl:value-of select="./v3:id/@extension"/>)</xsl:if>
 					</td>
-				</tr>
-				<xsl:call-template name="data-contactParty"/>
-			</table>
+				</tr>-->
+				<xsl:call-template name="data-contactParty-new"><xsl:with-param name="orgRole" select="'1'"/></xsl:call-template>
+<!--			</table>-->
 		</xsl:if>
 	</xsl:template>
 	<xsl:template mode="format" match="*/v3:addr">
@@ -1450,7 +1518,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 							</td>
 						</tr>
 						<tr>
-							<td class="normalizer">
+							<td>
 								<xsl:call-template name="MarketingInfo"></xsl:call-template>
 							</td>
 						</tr>
@@ -1995,7 +2063,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 
 	<xsl:template name="MarketingInfo">
 		<xsl:if test="../v3:subjectOf/v3:approval|../v3:subjectOf/v3:marketingAct">
-			<table width="100%" cellpadding="3" cellspacing="0" class="formTableMorePetite">
+			<table width="100%" cellpadding="3" cellspacing="0" class="formTableMorePetite" style="font-size:80%">
 				<tr>
 					<td colspan="4" class="formHeadingReg">
 						<span class="formHeadingTitle">
