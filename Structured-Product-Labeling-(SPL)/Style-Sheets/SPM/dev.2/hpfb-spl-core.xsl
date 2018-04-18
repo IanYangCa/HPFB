@@ -1305,7 +1305,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 									-&#160;(<xsl:value-of select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:code[@codeSystem=$medicinal-product-oids]/@code"/>)
 									<xsl:if test="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId">
 										&#160;-&#160;
-										<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId[@root=$ingredient-id-oid]/@extension"/><xsl:with-param name="codeSystem" select="$ingredient-id-oid"/></xsl:call-template>
+										(<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId[@root=$ingredient-id-oid]/@extension"/><xsl:with-param name="codeSystem" select="$ingredient-id-oid"/></xsl:call-template>)&#160;
 										(<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10093'"/></xsl:call-template>:&#160;<xsl:value-of select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId[@root=$ingredient-id-oid]/@extension"/>)
 									</xsl:if>
 								</xsl:for-each>
@@ -1339,8 +1339,8 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 		<xsl:param name="addr" select="/.."/>
 		<xsl:value-of select="$addr/v3:streetAddressLine"/><br/>
 		<xsl:value-of select="$addr/v3:city"/>
-		<xsl:if test="string-length($addr/v3:state)&gt;0">,&#xA0;<xsl:value-of select="$addr/v3:state"/></xsl:if>
-		<xsl:if test="string-length($addr/v3:postalCode)&gt;0">,&#xA0;<xsl:value-of select="$addr/v3:postalCode"/></xsl:if><br/>
+		<xsl:if test="string-length($addr/v3:state)&gt;0">,&#xA0;<xsl:value-of select="$addr/v3:state"/></xsl:if><br/>
+		<xsl:if test="string-length($addr/v3:postalCode)&gt;0"><xsl:value-of select="$addr/v3:postalCode"/></xsl:if><br/>
 		<xsl:if test="$addr/v3:country"><xsl:call-template name="hpfb-label"><xsl:with-param name="codeSystem" select="$country-code-oid"/><xsl:with-param name="code" select="$addr/v3:country/@code"/></xsl:call-template></xsl:if>
 	</xsl:template>
 	<xsl:template mode="format" match="*/v3:addr">
