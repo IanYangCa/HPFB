@@ -370,7 +370,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 													</th>
 													<th scope="col" class="formTitle">
 														<xsl:call-template name="hpfb-title">
-															<xsl:with-param name="code" select="'10076'"/>
+															<xsl:with-param name="code" select="'10121'"/>
 															<!-- role -->
 														</xsl:call-template>
 													</th>
@@ -1305,8 +1305,8 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 									-&#160;(<xsl:value-of select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:code[@codeSystem=$medicinal-product-oids]/@code"/>)
 									<xsl:if test="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId">
 										&#160;-&#160;
-										(<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId[@root=$ingredient-id-oid]/@extension"/><xsl:with-param name="codeSystem" select="$ingredient-id-oid"/></xsl:call-template>)&#160;
-										(<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10093'"/></xsl:call-template>:&#160;<xsl:value-of select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId[@root=$ingredient-id-oid]/@extension"/>)
+										(<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId[@root=$ingredient-id-oid]/@extension"/><xsl:with-param name="codeSystem" select="$ingredient-id-oid"/></xsl:call-template>&#160;
+										(<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10093'"/></xsl:call-template>:&#160;<xsl:value-of select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId[@root=$ingredient-id-oid]/@extension"/>))
 									</xsl:if>
 								</xsl:for-each>
 							</xsl:for-each>
