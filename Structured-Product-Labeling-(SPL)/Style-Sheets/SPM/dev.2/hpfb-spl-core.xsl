@@ -1300,9 +1300,9 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 							<xsl:for-each select="../v3:performance/v3:actDefinition/v3:code[@codeSystem=$organization-role-oid]">
 								<xsl:if test="position() &gt; 1"><br/></xsl:if>
 								<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="./@code"/><xsl:with-param name="codeSystem" select="$organization-role-oid"/></xsl:call-template>
-								<xsl:for-each select="../v3:product">:&#160;
+								<xsl:for-each select="../v3:product">:&#160;&#160;
 									<xsl:if test="position() &gt; 1">;&#160;&#160;</xsl:if>
-									-&#160;(<xsl:value-of select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:code[@codeSystem=$medicinal-product-oids]/@code"/>)
+									-&#160;&#160;(<xsl:value-of select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:code[@codeSystem=$medicinal-product-oids]/@code"/>)
 									<xsl:if test="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId">
 										&#160;-&#160;
 										(<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId[@root=$ingredient-id-oid]/@extension"/><xsl:with-param name="codeSystem" select="$ingredient-id-oid"/></xsl:call-template>&#160;
