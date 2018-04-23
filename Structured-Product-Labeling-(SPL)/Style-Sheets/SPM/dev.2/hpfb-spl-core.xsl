@@ -1501,23 +1501,20 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 								</xsl:call-template>
 							</td>
 							<td class="formItem">
-								<!-- XXX: can't do in XSLT 1.0: xsl:value-of select="replace($documentTypes/v3:document[@code = $root/v3:document/v3:code/@code]/v3:title,'(^| )label( |$)',' ','i')"/ -->
-								<xsl:value-of select="$documentTypes/gc:CodeList/SimpleCodeList/Row/Value[@ColumnRef='code' and SimpleValue=$root/v3:document/v3:code/@code]/../Value[@ColumnRef=$display_language]/SimpleValue"/>
+								<xsl:value-of select="v3:templateId[@root='2.16.840.1.113883.2.20.6.53']/@extension"/>
 							</td>
 						</xsl:if>
-						<xsl:for-each select="v3:code/@code">
-							<td class="formLabel">
+						<xsl:for-each select="v3:code[@codeSystem='2.16.840.1.113883.2.20.6.55']">
+							<td class="formLabel" style="width:10em;">
 								<xsl:call-template name="hpfb-title">
 									<xsl:with-param name="code" select="'10039'"/>
 									<!-- itemCodeSource -->
 								</xsl:call-template>
 							</td>
 							<td class="formItem">
-								<xsl:variable name="approval" select="current()/../../../v3:subjectOf/v3:approval/v3:code[@codeSystem = $marketing-category-oid]"/>
-								<xsl:value-of select="$approval/@displayName"/>
-								<xsl:text>( </xsl:text>
-								<xsl:value-of select="$approval/@code"/>
-								<xsl:text> )</xsl:text>
+								<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10121'"/></xsl:call-template>:&#160;
+								<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="./@code"/><xsl:with-param name="codeSystem" select="'2.16.840.1.113883.2.20.6.55'"/></xsl:call-template>
+								(<xsl:value-of select="./@code"/>)
 							</td>
 						</xsl:for-each>
 					</tr>
@@ -1547,26 +1544,6 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 							</xsl:if>
 						</tr>
 					</xsl:if>
-					<!--					<xsl:if test="../../../v3:effectiveTime[v3:low/@value or v3:high/@value]  or  ../v3:effectiveTime[v3:low/@value and v3:high/@value]">
-						<tr class="formTableRowAlt">
-							<td class="formLabel">
-								<xsl:call-template name="hpfb-title">
-									<xsl:with-param name="code" select="'10070'"/>
-									== reportingPeriod ==
-								</xsl:call-template>
-							</td>
-							<td class="formItem">
-								<xsl:variable name="range" select="ancestor::v3:section[1]/v3:effectiveTime"/>
-								<xsl:value-of select="$range/v3:low/@value"/>
-								<xsl:text>-</xsl:text>
-								<xsl:value-of select="$range/v3:high/@value"/>
-							</td>
-							<xsl:if test=" ../../../../v3:section[v3:subject/v3:manufacturedProduct]">
-								<td class="formLabel"/>
-								<td class="formItem"/>
-							</xsl:if>
-						</tr>
-					</xsl:if>-->
 				</table>
 			</td>
 		</tr>
