@@ -377,9 +377,9 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 												</tr>
 												</thead>
 												<tbody>
-																<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization"/>
-																<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization"/>
-																<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization"/>
+													<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization"/>
+													<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization"/>
+													<xsl:apply-templates mode="subjects" select="v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization"/>
 												</tbody>
 											</table></td>
 
@@ -451,9 +451,9 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 								<xsl:call-template name="hpfb-title">
 									<xsl:with-param name="code" select="'10105'"/>
 								</xsl:call-template>:<span id="revisionDateValue">
-									<xsl:call-template name="string-ISO-date">
-										<xsl:with-param name="text" select="/v3:document/v3:effectiveTime/@value"/>
-									</xsl:call-template></span></span>
+								<xsl:call-template name="string-ISO-date">
+									<xsl:with-param name="text" select="/v3:document/v3:effectiveTime/@value"/>
+								</xsl:call-template></span></span>
 						</td>
 					</tr>
 				</table>

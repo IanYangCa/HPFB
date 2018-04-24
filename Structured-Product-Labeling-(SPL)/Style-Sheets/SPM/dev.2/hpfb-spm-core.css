@@ -1138,24 +1138,7 @@ body {
 .pageHeader .revisionDate {
 	padding-top:3px;
 }
-.triangle-left {
-	display:none !important;
-	width: 0;
-	height: 0;
-	border-top: 12px solid transparent;
-	border-right: 12px solid red;
-	border-bottom: 12px solid transparent;
-	z-index:3;
-}
-.triangle-right {
-	display:none !important;
-	width: 0;
-	height: 0;
-	border-top: 12px solid transparent;
-	border-left: 12px solid red;
-	border-bottom: 12px solid transparent;
-	z-index:3;
-}
+
 @media screen and (min-width: 300px) and (max-width: 580px) {
 	.leftColumn {
 	    width:100%;

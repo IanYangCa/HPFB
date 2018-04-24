@@ -26,11 +26,11 @@ Revision: $Id: spl-common.xsl,v 2.0 2006/08/18 04:11:00 sbsuggs Exp $
 
 <!-- HPFB Changes:
 	1.	changed the resource locations to the HPFB instances.
-	https://github.com/IanYangCa/HPFB/blob/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/dev/hpfb-spl.js
+	https://github.com/IanYangCa/HPFB/blob/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/dev/hpfb-spm.js
 -->
 
 <xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:v3="urn:hl7-org:v3" exclude-result-prefixes="v3 xsl">
-	<xsl:import href="hpfb-spl-core.xsl"/>
+	<xsl:import href="hpfb-spm-core.xsl"/>
 	<!-- Whether to show the clickable XML, set to "/.." instead of "1" to turn off -->
 	<xsl:param name="show-subjects-xml" select="0"/>
 	<!-- Whether to show the data elements in special tables etc., set to "/.." instead of "1" to turn off -->
@@ -44,7 +44,7 @@ Revision: $Id: spl-common.xsl,v 2.0 2006/08/18 04:11:00 sbsuggs Exp $
 
 	<!-- Where to find JavaScript and CSS resources -->
 	<xsl:param name="resourcesdir" select="'https://rawgit.com/IanYangCa/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/dev.2/'" />
-	<xsl:param name="css" select="concat($resourcesdir, 'hpfb-spl-core.css')" />
+	<xsl:param name="css" select="concat($resourcesdir, 'hpfb-spm-core.css')" />
 	<!-- is there any reason we render HTML 1.0?  -->
 	<xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
 	<xsl:strip-space elements="*"/>
