@@ -1512,7 +1512,6 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 								</xsl:call-template>
 							</td>
 							<td class="formItem">
-								<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10121'"/></xsl:call-template>:&#160;
 								<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="./@code"/><xsl:with-param name="codeSystem" select="'2.16.840.1.113883.2.20.6.55'"/></xsl:call-template>
 								(<xsl:value-of select="./@code"/>)
 							</td>
