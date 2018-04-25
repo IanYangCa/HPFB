@@ -38,46 +38,6 @@
 		</xsl:when>
 		</xsl:choose>
 	</xsl:template>
-	<xsl:template name="organizations">
-		<xsl:for-each select="//v3:author/v3:assignedEntity/v3:representedOrganization">
-			<xsl:if test="(count(./v3:name)&gt;0)">
-				<h2 id="dinOwner{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization)}h" style="padding-left:2em;margin-top:1.5ex;"><a href="#dinOwner{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization)}">
-					<xsl:call-template name="hpfb-title">
-						<xsl:with-param name="code" select="'10020'"/>
-						<!-- DIN_Owner -->
-					</xsl:call-template>
-				</a></h2>
-			</xsl:if>
-		</xsl:for-each>
-		<xsl:for-each select="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization">
-			<xsl:variable name="role_id" select="./v3:id[@root=$organization-role-oid]/@extension"/>
-			<xsl:variable name="role_name" select="(document(concat($oids-base-url,$organization-role-oid,$file-suffix)))/gc:CodeList/SimpleCodeList/Row[./Value[@ColumnRef='code']/SimpleValue=$role_id]/Value[@ColumnRef=$display_language]/SimpleValue"/>
-			<h2 id="{$role_name}{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization)}h" style="padding-left:2em;margin-top:1.5ex;"><a href="#{$role_name}{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization)}">
-				<xsl:choose>
-					<!-- replace with HPFB codes -->
-					<xsl:when test="string($role_name) != 'NaN'">
-						<xsl:value-of select="$role_name"/>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:call-template name="hpfb-title">
-							<xsl:with-param name="code" select="'10056'"/>
-							<!-- otherParty -->
-						</xsl:call-template>
-					</xsl:otherwise>
-				</xsl:choose>
-			</a></h2>
-		</xsl:for-each>
-		<xsl:for-each select="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization">
-			<xsl:if test="(count(./v3:name)&gt;0)">
-				<h2 id="otherpart{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization)}h" style="padding-left:2em;margin-top:1.5ex;"><a href="#otherpart{count(preceding::v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization)}">
-					<xsl:call-template name="hpfb-title">
-							<xsl:with-param name="code" select="'10071'"/>
-							<!-- registrant -->
-					</xsl:call-template>&#xA0;-&#xA0;<xsl:value-of select="./v3:name"/>
-				</a></h2>
-			</xsl:if>
-		</xsl:for-each>
-	</xsl:template>
 	<xsl:template name="formatAddress">
 		<xsl:param name="addr" select="/.."/>
 		<xsl:value-of select="$addr/v3:streetAddressLine"/><br/>
@@ -1532,5 +1492,92 @@
 			<xsl:apply-templates mode="mixed" select="node()"/>
 		</li>
 	</xsl:template>
+	<xsl:template mode="subjects" match="/|@*|node()">
+		<xsl:apply-templates mode="subjects" select="@*|node()"/>
+	</xsl:template>
+	<!-- DIN info -->
+	<xsl:template name="data-contactParty-new">
+		<xsl:param name="orgRole" select="/.."/>
+			<tr class="formTableRowAlt">
+				<td class="formItem">
+					<xsl:value-of select="v3:name"/>
+				</td>
+				<td class="formItem">
+					<xsl:value-of select="v3:id[@root='2.16.840.1.113883.2.20.6.31']/@extension"/>
+				</td>
+				<td class="formItem">
+					<xsl:choose>
+					<xsl:when test="$orgRole = '0'">
+						<xsl:call-template name="formatAddress"><xsl:with-param name="addr" select="v3:contactParty/v3:addr"/></xsl:call-template>
+					</xsl:when>
+					<xsl:when test="$orgRole = '1'">
+						<xsl:call-template name="formatAddress"><xsl:with-param name="addr" select="v3:contactParty/v3:addr"/></xsl:call-template>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:call-template name="formatAddress"><xsl:with-param name="addr" select="v3:addr"/></xsl:call-template>
+					</xsl:otherwise>
+					</xsl:choose>
+				</td>
+				<td class="formItem">
+					<xsl:choose>
+					<xsl:when test="$orgRole = '0'">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10020'"/>
+						<!-- DIN_Owner -->
+					</xsl:call-template>
+					</xsl:when>
+					<xsl:when test="$orgRole = '1'">
+						<xsl:call-template name="hpfb-title">
+							<xsl:with-param name="code" select="'10071'"/>
+							<!-- registrant -->
+						</xsl:call-template>
+					</xsl:when>
+					<xsl:otherwise>
+						<div style="white-space:nowrap;">
+							<xsl:for-each select="../v3:performance/v3:actDefinition/v3:code[@codeSystem=$organization-role-oid]">
+								<xsl:if test="position() &gt; 1"><br/></xsl:if>
+								<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="./@code"/><xsl:with-param name="codeSystem" select="$organization-role-oid"/></xsl:call-template>
+								<xsl:for-each select="../v3:product">:&#160;&#160;
+									<xsl:if test="position() &gt; 1">;&#160;&#160;</xsl:if>
+									-&#160;&#160;(<xsl:value-of select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:code[@codeSystem=$medicinal-product-oids]/@code"/>)
+									<xsl:if test="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId">
+										&#160;-&#160;
+										(<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId[@root=$ingredient-id-oid]/@extension"/><xsl:with-param name="codeSystem" select="$ingredient-id-oid"/></xsl:call-template>&#160;
+										(<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10093'"/></xsl:call-template>:&#160;<xsl:value-of select="v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:templateId[@root=$ingredient-id-oid]/@extension"/>))
+									</xsl:if>
+								</xsl:for-each>
+							</xsl:for-each>
+						</div>
+					</xsl:otherwise>
+					</xsl:choose>
+				</td>
+			</tr>
+	</xsl:template>
+	<xsl:template mode="subjects" match="//v3:author/v3:assignedEntity/v3:representedOrganization">
+		<xsl:if test="(count(./v3:name)&gt;0)">
+			<xsl:call-template name="data-contactParty-new"><xsl:with-param name="orgRole" select="'0'"/></xsl:call-template>
+		</xsl:if>
+	</xsl:template>
+	<xsl:template mode="subjects" match="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization">
+		<xsl:if test="./v3:name">
+			<xsl:call-template name="data-contactParty-new"><xsl:with-param name="orgRole" select="'1'"/></xsl:call-template>
+		</xsl:if>
+	</xsl:template>
+	<xsl:template mode="subjects" match="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization">
+		<xsl:if test="./v3:name">
+			<xsl:call-template name="data-contactParty-new"><xsl:with-param name="orgRole" select="'2'"/></xsl:call-template>
+		</xsl:if>
+	</xsl:template>
 </xsl:transform>
-	
+	<!-- Stylus Studio meta-information - (c) 2004-2009. Progress Software Corporation. All rights reserved.
+
+<metaInformation>
+	<scenarios/>
+	<MapperMetaTag>
+		<MapperInfo srcSchemaPathIsRelative="yes" srcSchemaInterpretAsXML="no" destSchemaPath="" destSchemaRoot="" destSchemaPathIsRelative="yes" destSchemaInterpretAsXML="no"/>
+		<MapperBlockPosition></MapperBlockPosition>
+		<TemplateContext></TemplateContext>
+		<MapperFilter side="source"></MapperFilter>
+	</MapperMetaTag>
+</metaInformation>
+-->
