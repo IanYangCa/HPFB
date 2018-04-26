@@ -228,7 +228,7 @@
 								</xsl:call-template>
 							</td>
 							<td class="formItem">
-								<xsl:value-of select="v3:templateId[@root='2.16.840.1.113883.2.20.6.53']/@extension"/>
+								<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="v3:templateId[@root='2.16.840.1.113883.2.20.6.53']/@extension"/><xsl:with-param name="codeSystem" select="'2.16.840.1.113883.2.20.6.53'"/></xsl:call-template>
 							</td>
 						</xsl:if>
 						<xsl:for-each select="v3:code[@codeSystem='2.16.840.1.113883.2.20.6.55']">
@@ -239,7 +239,6 @@
 								</xsl:call-template>
 							</td>
 							<td class="formItem">
-								<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10121'"/></xsl:call-template>:&#160;
 								<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="./@code"/><xsl:with-param name="codeSystem" select="'2.16.840.1.113883.2.20.6.55'"/></xsl:call-template>
 								(<xsl:value-of select="./@code"/>)
 							</td>

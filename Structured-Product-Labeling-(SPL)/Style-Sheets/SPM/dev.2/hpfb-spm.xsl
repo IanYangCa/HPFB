@@ -45,6 +45,7 @@ Revision: $Id: spl-common.xsl,v 2.0 2006/08/18 04:11:00 sbsuggs Exp $
 	<!-- Where to find JavaScript and CSS resources -->
 	<xsl:param name="resourcesdir" select="'https://rawgit.com/IanYangCa/HPFB/master/Structured-Product-Labeling-(SPL)/Style-Sheets/SPM/dev.2/'" />
 	<xsl:param name="css" select="concat($resourcesdir, 'hpfb-spm-core.css')" />
+	<xsl:param name="buildFor" select="dev"/>
 	<!-- is there any reason we render HTML 1.0?  -->
 	<xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
 	<xsl:strip-space elements="*"/>
