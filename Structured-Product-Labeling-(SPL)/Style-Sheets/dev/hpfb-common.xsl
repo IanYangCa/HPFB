@@ -836,7 +836,7 @@
 		<td class="formItem">
 			<xsl:value-of select=".//@displayName[1]"/>
 <!--			<xsl:if test="./v3:originalText">(<xsl:value-of select="./v3:originalText"/>)</xsl:if>-->
-			(<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select=".//@code"/><xsl:with-param name="codeSystem" select=".//@codeSystem"/></xsl:call-template>)
+			<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select=".//@code"/><xsl:with-param name="codeSystem" select=".//@codeSystem"/></xsl:call-template>
 		</td>
 		<td class="formItem">
 			<xsl:value-of select=".//@code[1]"/>
