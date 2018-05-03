@@ -931,22 +931,6 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 			</table>
 		</div>
 	</xsl:template>
-	<xsl:template mode="subjects" match="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization/v3:assignedEntity/v3:assignedOrganization">
-		<xsl:if test="./v3:name">
-			<xsl:call-template name="data-contactParty-new"><xsl:with-param name="orgRole" select="'2'"/></xsl:call-template>
-		</xsl:if>
-	</xsl:template>
-	<!-- DIN info -->
-	<xsl:template mode="subjects" match="//v3:author/v3:assignedEntity/v3:representedOrganization">
-		<xsl:if test="(count(./v3:name)&gt;0)">
-			<xsl:call-template name="data-contactParty-new"><xsl:with-param name="orgRole" select="'0'"/></xsl:call-template>
-		</xsl:if>
-	</xsl:template>
-	<xsl:template mode="subjects" match="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:assignedEntity/v3:assignedOrganization">
-		<xsl:if test="./v3:name">
-			<xsl:call-template name="data-contactParty-new"><xsl:with-param name="orgRole" select="'1'"/></xsl:call-template>
-		</xsl:if>
-	</xsl:template>
 	<xsl:template match="v3:text[not(parent::v3:observationMedia)]">
 		<!-- Health Canada Change added font size attribute below-->
 		<text style="font-size:0.8em;">
@@ -970,7 +954,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 
 <metaInformation>
 	<scenarios>
-		<scenario default="yes" name="Scenario1" userelativepaths="no" externalpreview="yes" url="file:///e:/12.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test5.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
+		<scenario default="yes" name="Scenario1" userelativepaths="no" externalpreview="yes" url="file:///e:/14.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test5.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
 		          profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no" validator="internal"
 		          customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
