@@ -255,7 +255,8 @@
 								</td>
 								<td class="formItem" colspan="3">
 									<xsl:for-each select="../v3:consumedIn/*[self::v3:substanceAdministration or self::v3:substanceAdministration1]/v3:routeCode">
-										<xsl:value-of select="@displayName"/>;&#160;&#160;
+										<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="./@code"/><xsl:with-param name="codeSystem" select="./@codeSystem"/></xsl:call-template>
+										;&#160;&#160;
 									</xsl:for-each>
 								</td>
 							</xsl:if>
@@ -364,15 +365,13 @@
 	</xsl:template>
 	<xsl:template name="MarketingInfo">
 		<xsl:if test="../v3:subjectOf/v3:approval|../v3:subjectOf/v3:marketingAct">
-			<table width="100%" cellpadding="3" cellspacing="0" class="formTableMorePetite">
+			<table width="100%" cellpadding="3" cellspacing="0" class="formTablePetite">
 				<tr>
-					<td colspan="4" class="formHeadingReg">
-						<span class="formHeadingTitle">
-							<xsl:call-template name="hpfb-title">
-								<xsl:with-param name="code" select="'10047'"/>
-								<!-- marketingInformation -->
-							</xsl:call-template>
-						</span>
+					<td colspan="4" class="formHeadingTitle">
+						<xsl:call-template name="hpfb-title">
+							<xsl:with-param name="code" select="'10047'"/>
+							<!-- marketingInformation -->
+						</xsl:call-template>
 					</td>
 				</tr>
 				<tr>
@@ -522,23 +521,21 @@
 					<xsl:for-each select="(v3:ingredientSubstance|v3:activeIngredientSubstance)[1]">
 						<td class="formItem">
 							<strong>
-								<xsl:value-of select="v3:code/@displayName"/>
+								<xsl:value-of select="v3:name"/>
 							</strong>
-							<xsl:text> (</xsl:text>
-							<xsl:for-each select="v3:code/@code">
+							(<xsl:for-each select="v3:code/@code">
 								<xsl:call-template name="hpfb-title">
 									<xsl:with-param name="code" select="'10093'"/>
 									<!-- ID -->
 								</xsl:call-template>:
 								<xsl:value-of select="."/>
-								<xsl:if test="position()!=last()">
+								<xsl:if test="position()!=last()">&#160;
 									<xsl:call-template name="hpfb-title">
 										<xsl:with-param name="code" select="'10005'"/>
 										<!-- and -->
-									</xsl:call-template>
+									</xsl:call-template>&#160;
 								</xsl:if>
-							</xsl:for-each>
-							<xsl:text>) </xsl:text>
+							</xsl:for-each>)
 							<xsl:if test="normalize-space(v3:activeMoiety/v3:activeMoiety/v3:name)">
 								<xsl:text> (</xsl:text>
 								<xsl:for-each select="v3:activeMoiety/v3:activeMoiety/v3:name">
@@ -575,6 +572,7 @@
 									<xsl:value-of select="v3:activeMoiety/v3:activeMoiety/v3:name"/>
 								</xsl:when>
 							</xsl:choose>
+							(<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10093'"/></xsl:call-template>:&#160;<xsl:value-of select="v3:code/@code"/>)
 						</td>
 					</xsl:for-each>
 					<td class="formItem">
@@ -631,17 +629,15 @@
 					<xsl:for-each select="(v3:ingredientSubstance|v3:inactiveIngredientSubstance)[1]">
 						<td class="formItem">
 							<strong>
-								<xsl:value-of select="v3:code/@displayName"/>
+								<xsl:value-of select="v3:name"/>
 							</strong>
-							<xsl:text> (</xsl:text>
-							<xsl:for-each select="v3:code/@code">
+							(<xsl:for-each select="v3:code/@code">
 								<xsl:call-template name="hpfb-title">
 									<xsl:with-param name="code" select="'10093'"/>
 									<!-- ID -->
 								</xsl:call-template>:
 								<xsl:value-of select="."/>
-							</xsl:for-each>
-							<xsl:text>) </xsl:text>
+							</xsl:for-each>)
 						</td>
 					</xsl:for-each>
 					<td class="formItem">
@@ -733,18 +729,14 @@
 					</td>
 					<xsl:for-each select="(v3:ingredientSubstance|v3:activeIngredientSubstance)[1]">
 						<td class="formItem">
-							<strong>
-								<xsl:value-of select="v3:code/@displayName"/>
-							</strong>
-							<xsl:text> (</xsl:text>
-							<xsl:for-each select="v3:code/@code">
+							<strong><xsl:value-of select="v3:name"/></strong>
+							(<xsl:for-each select="v3:code/@code">
 								<xsl:call-template name="hpfb-title">
 									<xsl:with-param name="code" select="'10093'"/>
 									<!-- ID -->
 								</xsl:call-template>:
 								<xsl:value-of select="."/>
-							</xsl:for-each>
-							<xsl:text>) </xsl:text>
+							</xsl:for-each>)
 							<xsl:if test="normalize-space(v3:ingredientSubstance/v3:activeMoiety/v3:activeMoiety/v3:name)">(<xsl:value-of select="v3:ingredientSubstance/v3:activeMoiety/v3:activeMoiety/v3:name"/>)</xsl:if>
 						</td>
 					</xsl:for-each>
@@ -835,8 +827,8 @@
 	<xsl:template mode="characteristics" match="v3:value[@xsi:type = 'CV' or @xsi:type = 'CE' or @xsi:type = 'CE']">
 		<td class="formItem">
 			<xsl:value-of select=".//@displayName[1]"/>
-<!--			<xsl:if test="./v3:originalText">(<xsl:value-of select="./v3:originalText"/>)</xsl:if>-->
-			(<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select=".//@code"/><xsl:with-param name="codeSystem" select=".//@codeSystem"/></xsl:call-template>)
+			<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select=".//@code"/><xsl:with-param name="codeSystem" select=".//@codeSystem"/></xsl:call-template>
+			<xsl:if test="./v3:originalText">(<xsl:value-of select="./v3:originalText"/>)</xsl:if>
 		</td>
 		<td class="formItem">
 			<xsl:value-of select=".//@code[1]"/>
