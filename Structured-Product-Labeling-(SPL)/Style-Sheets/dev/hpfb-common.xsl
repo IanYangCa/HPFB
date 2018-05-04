@@ -365,15 +365,13 @@
 	</xsl:template>
 	<xsl:template name="MarketingInfo">
 		<xsl:if test="../v3:subjectOf/v3:approval|../v3:subjectOf/v3:marketingAct">
-			<table width="100%" cellpadding="3" cellspacing="0" class="formTableMorePetite">
+			<table width="100%" cellpadding="3" cellspacing="0" class="formTablePetite">
 				<tr>
-					<td colspan="4" class="formHeadingReg">
-						<span class="formHeadingTitle">
-							<xsl:call-template name="hpfb-title">
-								<xsl:with-param name="code" select="'10047'"/>
-								<!-- marketingInformation -->
-							</xsl:call-template>
-						</span>
+					<td colspan="4" class="formHeadingTitle">
+						<xsl:call-template name="hpfb-title">
+							<xsl:with-param name="code" select="'10047'"/>
+							<!-- marketingInformation -->
+						</xsl:call-template>
 					</td>
 				</tr>
 				<tr>
