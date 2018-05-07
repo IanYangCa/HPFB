@@ -255,8 +255,7 @@
 								</td>
 								<td class="formItem" colspan="3">
 									<xsl:for-each select="../v3:consumedIn/*[self::v3:substanceAdministration or self::v3:substanceAdministration1]/v3:routeCode">
-										<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="./@code"/><xsl:with-param name="codeSystem" select="./@codeSystem"/></xsl:call-template>
-										;&#160;&#160;
+										<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select="./@code"/><xsl:with-param name="codeSystem" select="./@codeSystem"/></xsl:call-template>;&#160;&#160;
 									</xsl:for-each>
 								</td>
 							</xsl:if>
@@ -518,11 +517,9 @@
 							<xsl:otherwise>formTableRowAlt</xsl:otherwise>
 						</xsl:choose>
 					</xsl:attribute>
-					<xsl:for-each select="(v3:ingredientSubstance|v3:activeIngredientSubstance)[1]">
+					<xsl:for-each select="(v3:ingredientSubstance|v3:activeIngredientSubstance)">
 						<td class="formItem">
-							<strong>
-								<xsl:value-of select="v3:name"/>
-							</strong>
+							<xsl:value-of select="v3:name"/>
 							(<xsl:for-each select="v3:code/@code">
 								<xsl:call-template name="hpfb-title">
 									<xsl:with-param name="code" select="'10093'"/>
@@ -536,9 +533,8 @@
 									</xsl:call-template>&#160;
 								</xsl:if>
 							</xsl:for-each>)
-							<xsl:if test="normalize-space(v3:activeMoiety/v3:activeMoiety/v3:name)">
-								<xsl:text> (</xsl:text>
-								<xsl:for-each select="v3:activeMoiety/v3:activeMoiety/v3:name">
+							<xsl:if test="../@classCode != 'ACTIR' and normalize-space(v3:activeMoiety/v3:activeMoiety/v3:name)">
+								(<xsl:for-each select="v3:activeMoiety/v3:activeMoiety/v3:name">
 									<xsl:value-of select="."/>
 									<xsl:text> - </xsl:text>
 									<xsl:call-template name="hpfb-title">
@@ -547,8 +543,19 @@
 									</xsl:call-template>:
 									<xsl:value-of select="../v3:code/@code"/>
 									<xsl:if test="position()!=last()">,</xsl:if>
-								</xsl:for-each>
-								<xsl:text>) </xsl:text>
+								</xsl:for-each>)
+							</xsl:if>
+							<xsl:if test="../@classCode = 'ACTIR' and normalize-space(v3:asEquivalentSubstance/v3:definingSubstance/v3:name)">
+								(<xsl:for-each select="v3:asEquivalentSubstance/v3:definingSubstance/v3:name">
+									<xsl:value-of select="."/>
+									<xsl:text> - </xsl:text>
+									<xsl:call-template name="hpfb-title">
+										<xsl:with-param name="code" select="'10093'"/>
+										<!-- UNII -->
+									</xsl:call-template>:
+									<xsl:value-of select="../v3:code/@code"/>
+									<xsl:if test="position()!=last()">,</xsl:if>
+								</xsl:for-each>)
 							</xsl:if>
 							<xsl:for-each select="../v3:subjectOf/v3:substanceSpecification/v3:code[@codeSystem = '2.16.840.1.113883.6.69' or @codeSystem = '2.16.840.1.113883.3.6277']/@code">(
 								<xsl:call-template name="hpfb-title">
@@ -828,7 +835,7 @@
 		<td class="formItem">
 			<xsl:value-of select=".//@displayName[1]"/>
 			<xsl:call-template name="hpfb-label"><xsl:with-param name="code" select=".//@code"/><xsl:with-param name="codeSystem" select=".//@codeSystem"/></xsl:call-template>
-			<xsl:if test="./v3:originalText">(<xsl:value-of select="./v3:originalText"/>)</xsl:if>
+			<xsl:if test="./v3:originalText">&#160;(<xsl:value-of select="./v3:originalText"/>)</xsl:if>
 		</td>
 		<td class="formItem">
 			<xsl:value-of select=".//@code[1]"/>
@@ -944,8 +951,9 @@
 				</th>
 				<td class="formItem">
 					<xsl:variable name="approval" select="current()/../../../v3:subjectOf/v3:approval/v3:code[@codeSystem = $marketing-category-oid]"/>
-					<xsl:value-of select="$approval/@displayName"/>(
-					<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10093'"/></xsl:call-template>:&#160;
+<!--					<xsl:value-of select="$approval/@codeSystem"/>-->
+					<xsl:call-template name="hpfb-label"><xsl:with-param name="codeSystem" select="$marketing-category-oid"/><xsl:with-param name="code" select="$approval/@code"/></xsl:call-template>
+					(<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10093'"/></xsl:call-template>:&#160;
 					<xsl:value-of select="$approval/@code"/>)
 				</td>
 				<td class="formItem">

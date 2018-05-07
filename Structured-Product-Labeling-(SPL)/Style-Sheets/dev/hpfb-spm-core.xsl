@@ -117,6 +117,14 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					<h1 id="{$sectionID}h">
 						<a href="#{$sectionID}">
 							<xsl:value-of select="v3:title"/>
+							<xsl:if test="v3:templateId[@root='2.16.840.1.113883.2.20.6.55']">
+								&#160;(<xsl:call-template name="hpfb-label"><xsl:with-param name="codeSystem" select="'2.16.840.1.113883.2.20.6.55'"/><xsl:with-param name="code" select="v3:templateId[@root='2.16.840.1.113883.2.20.6.55']/@extension"/></xsl:call-template>
+								(<xsl:value-of select="v3:templateId[@root='2.16.840.1.113883.2.20.6.55']/@extension"/>))
+							</xsl:if>
+							<xsl:if test="v3:templateId[@root='2.16.840.1.113883.2.20.6.56']">
+								&#160;(<xsl:call-template name="hpfb-label"><xsl:with-param name="codeSystem" select="'2.16.840.1.113883.2.20.6.56'"/><xsl:with-param name="code" select="v3:templateId[@root='2.16.840.1.113883.2.20.6.56']/@extension"/></xsl:call-template>
+								(<xsl:value-of select="v3:templateId[@root='2.16.840.1.113883.2.20.6.56']/@extension"/>))
+							</xsl:if>
 						</a>
 					</h1>
 				</xsl:when>
@@ -954,7 +962,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 
 <metaInformation>
 	<scenarios>
-		<scenario default="yes" name="Scenario1" userelativepaths="no" externalpreview="yes" url="file:///e:/14.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test5.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
+		<scenario default="yes" name="Scenario1" userelativepaths="no" externalpreview="yes" url="file:///e:/15.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test5.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
 		          profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no" validator="internal"
 		          customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
