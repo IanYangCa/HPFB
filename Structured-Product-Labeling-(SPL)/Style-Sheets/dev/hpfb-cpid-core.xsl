@@ -253,6 +253,17 @@
 					<td class="formTitle">
 						<xsl:call-template name="hpfb-title">
 							<xsl:with-param name="code" select="'10114'"/>
+							<!-- Company (Sponsor) Name -->
+						</xsl:call-template>
+					</td>
+					<td class="formItem" colspan="3">
+						<xsl:value-of select="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:name"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="formTitle">
+						<xsl:call-template name="hpfb-title">
+							<xsl:with-param name="code" select="'10114'"/>
 							<!-- Brand Name of Drug Product -->
 						</xsl:call-template>
 					</td>
@@ -809,8 +820,8 @@
 		          customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
 			<parameterValue name="css" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\dev\hpfb-cpid.css'"/>
-			<parameterValue name="resourcesdir" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\dev\'"/>
 			<parameterValue name="language" value="'eng'"/>
+			<parameterValue name="resourcesdir" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\dev\'"/>
 			<advancedProp name="sInitialMode" value=""/>
 			<advancedProp name="schemaCache" value="||"/>
 			<advancedProp name="bXsltOneIsOkay" value="true"/>

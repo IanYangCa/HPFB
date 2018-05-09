@@ -1467,6 +1467,19 @@
 		</xsl:if>
 		<xsl:if test="not($value)">Error: code missing:(<xsl:value-of select="$code"/> in <xsl:value-of select="$section-id-oid"/>)</xsl:if>
 	</xsl:template>
+	<xsl:template name="hpfb-title-resolve">
+		<xsl:param name="code" select="/.."/>
+		<xsl:param name="title" select="/.."/>
+		<xsl:choose>
+		<xsl:when test="$title">
+			<xsl:value-of select="v3:title"/>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="$code"/></xsl:call-template>
+		</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
 	<!-- LIST MODEL -->
 	<xsl:template match="v3:list[@styleCode]" priority="1">
 		<ul>
