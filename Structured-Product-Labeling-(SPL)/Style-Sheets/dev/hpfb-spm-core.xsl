@@ -116,7 +116,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				<xsl:when test="$heading='1'">
 					<h1 id="{$sectionID}h">
 						<a href="#{$sectionID}">
-							<xsl:value-of select="v3:title"/>
+							<xsl:call-template name="hpfb-title-resolve"><xsl:with-param name="code" select="$code"/><xsl:with-param name="title" select="v3:title"/></xsl:call-template>
 							<xsl:if test="v3:templateId[@root='2.16.840.1.113883.2.20.6.55']">
 								&#160;(<xsl:call-template name="hpfb-label"><xsl:with-param name="codeSystem" select="'2.16.840.1.113883.2.20.6.55'"/><xsl:with-param name="code" select="v3:templateId[@root='2.16.840.1.113883.2.20.6.55']/@extension"/></xsl:call-template>
 								(<xsl:value-of select="v3:templateId[@root='2.16.840.1.113883.2.20.6.55']/@extension"/>))
@@ -133,7 +133,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 					<h2 id="{$sectionID}h" style="padding-left:2em;margin-top:1.5ex;">
 						<a href="#{$sectionID}">
 							<xsl:value-of select="concat($prefix,'. ')"/>
-							<xsl:value-of select="v3:title"/>
+							<xsl:call-template name="hpfb-title-resolve"><xsl:with-param name="code" select="$code"/><xsl:with-param name="title" select="v3:title"/></xsl:call-template>
 						</a>
 					</h2>
 				</xsl:when>
@@ -142,7 +142,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 						<a href="#{$sectionID}">
 							<xsl:value-of select="concat($parentPrefix,'.')"/>
 							<xsl:value-of select="concat($prefix,' ')"/>
-							<xsl:value-of select="v3:title"/>
+							<xsl:call-template name="hpfb-title-resolve"><xsl:with-param name="code" select="$code"/><xsl:with-param name="title" select="v3:title"/></xsl:call-template>
 						</a>
 					</h3>
 				</xsl:when>
@@ -151,7 +151,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 						<a href="#{$sectionID}">
 							<xsl:value-of select="concat($parentPrefix,'.')"/>
 							<xsl:value-of select="concat($prefix,' ')"/>
-							<xsl:value-of select="v3:title"/>
+							<xsl:call-template name="hpfb-title-resolve"><xsl:with-param name="code" select="$code"/><xsl:with-param name="title" select="v3:title"/></xsl:call-template>
 						</a>
 					</h4>
 				</xsl:when>
@@ -160,7 +160,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 						<a href="#{$sectionID}">
 							<xsl:value-of select="concat($parentPrefix,'.')"/>
 							<xsl:value-of select="concat($prefix,' ')"/>
-							<xsl:value-of select="v3:title"/>
+							<xsl:call-template name="hpfb-title-resolve"><xsl:with-param name="code" select="$code"/><xsl:with-param name="title" select="v3:title"/></xsl:call-template>
 						</a>
 					</h5>
 				</xsl:when>
@@ -962,7 +962,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 
 <metaInformation>
 	<scenarios>
-		<scenario default="yes" name="Scenario1" userelativepaths="no" externalpreview="yes" url="file:///e:/15.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test5.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
+		<scenario default="yes" name="Scenario1" userelativepaths="no" externalpreview="yes" url="file:///e:/spm-4.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test6.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
 		          profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no" validator="internal"
 		          customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
