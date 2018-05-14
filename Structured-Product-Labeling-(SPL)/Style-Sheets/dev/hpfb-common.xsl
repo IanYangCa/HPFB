@@ -1581,6 +1581,15 @@
 			<xsl:call-template name="data-contactParty-new"><xsl:with-param name="orgRole" select="'2'"/></xsl:call-template>
 		</xsl:if>
 	</xsl:template>
+	<xsl:template name="stringJoin">
+		<xsl:param name="strings" select="/.."/>
+<!--		<xsl:if test="strings">-->
+			<xsl:for-each select="$strings">
+				<xsl:value-of select="."/>
+				<xsl:if test="position() &gt; 0 and position() != last()"><xsl:value-of select="'/'"/></xsl:if>
+			</xsl:for-each>
+<!--		</xsl:if>-->
+	</xsl:template>
 </xsl:transform>
 	<!-- Stylus Studio meta-information - (c) 2004-2009. Progress Software Corporation. All rights reserved.
 

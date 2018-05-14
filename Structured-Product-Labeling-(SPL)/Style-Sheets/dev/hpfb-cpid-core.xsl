@@ -424,10 +424,11 @@
 		</div>
 	</xsl:template>
 	<xsl:template mode="nonProprietarySubstance" match="*">
-		<xsl:variable name="nonPrdHeader" select="string-join(./v3:ingredient[starts-with(@classCode, 'ACTI')]/v3:quantity/v3:numerator/string(@value), '/')"/>
+<!--		<xsl:variable name="nonPrdHeader" select="string-join(./v3:ingredient[starts-with(@classCode, 'ACTI')]/v3:quantity/v3:numerator/string(@value), '/')"/>-->
 		<tr>
 			<td class="formTitle">
-				<xsl:value-of select="$nonPrdHeader"/>
+<!--				<xsl:value-of select="$nonPrdHeader"/>-->
+				<xsl:call-template name="stringJoin"><xsl:with-param name="strings" select="./v3:ingredient[starts-with(@classCode, 'ACTI')]/v3:quantity/v3:numerator/string(@value)"/></xsl:call-template>
 			</td>
 			<td class="formItem">
 				<xsl:for-each select="./v3:ingredient[starts-with(@classCode, 'ACTI')]">
