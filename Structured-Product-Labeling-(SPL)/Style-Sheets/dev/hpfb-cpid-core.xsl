@@ -428,7 +428,7 @@
 		<tr>
 			<td class="formTitle">
 <!--				<xsl:value-of select="$nonPrdHeader"/>-->
-				<xsl:call-template name="stringJoin"><xsl:with-param name="strings" select="./v3:ingredient[starts-with(@classCode, 'ACTI')]/v3:quantity/v3:numerator/string(@value)"/></xsl:call-template>
+				<xsl:call-template name="stringJoin"><xsl:with-param name="strings" select="./v3:ingredient[starts-with(@classCode, 'ACTI')]/v3:quantity/v3:numerator/@value"/></xsl:call-template>
 			</td>
 			<td class="formItem">
 				<xsl:for-each select="./v3:ingredient[starts-with(@classCode, 'ACTI')]">
@@ -819,8 +819,8 @@
 		          customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
 			<parameterValue name="css" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\dev\hpfb-cpid.css'"/>
-			<parameterValue name="language" value="'eng'"/>
 			<parameterValue name="resourcesdir" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\dev\'"/>
+			<parameterValue name="language" value="'eng'"/>
 			<advancedProp name="sInitialMode" value=""/>
 			<advancedProp name="schemaCache" value="||"/>
 			<advancedProp name="bXsltOneIsOkay" value="true"/>
