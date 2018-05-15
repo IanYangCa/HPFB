@@ -237,6 +237,8 @@
 					</xsl:call-template>
 				</text>
 	</xsl:template>
+	<xsl:key name="dosageIndex" match="//v3:manufacturedProduct/v3:manufacturedProduct/v3:formCode/@displayName/text()" use="." />
+	<xsl:key name="routeIndex" match="//v3:consumedIn/v3:substanceAdministration/v3:routeCode/@displayName/text()" use="." />
 	<xsl:template name="overview">
 		<div class="overview">
 		<table class="contentTablePetite" cellspacing="0" width="100%">
@@ -271,34 +273,32 @@
 						<xsl:apply-templates mode="showDataWithBR" select="//v3:manufacturedProduct/v3:manufacturedProduct/v3:name"/>
 					</td>
 				</tr>
-<!--				<xsl:for-each select="//v3:manufacturedProduct/v3:manufacturedProduct">-->
-					<tr>
-						<td class="formTitle">
-							<xsl:call-template name="hpfb-title">
-								<xsl:with-param name="code" select="'10115'"/>
-								<!-- Non-proprietary (Proper or common name) Name of Drug Product -->
-							</xsl:call-template>
-						</td>
-						<td class="formItem" colspan="3">
-							<xsl:apply-templates mode="showDataWithBR" select="//v3:manufacturedProduct/v3:manufacturedProduct/v3:asEntityWithGeneric/v3:genericMedicine/v3:name"/>
-						</td>
-					</tr>
-					<tr>
-						<td class="formTitle">
-							<xsl:call-template name="hpfb-title">
-								<xsl:with-param name="code" select="'10086'"/>
-								<!-- Product Strength -->
-							</xsl:call-template>
-						</td>
-						<td class="formItem" colspan="3">
-							<xsl:call-template name="hpfb-title">
-								<xsl:with-param name="code" select="'100116'"/>
-								<!-- Non-proprietary (Proper or common name) Name of Drug Substance (Medical Ingredient) -->
-							</xsl:call-template>
-						</td>
-					</tr>
-					<xsl:apply-templates mode="nonProprietarySubstance" select="//v3:manufacturedProduct/v3:manufacturedProduct"/>
-<!--				</xsl:for-each>-->
+				<tr>
+					<td class="formTitle">
+						<xsl:call-template name="hpfb-title">
+							<xsl:with-param name="code" select="'10115'"/>
+							<!-- Non-proprietary (Proper or common name) Name of Drug Product -->
+						</xsl:call-template>
+					</td>
+					<td class="formItem" colspan="3">
+						<xsl:apply-templates mode="showDataWithBR" select="//v3:manufacturedProduct/v3:manufacturedProduct/v3:asEntityWithGeneric/v3:genericMedicine/v3:name"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="formTitle">
+						<xsl:call-template name="hpfb-title">
+							<xsl:with-param name="code" select="'10086'"/>
+							<!-- Product Strength -->
+						</xsl:call-template>
+					</td>
+					<td class="formItem" colspan="3">
+						<xsl:call-template name="hpfb-title">
+							<xsl:with-param name="code" select="'100116'"/>
+							<!-- Non-proprietary (Proper or common name) Name of Drug Substance (Medical Ingredient) -->
+						</xsl:call-template>
+					</td>
+				</tr>
+				<xsl:apply-templates mode="nonProprietarySubstance" select="//v3:manufacturedProduct/v3:manufacturedProduct"/>
 				<tr>
 					<td class="formTitle">
 						<xsl:call-template name="hpfb-title">
@@ -307,9 +307,13 @@
 						</xsl:call-template>
 					</td>
 					<td class="formItem" colspan="3">
-						<xsl:for-each select="distinct-values(//v3:manufacturedProduct/v3:manufacturedProduct/v3:formCode/@displayName)">
+						<xsl:call-template name="distinctValues">
+							<xsl:with-param name="values" select="//v3:manufacturedProduct/v3:manufacturedProduct/v3:formCode/@displayName[generate-id()
+		                               = generate-id(key('dosageIndex',.)[1])]"/>
+						</xsl:call-template>
+<!--						<xsl:for-each select="distinct-values(//v3:manufacturedProduct/v3:manufacturedProduct/v3:formCode/@displayName)">
 							<xsl:value-of select="."/>;&#160;&#160;
-						</xsl:for-each>
+						</xsl:for-each>-->
 					</td>
 				</tr>
 				<tr>
@@ -320,9 +324,13 @@
 						</xsl:call-template>
 					</td>
 					<td class="formItem" colspan="3">
-						<xsl:for-each select="distinct-values(//v3:consumedIn/v3:substanceAdministration/v3:routeCode/@displayName)">
+						<xsl:call-template name="distinctValues">
+							<xsl:with-param name="values" select="//v3:consumedIn/v3:substanceAdministration/v3:routeCode/@displayName[generate-id()
+		                               = generate-id(key('routeIndex',.)[1])]"/>
+						</xsl:call-template>
+<!--						<xsl:for-each select="distinct-values(//v3:consumedIn/v3:substanceAdministration/v3:routeCode/@displayName)">
 							<xsl:value-of select="."/>;&#160;&#160;
-						</xsl:for-each>
+						</xsl:for-each>-->
 					</td>
 				</tr>
 				<tr>
@@ -817,8 +825,8 @@
 		          customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
 			<parameterValue name="css" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\dev\hpfb-cpid.css'"/>
-			<parameterValue name="resourcesdir" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\dev\'"/>
 			<parameterValue name="language" value="'eng'"/>
+			<parameterValue name="resourcesdir" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\dev\'"/>
 			<advancedProp name="sInitialMode" value=""/>
 			<advancedProp name="schemaCache" value="||"/>
 			<advancedProp name="bXsltOneIsOkay" value="true"/>
