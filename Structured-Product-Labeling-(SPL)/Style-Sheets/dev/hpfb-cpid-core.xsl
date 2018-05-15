@@ -271,7 +271,7 @@
 						<xsl:apply-templates mode="showDataWithBR" select="//v3:manufacturedProduct/v3:manufacturedProduct/v3:name"/>
 					</td>
 				</tr>
-				<xsl:for-each select="//v3:manufacturedProduct/v3:manufacturedProduct">
+<!--				<xsl:for-each select="//v3:manufacturedProduct/v3:manufacturedProduct">-->
 					<tr>
 						<td class="formTitle">
 							<xsl:call-template name="hpfb-title">
@@ -298,7 +298,7 @@
 						</td>
 					</tr>
 					<xsl:apply-templates mode="nonProprietarySubstance" select="//v3:manufacturedProduct/v3:manufacturedProduct"/>
-				</xsl:for-each>
+<!--				</xsl:for-each>-->
 				<tr>
 					<td class="formTitle">
 						<xsl:call-template name="hpfb-title">
@@ -424,10 +424,8 @@
 		</div>
 	</xsl:template>
 	<xsl:template mode="nonProprietarySubstance" match="*">
-<!--		<xsl:variable name="nonPrdHeader" select="string-join(./v3:ingredient[starts-with(@classCode, 'ACTI')]/v3:quantity/v3:numerator/string(@value), '/')"/>-->
 		<tr>
 			<td class="formTitle">
-<!--				<xsl:value-of select="$nonPrdHeader"/>-->
 				<xsl:call-template name="stringJoin"><xsl:with-param name="strings" select="./v3:ingredient[starts-with(@classCode, 'ACTI')]/v3:quantity/v3:numerator/@value"/></xsl:call-template>
 			</td>
 			<td class="formItem">
@@ -814,7 +812,7 @@
 
 <metaInformation>
 	<scenarios>
-		<scenario default="yes" name="CPID" userelativepaths="no" externalpreview="yes" url="file:///e:/cpid-5.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/cpid.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
+		<scenario default="yes" name="CPID" userelativepaths="no" externalpreview="yes" url="file:///e:/cpid-6.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/cpid.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
 		          profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no" validator="internal"
 		          customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
