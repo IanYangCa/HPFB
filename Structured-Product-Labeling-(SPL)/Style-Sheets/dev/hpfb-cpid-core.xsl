@@ -307,7 +307,7 @@
 						</xsl:call-template>
 					</td>
 					<td class="formItem" colspan="3">
-						<xsl:for-each select="//v3:manufacturedProduct/v3:manufacturedProduct/v3:formCode/@displayName">
+						<xsl:for-each select="distinct-values(//v3:manufacturedProduct/v3:manufacturedProduct/v3:formCode/@displayName)">
 							<xsl:value-of select="."/>;&#160;&#160;
 						</xsl:for-each>
 					</td>
@@ -320,7 +320,7 @@
 						</xsl:call-template>
 					</td>
 					<td class="formItem" colspan="3">
-						<xsl:for-each select="//v3:consumedIn/v3:substanceAdministration/v3:routeCode/@displayName">
+						<xsl:for-each select="distinct-values(//v3:consumedIn/v3:substanceAdministration/v3:routeCode/@displayName)">
 							<xsl:value-of select="."/>;&#160;&#160;
 						</xsl:for-each>
 					</td>
