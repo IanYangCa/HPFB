@@ -237,8 +237,8 @@
 					</xsl:call-template>
 				</text>
 	</xsl:template>
-	<xsl:key name="dosageIndex" match="//v3:manufacturedProduct/v3:manufacturedProduct/v3:formCode/@displayName/text()" use="." />
-	<xsl:key name="routeIndex" match="//v3:consumedIn/v3:substanceAdministration/v3:routeCode/@displayName/text()" use="." />
+	<xsl:key name="dosageIndex" match="//v3:manufacturedProduct/v3:manufacturedProduct/v3:formCode/@displayName" use="." />
+	<xsl:key name="routeIndex" match="//v3:consumedIn/v3:substanceAdministration/v3:routeCode/@displayName" use="." />
 	<xsl:template name="overview">
 		<div class="overview">
 		<table class="contentTablePetite" cellspacing="0" width="100%">
@@ -820,7 +820,7 @@
 
 <metaInformation>
 	<scenarios>
-		<scenario default="yes" name="CPID" userelativepaths="no" externalpreview="yes" url="file:///e:/cpid-6.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/cpid.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
+		<scenario default="yes" name="CPID" userelativepaths="no" externalpreview="yes" url="file:///e:/cpid-6.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/cpid1.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
 		          profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no" validator="internal"
 		          customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
