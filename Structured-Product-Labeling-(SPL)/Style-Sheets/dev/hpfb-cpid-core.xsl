@@ -530,14 +530,14 @@
 			<tr>
 				<td class="formTitle">
 					<xsl:call-template name="hpfb-title">
-						<xsl:with-param name="code" select="'10027'"/>
-						<!-- Org ID -->
+						<xsl:with-param name="code" select="'10051'"/>
+						<!-- Org Name -->
 					</xsl:call-template>
 				</td>
 				<td class="formTitle">
 					<xsl:call-template name="hpfb-title">
-						<xsl:with-param name="code" select="'10051'"/>
-						<!-- Org Name -->
+						<xsl:with-param name="code" select="'10027'"/>
+						<!-- Org ID -->
 					</xsl:call-template>
 				</td>
 				<td class="formTitle">
@@ -579,13 +579,13 @@
 				</xsl:choose>
 			</xsl:attribute>
 			<td class="formItem">
-				<xsl:value-of select="./v3:id[@root=$organization-oid]/@extension"/>
-			</td>
-			<td class="formItem">
 				<xsl:value-of select="./v3:name"/>
 			</td>
 			<td class="formItem">
-				<xsl:apply-templates mode="FORMAT" select="./v3:addr"/>
+				<xsl:value-of select="./v3:id[@root=$organization-oid]/@extension"/>
+			</td>
+			<td class="formItem">
+				<xsl:apply-templates mode="formatAddress" select="./v3:addr"/>
 			</td>
 			<td class="formItem">
 				<xsl:for-each select="../v3:performance">
@@ -825,8 +825,8 @@
 		          customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
 			<parameterValue name="css" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\dev\hpfb-cpid.css'"/>
-			<parameterValue name="language" value="'eng'"/>
 			<parameterValue name="resourcesdir" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\dev\'"/>
+			<parameterValue name="language" value="'eng'"/>
 			<advancedProp name="sInitialMode" value=""/>
 			<advancedProp name="schemaCache" value="||"/>
 			<advancedProp name="bXsltOneIsOkay" value="true"/>

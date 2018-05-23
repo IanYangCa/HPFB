@@ -114,7 +114,7 @@
 		<table class="contentTablePetite" cellspacing="0" width="100%">
 		<tbody>
 			<tr>
-				<td colspan="3" class="formHeadingReg">
+				<td colspan="4" class="formHeadingReg">
 					<xsl:value-of select="./v3:actDefinition/v3:product/v3:manufacturedProduct/v3:manufacturedMaterialKind/v3:code/@displayName"/>
 				</td>
 			</tr>
@@ -123,6 +123,12 @@
 					<xsl:call-template name="hpfb-title">
 						<xsl:with-param name="code" select="'10051'"/>
 						<!-- name -->
+					</xsl:call-template>
+				</td>
+				<td class="formTitle">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10027'"/>
+						<!-- Org ID -->
 					</xsl:call-template>
 				</td>
 				<td class="formTitle">
@@ -143,6 +149,9 @@
 					<xsl:value-of select="../v3:assignedOrganization/v3:name"/>
 				</td>
 				<td class="formItem">
+					<xsl:value-of select="../v3:assignedOrganization/v3:id[@root=$organization-oid]/@extension"/>
+				</td>
+				<td class="formItem">
 					<xsl:apply-templates mode="format" select="../v3:assignedOrganization/v3:addr"/>
 				</td>
 				<td>
@@ -150,7 +159,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="3" class="formHeadingReg">footer???
+				<td colspan="4" class="formHeadingReg">footer???
 				</td>
 			</tr>
 		</tbody>
