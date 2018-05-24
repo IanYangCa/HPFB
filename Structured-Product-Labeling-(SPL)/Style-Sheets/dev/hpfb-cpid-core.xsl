@@ -203,9 +203,9 @@
 				</tbody>
 				</table>
 			</xsl:when>
-			<xsl:when test="../v3:code[@code='5013']">
+<!--			<xsl:when test="../v3:code[@code='5013']">
 				<xsl:call-template name="performances"/>
-			</xsl:when>
+			</xsl:when>-->
 			<xsl:when test="../v3:code[@code='5022']">
 				<xsl:call-template name="storageConditions"/>
 			</xsl:when>
@@ -548,8 +548,14 @@
 				</td>
 				<td class="formTitle">
 					<xsl:call-template name="hpfb-title">
-						<xsl:with-param name="code" select="'10076'"/>
-						<!-- Role - Product - Substance -->
+						<xsl:with-param name="code" select="'10121'"/>
+						<!-- Role - Product - Substance 100076-->
+					</xsl:call-template>
+				</td>
+				<td class="formTitle">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10128'"/>
+						<!-- MF# or CEP# -->
 					</xsl:call-template>
 				</td>
 			</tr>
@@ -604,6 +610,8 @@
 				</xsl:for-each>
 				</div>
 				</xsl:for-each>
+			</td>
+			<td class="formItem">TBD
 			</td>
 		</tr>
 	</xsl:template>
@@ -825,8 +833,8 @@
 		          customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
 			<parameterValue name="css" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\dev\hpfb-cpid.css'"/>
-			<parameterValue name="resourcesdir" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\dev\'"/>
 			<parameterValue name="language" value="'eng'"/>
+			<parameterValue name="resourcesdir" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\dev\'"/>
 			<advancedProp name="sInitialMode" value=""/>
 			<advancedProp name="schemaCache" value="||"/>
 			<advancedProp name="bXsltOneIsOkay" value="true"/>
