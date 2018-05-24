@@ -507,6 +507,12 @@
 						<!-- strength -->
 					</xsl:call-template>
 				</th>
+				<th class="formTitle" scope="col">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10128'"/>
+						<!-- strength -->
+					</xsl:call-template>
+				</th>
 			</tr>
 			<xsl:if test="not(v3:ingredient[starts-with(@classCode, 'ACTI')]|v3:activeIngredient)">
 				<tr>
@@ -595,6 +601,7 @@
 						<xsl:value-of select="v3:quantity/v3:numerator/@value"/>&#xA0;<xsl:if test="normalize-space(v3:quantity/v3:numerator/@unit)!='1'"><xsl:value-of select="v3:quantity/v3:numerator/@unit"/></xsl:if>
 						<xsl:if test="(v3:quantity/v3:denominator/@value and normalize-space(v3:quantity/v3:denominator/@value)!='1')              or (v3:quantity/v3:denominator/@unit and normalize-space(v3:quantity/v3:denominator/@unit)!='1')">&#xA0;in&#xA0;<xsl:value-of select="v3:quantity/v3:denominator/@value"/>&#xA0;<xsl:if test="normalize-space(v3:quantity/v3:denominator/@unit)!='1'"><xsl:value-of select="v3:quantity/v3:denominator/@unit"/></xsl:if></xsl:if>
 					</td>
+					<td>TBD</td>
 				</tr>
 			</xsl:for-each>
 		</table>
