@@ -481,7 +481,7 @@
 	<xsl:template name="ActiveIngredients">
 		<table width="100%" cellpadding="3" cellspacing="0" class="formTablePetite">
 			<tr>
-				<td colspan="3" class="formHeadingTitle">
+				<td colspan="4" class="formHeadingTitle">
 					<xsl:call-template name="hpfb-title">
 						<xsl:with-param name="code" select="'10001'"/>
 						<!-- activeIngredientActiveMoiety -->
@@ -510,7 +510,7 @@
 				<th class="formTitle" scope="col">
 					<xsl:call-template name="hpfb-title">
 						<xsl:with-param name="code" select="'10128'"/>
-						<!-- strength -->
+						<!-- MF# or CEP# -->
 					</xsl:call-template>
 				</th>
 			</tr>
@@ -599,7 +599,7 @@
 					</xsl:for-each>
 					<td class="formItem">
 						<xsl:value-of select="v3:quantity/v3:numerator/@value"/>&#xA0;<xsl:if test="normalize-space(v3:quantity/v3:numerator/@unit)!='1'"><xsl:value-of select="v3:quantity/v3:numerator/@unit"/></xsl:if>
-						<xsl:if test="(v3:quantity/v3:denominator/@value and normalize-space(v3:quantity/v3:denominator/@value)!='1')              or (v3:quantity/v3:denominator/@unit and normalize-space(v3:quantity/v3:denominator/@unit)!='1')">&#xA0;in&#xA0;<xsl:value-of select="v3:quantity/v3:denominator/@value"/>&#xA0;<xsl:if test="normalize-space(v3:quantity/v3:denominator/@unit)!='1'"><xsl:value-of select="v3:quantity/v3:denominator/@unit"/></xsl:if></xsl:if>
+						<xsl:if test="(v3:quantity/v3:denominator/@value and normalize-space(v3:quantity/v3:denominator/@value)!='1') or (v3:quantity/v3:denominator/@unit and normalize-space(v3:quantity/v3:denominator/@unit)!='1')">&#xA0;in&#xA0;<xsl:value-of select="v3:quantity/v3:denominator/@value"/>&#xA0;<xsl:if test="normalize-space(v3:quantity/v3:denominator/@unit)!='1'"><xsl:value-of select="v3:quantity/v3:denominator/@unit"/></xsl:if></xsl:if>
 					</td>
 					<td>TBD</td>
 				</tr>

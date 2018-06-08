@@ -254,17 +254,6 @@
 				<tr>
 					<td class="formTitle">
 						<xsl:call-template name="hpfb-title">
-							<xsl:with-param name="code" select="'10117'"/>
-							<!-- Company (Sponsor) Name -->
-						</xsl:call-template>
-					</td>
-					<td class="formItem" colspan="3">
-						<xsl:value-of select="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:name"/>
-					</td>
-				</tr>
-				<tr>
-					<td class="formTitle">
-						<xsl:call-template name="hpfb-title">
 							<xsl:with-param name="code" select="'10114'"/>
 							<!-- Brand Name of Drug Product -->
 						</xsl:call-template>
@@ -284,21 +273,19 @@
 						<xsl:apply-templates mode="showDataWithBR" select="//v3:manufacturedProduct/v3:manufacturedProduct/v3:asEntityWithGeneric/v3:genericMedicine/v3:name"/>
 					</td>
 				</tr>
+<!--				<xsl:apply-templates mode="nonProprietarySubstance" select="//v3:manufacturedProduct/v3:manufacturedProduct"/>-->
+				<xsl:call-template name="nonProprietarySubstance"/>
 				<tr>
 					<td class="formTitle">
 						<xsl:call-template name="hpfb-title">
-							<xsl:with-param name="code" select="'10086'"/>
-							<!-- Product Strength -->
+							<xsl:with-param name="code" select="'10117'"/>
+							<!-- Company (Sponsor) Name -->
 						</xsl:call-template>
 					</td>
 					<td class="formItem" colspan="3">
-						<xsl:call-template name="hpfb-title">
-							<xsl:with-param name="code" select="'100116'"/>
-							<!-- Non-proprietary (Proper or common name) Name of Drug Substance (Medical Ingredient) -->
-						</xsl:call-template>
+						<xsl:value-of select="//v3:author/v3:assignedEntity/v3:representedOrganization/v3:name"/>
 					</td>
 				</tr>
-				<xsl:apply-templates mode="nonProprietarySubstance" select="//v3:manufacturedProduct/v3:manufacturedProduct"/>
 				<tr>
 					<td class="formTitle">
 						<xsl:call-template name="hpfb-title">
@@ -345,19 +332,6 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="formTitle">
-						<xsl:call-template name="hpfb-title">
-							<xsl:with-param name="code" select="'10122'"/>
-							<!-- Sponsor’s Date of CPID -->
-						</xsl:call-template>
-					</td>
-					<td class="formItem" colspan="3">
-						<xsl:call-template name="string-ISO-date">
-							<xsl:with-param name="text" select="/v3:document/v3:effectiveTime/v3:originalText"/>
-						</xsl:call-template>
-					</td>
-				</tr>
-				<tr>
 					<td class="formHeadingReg" colspan="4">
 						footer??
 					</td>
@@ -371,6 +345,19 @@
 					<xsl:call-template name="hpfb-title">
 						<xsl:with-param name="code" select="'10140'"/>
 						<!-- Administrative SUMMARY -->
+					</xsl:call-template>
+				</td>
+			</tr>
+			<tr>
+				<td class="formTitle">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10122'"/>
+						<!-- Sponsor’s Date of CPID -->
+					</xsl:call-template>
+				</td>
+				<td class="formItem" colspan="3">
+					<xsl:call-template name="string-ISO-date">
+						<xsl:with-param name="text" select="/v3:document/v3:effectiveTime/v3:originalText"/>
 					</xsl:call-template>
 				</td>
 			</tr>
@@ -420,10 +407,6 @@
 					</xsl:call-template>
 				</td>
 			</tr>
-			<tr>
-				<td colspan="2" class="formItem">Health Canada use only
-				</td>
-			</tr>
 		</tbody>
 		</table>
 <!--		<div id="topPageFootImage">
@@ -431,19 +414,137 @@
 		</div>-->
 		</div>
 	</xsl:template>
-	<xsl:template mode="nonProprietarySubstance" match="*">
+<!--	<xsl:template mode="nonProprietarySubstance" match="*">-->
+	<xsl:template name="nonProprietarySubstance">
 		<tr>
-			<td class="formTitle">
+<!--			<td class="formTitle">
 				<xsl:call-template name="stringJoin"><xsl:with-param name="strings" select="./v3:ingredient[starts-with(@classCode, 'ACTI')]/v3:quantity/v3:numerator/@value"/></xsl:call-template>
+			</td>-->
+			<td class="formTitle">
+				<xsl:call-template name="hpfb-title">
+					<xsl:with-param name="code" select="'100116'"/>
+					<!-- Non-proprietary (Proper or common name) Name of Drug Substance (Medical Ingredient) -->
+				</xsl:call-template>
 			</td>
 			<td class="formItem">
-				<xsl:for-each select="./v3:ingredient[starts-with(@classCode, 'ACTI')]">
+<!--				<xsl:for-each select="./v3:ingredient[starts-with(@classCode, 'ACTI')]">
 					<xsl:value-of select="./v3:ingredientSubstance/v3:code/@displayName"/>
 					(<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10093'"/></xsl:call-template>:&#160;<xsl:value-of select="./v3:ingredientSubstance/v3:code/@code"/>)
 					<xsl:value-of select="./v3:quantity/v3:numerator/@value"/>&#160;
 					<xsl:value-of select="./v3:quantity/v3:numerator/@unit"/>
 					<xsl:text disable-output-escaping="yes">&lt;br/&gt;</xsl:text>
-				</xsl:for-each>
+				</xsl:for-each>-->
+		<table width="100%" cellpadding="3" cellspacing="0" class="formTablePetite">
+			<tr>
+				<th class="formTitle" scope="col">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10036'"/>
+						<!-- ingredientName -->
+					</xsl:call-template>
+				</th>
+				<th class="formTitle" scope="col">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10009'"/>
+						<!-- basisOfStrength -->
+					</xsl:call-template>
+				</th>
+				<th class="formTitle" scope="col">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'10086'"/>
+						<!-- strength -->
+					</xsl:call-template>
+				</th>
+			</tr>
+			<xsl:if test="not(//v3:ingredient[starts-with(@classCode, 'ACTI')]|//v3:activeIngredient)">
+				<tr>
+					<td colspan="3" class="formItem" align="center">
+						<xsl:call-template name="hpfb-title">
+							<xsl:with-param name="code" select="'10053'"/>
+							<!-- noActiveIngredientsFound -->
+						</xsl:call-template>
+					</td>
+				</tr>
+			</xsl:if>
+			<xsl:for-each select="//v3:ingredient[starts-with(@classCode, 'ACTI')]|//v3:activeIngredient">
+				<tr>
+					<xsl:attribute name="class">
+						<xsl:choose>
+							<xsl:when test="position() mod 2 = 0">formTableRow</xsl:when>
+							<xsl:otherwise>formTableRowAlt</xsl:otherwise>
+						</xsl:choose>
+					</xsl:attribute>
+					<xsl:for-each select="(v3:ingredientSubstance|v3:activeIngredientSubstance)">
+						<td class="formItem">
+							<xsl:value-of select="v3:name"/>
+							(<xsl:for-each select="v3:code/@code">
+								<xsl:call-template name="hpfb-title">
+									<xsl:with-param name="code" select="'10093'"/>
+									<!-- ID -->
+								</xsl:call-template>:
+								<xsl:value-of select="."/>
+								<xsl:if test="position()!=last()">&#160;
+									<xsl:call-template name="hpfb-title">
+										<xsl:with-param name="code" select="'10005'"/>
+										<!-- and -->
+									</xsl:call-template>&#160;
+								</xsl:if>
+							</xsl:for-each>)
+							<xsl:if test="../@classCode != 'ACTIR' and normalize-space(v3:activeMoiety/v3:activeMoiety/v3:name)">
+								(<xsl:for-each select="v3:activeMoiety/v3:activeMoiety/v3:name">
+									<xsl:value-of select="."/>
+									<xsl:text> - </xsl:text>
+									<xsl:call-template name="hpfb-title">
+										<xsl:with-param name="code" select="'10093'"/>
+										<!-- UNII -->
+									</xsl:call-template>:
+									<xsl:value-of select="../v3:code/@code"/>
+									<xsl:if test="position()!=last()">,</xsl:if>
+								</xsl:for-each>)
+							</xsl:if>
+							<xsl:if test="../@classCode = 'ACTIR' and normalize-space(v3:asEquivalentSubstance/v3:definingSubstance/v3:name)">
+								(<xsl:for-each select="v3:asEquivalentSubstance/v3:definingSubstance/v3:name">
+									<xsl:value-of select="."/>
+									<xsl:text> - </xsl:text>
+									<xsl:call-template name="hpfb-title">
+										<xsl:with-param name="code" select="'10093'"/>
+										<!-- UNII -->
+									</xsl:call-template>:
+									<xsl:value-of select="../v3:code/@code"/>
+									<xsl:if test="position()!=last()">,</xsl:if>
+								</xsl:for-each>)
+							</xsl:if>
+							<xsl:for-each select="../v3:subjectOf/v3:substanceSpecification/v3:code[@codeSystem = '2.16.840.1.113883.6.69' or @codeSystem = '2.16.840.1.113883.3.6277']/@code">(
+								<xsl:call-template name="hpfb-title">
+									<xsl:with-param name="code" select="'10085'"/>
+									<!-- sourceNDC -->
+								</xsl:call-template>:
+
+								<xsl:value-of select="."/>
+								<xsl:text>)</xsl:text>
+							</xsl:for-each>
+						</td>
+						<td class="formItem">
+							<xsl:choose>
+								<xsl:when test="../@classCode='ACTIR'">
+									<xsl:value-of select="v3:asEquivalentSubstance/v3:definingSubstance/v3:name"/>
+								</xsl:when>
+								<xsl:when test="../@classCode='ACTIB'">
+									<xsl:value-of select="v3:name"/>
+								</xsl:when>
+								<xsl:when test="../@classCode='ACTIM'">
+									<xsl:value-of select="v3:activeMoiety/v3:activeMoiety/v3:name"/>
+								</xsl:when>
+							</xsl:choose>
+							(<xsl:call-template name="hpfb-title"><xsl:with-param name="code" select="'10093'"/></xsl:call-template>:&#160;<xsl:value-of select="v3:code/@code"/>)
+						</td>
+					</xsl:for-each>
+					<td class="formItem">
+						<xsl:value-of select="v3:quantity/v3:numerator/@value"/>&#xA0;<xsl:if test="normalize-space(v3:quantity/v3:numerator/@unit)!='1'"><xsl:value-of select="v3:quantity/v3:numerator/@unit"/></xsl:if>
+						<xsl:if test="(v3:quantity/v3:denominator/@value and normalize-space(v3:quantity/v3:denominator/@value)!='1') or (v3:quantity/v3:denominator/@unit and normalize-space(v3:quantity/v3:denominator/@unit)!='1')">&#xA0;in&#xA0;<xsl:value-of select="v3:quantity/v3:denominator/@value"/>&#xA0;<xsl:if test="normalize-space(v3:quantity/v3:denominator/@unit)!='1'"><xsl:value-of select="v3:quantity/v3:denominator/@unit"/></xsl:if></xsl:if>
+					</td>
+				</tr>
+			</xsl:for-each>
+		</table>
 			</td>
 		</tr>
 	</xsl:template>
@@ -828,7 +929,7 @@
 
 <metaInformation>
 	<scenarios>
-		<scenario default="yes" name="CPID" userelativepaths="no" externalpreview="yes" url="file:///e:/cpid-6.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/cpid1.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
+		<scenario default="yes" name="CPID" userelativepaths="no" externalpreview="yes" url="file:///e:/cpid-7.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/cpid1.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
 		          profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no" validator="internal"
 		          customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
