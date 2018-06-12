@@ -1611,6 +1611,12 @@
 			<xsl:if test="position() &gt; 0 and position() != last()"><xsl:value-of select="';&#160;&#160;'"/></xsl:if>
 		</xsl:for-each>
 	</xsl:template>
+	<xsl:template name="splitString">
+		<xsl:param name="text" select="/."/>
+		<xsl:param name="char" select="/."/>
+		<xsl:param name="splitter" select="/."/>
+		<xsl:value-of select="substring-before($text, $char)"/><xsl:value-of select="$char"/><xsl:value-of select="$splitter" disable-output-escaping="yes"/><xsl:value-of select="substring-after($text, $char)"/>
+	</xsl:template>
 </xsl:transform>
 	<!-- Stylus Studio meta-information - (c) 2004-2009. Progress Software Corporation. All rights reserved.
 

@@ -421,9 +421,16 @@
 				<xsl:call-template name="stringJoin"><xsl:with-param name="strings" select="./v3:ingredient[starts-with(@classCode, 'ACTI')]/v3:quantity/v3:numerator/@value"/></xsl:call-template>
 			</td>-->
 			<td class="formTitle">
-				<xsl:call-template name="hpfb-title">
-					<xsl:with-param name="code" select="'100116'"/>
-					<!-- Non-proprietary (Proper or common name) Name of Drug Substance (Medical Ingredient) -->
+				<xsl:variable name="nonProprietarySubstanceTitle">
+					<xsl:call-template name="hpfb-title">
+						<xsl:with-param name="code" select="'100116'"/>
+						<!-- Non-proprietary (Proper or common name) Name of Drug Substance (Medical Ingredient) -->
+					</xsl:call-template>
+				</xsl:variable>
+				<xsl:call-template name="splitString">
+					<xsl:with-param name="text" select="$nonProprietarySubstanceTitle"/>
+					<xsl:with-param name="char" select="')'"/>
+					<xsl:with-param name="splitter"><xsl:text>&lt;br/&gt;</xsl:text></xsl:with-param>
 				</xsl:call-template>
 			</td>
 			<td class="formItem">
@@ -934,8 +941,8 @@
 		          customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
 			<parameterValue name="css" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\dev\hpfb-cpid.css'"/>
-			<parameterValue name="language" value="'eng'"/>
 			<parameterValue name="resourcesdir" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\dev\'"/>
+			<parameterValue name="language" value="'eng'"/>
 			<advancedProp name="sInitialMode" value=""/>
 			<advancedProp name="schemaCache" value="||"/>
 			<advancedProp name="bXsltOneIsOkay" value="true"/>
