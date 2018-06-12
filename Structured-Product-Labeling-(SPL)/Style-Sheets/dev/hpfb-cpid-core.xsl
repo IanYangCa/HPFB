@@ -441,7 +441,7 @@
 					<xsl:value-of select="./v3:quantity/v3:numerator/@unit"/>
 					<xsl:text disable-output-escaping="yes">&lt;br/&gt;</xsl:text>
 				</xsl:for-each>-->
-		<table width="100%" cellpadding="3" cellspacing="0" class="formTablePetite">
+		<table width="100%" cellpadding="3" cellspacing="0" class="formTablePetite" style="margin:0px 0px 0px 0px;">
 			<tr>
 				<th class="formTitle" scope="col">
 					<xsl:call-template name="hpfb-title">
