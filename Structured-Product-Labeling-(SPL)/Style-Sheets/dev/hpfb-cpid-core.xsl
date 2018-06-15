@@ -474,12 +474,7 @@
 			</xsl:if>
 			<xsl:for-each select="//v3:ingredient[starts-with(@classCode, 'ACTI')]|//v3:activeIngredient">
 				<tr>
-					<xsl:attribute name="class">
-						<xsl:choose>
-							<xsl:when test="position() mod 2 = 0">formTableRow</xsl:when>
-							<xsl:otherwise>formTableRowAlt</xsl:otherwise>
-						</xsl:choose>
-					</xsl:attribute>
+					<xsl:attribute name="class">formItem</xsl:attribute>
 					<xsl:for-each select="(v3:ingredientSubstance|v3:activeIngredientSubstance)">
 						<td class="formItem">
 							<xsl:value-of select="v3:name"/>
@@ -496,30 +491,28 @@
 									</xsl:call-template>&#160;
 								</xsl:if>
 							</xsl:for-each>)
-							<xsl:if test="../@classCode != 'ACTIR' and normalize-space(v3:activeMoiety/v3:activeMoiety/v3:name)">
+<!--							<xsl:if test="../@classCode != 'ACTIR' and normalize-space(v3:activeMoiety/v3:activeMoiety/v3:name)">
 								(<xsl:for-each select="v3:activeMoiety/v3:activeMoiety/v3:name">
 									<xsl:value-of select="."/>
 									<xsl:text> - </xsl:text>
 									<xsl:call-template name="hpfb-title">
 										<xsl:with-param name="code" select="'10093'"/>
-										<!-- UNII -->
 									</xsl:call-template>:
 									<xsl:value-of select="../v3:code/@code"/>
 									<xsl:if test="position()!=last()">,</xsl:if>
 								</xsl:for-each>)
-							</xsl:if>
-							<xsl:if test="../@classCode = 'ACTIR' and normalize-space(v3:asEquivalentSubstance/v3:definingSubstance/v3:name)">
+							</xsl:if>-->
+<!--							<xsl:if test="../@classCode = 'ACTIR' and normalize-space(v3:asEquivalentSubstance/v3:definingSubstance/v3:name)">
 								(<xsl:for-each select="v3:asEquivalentSubstance/v3:definingSubstance/v3:name">
 									<xsl:value-of select="."/>
 									<xsl:text> - </xsl:text>
 									<xsl:call-template name="hpfb-title">
 										<xsl:with-param name="code" select="'10093'"/>
-										<!-- UNII -->
 									</xsl:call-template>:
 									<xsl:value-of select="../v3:code/@code"/>
 									<xsl:if test="position()!=last()">,</xsl:if>
 								</xsl:for-each>)
-							</xsl:if>
+							</xsl:if>-->
 							<xsl:for-each select="../v3:subjectOf/v3:substanceSpecification/v3:code[@codeSystem = '2.16.840.1.113883.6.69' or @codeSystem = '2.16.840.1.113883.3.6277']/@code">(
 								<xsl:call-template name="hpfb-title">
 									<xsl:with-param name="code" select="'10085'"/>
@@ -941,8 +934,8 @@
 		          customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
 			<parameterValue name="css" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\dev\hpfb-cpid.css'"/>
-			<parameterValue name="resourcesdir" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\dev\'"/>
 			<parameterValue name="language" value="'eng'"/>
+			<parameterValue name="resourcesdir" value="'file://C:\IP-602\HPFB\Structured-Product-Labeling-(SPL)\Style-Sheets\dev\'"/>
 			<advancedProp name="sInitialMode" value=""/>
 			<advancedProp name="schemaCache" value="||"/>
 			<advancedProp name="bXsltOneIsOkay" value="true"/>
