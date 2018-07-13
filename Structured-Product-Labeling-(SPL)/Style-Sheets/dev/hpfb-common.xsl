@@ -9,6 +9,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:gc="http://docs.oasis-open.org/codelist/ns/genericode/1.0/" 
 	exclude-result-prefixes="exsl msxsl v3 xsl xsi str">
+	<xsl:variable name="smallcase" select="'abcdefghijklmnopqrstuvwxyz'"/>
+	<xsl:variable name="uppercase" select="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'"/>
 	<xsl:template match="/" priority="1">
 		<xsl:apply-templates select="*"/>
 	</xsl:template>
