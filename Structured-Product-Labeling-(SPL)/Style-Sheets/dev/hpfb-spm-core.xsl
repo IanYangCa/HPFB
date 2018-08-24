@@ -64,11 +64,11 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 	<xsl:variable name="characteristics" select="document(concat($oids-base-url,$product-characteristics-oid,$file-suffix))"/>
 
 	<xsl:template name="include-custom-items">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="utf-8">/* */</script>
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" type="text/javascript" charset="utf-8">/* */</script>
-		<script src="{$resourcesdir}jqxcore.js" type="text/javascript" charset="utf-8">/* */</script>
-		<script src="{$resourcesdir}jqxsplitter_spm.js" type="text/javascript" charset="utf-8">/* */</script>
-		<script src="{$resourcesdir}hpfb-spm.js" type="text/javascript" charset="utf-8">/* */</script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript" charset="utf-8">/** */</script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" type="text/javascript" charset="utf-8">/** */</script>
+		<script src="{$resourcesdir}jqxcore.js" type="text/javascript" charset="utf-8">/** */</script>
+		<script src="{$resourcesdir}jqxsplitter_spm.js" type="text/javascript" charset="utf-8">/** */</script>
+		<script src="{$resourcesdir}hpfb-spm.js" type="text/javascript" charset="utf-8">/** */</script>
 	</xsl:template>
 	<xsl:template match="/v3:document/v3:title" priority="1"/>
 
@@ -963,7 +963,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 
 <metaInformation>
 	<scenarios>
-		<scenario default="yes" name="Scenario1" userelativepaths="no" externalpreview="yes" url="file:///e:/spm-4.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test6.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
+		<scenario default="yes" name="Scenario1" userelativepaths="no" externalpreview="yes" url="file:///c:/SPM/test/4.xml" htmlbaseurl="" outputurl="file:///c:/SPM/test/test6.html" processortype="saxon8" useresolver="yes" profilemode="0" profiledepth=""
 		          profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no" validator="internal"
 		          customvalidator="">
 			<parameterValue name="oids-base-url" value="'https://raw.githubusercontent.com/HealthCanada/HPFB/master/Controlled-Vocabularies/Content/'"/>
