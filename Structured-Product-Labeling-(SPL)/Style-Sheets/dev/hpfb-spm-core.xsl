@@ -236,6 +236,7 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 				<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
 				<link rel="stylesheet" type="text/css" href="{$resourcesdir}jqx.base.css"/>
 				<link rel="stylesheet" type="text/css" href="{$css}"/>
+		<script src="{$jqueryUrl}jquery.min.js" type="text/javascript">/*  */</script>
 				<xsl:call-template name="include-custom-items"/>
 			</head>
 			<body onload="setWatermarkBorder();twoColumnsDisplay();">
