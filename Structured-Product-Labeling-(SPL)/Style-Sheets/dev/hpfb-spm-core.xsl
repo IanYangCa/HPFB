@@ -64,15 +64,13 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 	<xsl:variable name="characteristics" select="document(concat($oids-base-url,$product-characteristics-oid,$file-suffix))"/>
 
 	<xsl:template name="include-custom-items">
-		<xsl:text disable-output-escaping="yes">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript">/**/</script>
-		<script type="text/javascript">/**/</script>
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" type="text/javascript">/**/</script>
-		<script type="text/javascript">/**/</script>
-		<script src="{$resourcesdir}jqxcore.js" type="text/javascript">/**/</script>
-		<script src="{$resourcesdir}jqxsplitter_spm.js" type="text/javascript">/**/</script>
-		<script src="{$resourcesdir}hpfb-spm.js" type="text/javascript">/**/</script>
-		</xsl:text>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript">/*  */</script>
+		<script type="text/javascript">/*  */</script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" type="text/javascript">/*  */</script>
+		<script type="text/javascript">/*  */</script>
+		<script src="{$resourcesdir}jqxcore.js" type="text/javascript">/*  */</script>
+		<script src="{$resourcesdir}jqxsplitter_spm.js" type="text/javascript">/*  */</script>
+		<script src="{$resourcesdir}hpfb-spm.js" type="text/javascript">/*  */</script>
 	</xsl:template>
 	<xsl:template match="/v3:document/v3:title" priority="1"/>
 
