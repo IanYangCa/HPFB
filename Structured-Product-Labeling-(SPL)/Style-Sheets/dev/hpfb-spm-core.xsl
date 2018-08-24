@@ -62,11 +62,13 @@ Contributor(s): Steven Gitterman, Brian Keller, Brian Suggs, Ian Yang
 	<xsl:variable name="vocabulary" select="document(concat($oids-base-url,$section-id-oid,$file-suffix))"/>
 	<xsl:variable name="documentTypes" select="document(concat($oids-base-url,$document-id-oid,$file-suffix))"/>
 	<xsl:variable name="characteristics" select="document(concat($oids-base-url,$product-characteristics-oid,$file-suffix))"/>
-
+	<xsl:variable name="jqueryUrl" select="'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/'"/>
+	<xsl:variable name="jqueryUiUrl" select="'https://code.jquery.com/ui/1.12.1/'"/>
+	
 	<xsl:template name="include-custom-items">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript">/*  */</script>
+		<script src="{$jqueryUrl}jquery.min.js" type="text/javascript">/*  */</script>
 		<script type="text/javascript">/*  */</script>
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" type="text/javascript">/*  */</script>
+		<script src="{$jqueryUiUrl}jquery-ui.js" type="text/javascript">/*  */</script>
 		<script type="text/javascript">/*  */</script>
 		<script src="{$resourcesdir}jqxcore.js" type="text/javascript">/*  */</script>
 		<script src="{$resourcesdir}jqxsplitter_spm.js" type="text/javascript">/*  */</script>
